@@ -67,8 +67,8 @@ termcapinfo xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 #hardstatus on
 #hardstatus alwayslastline
 #backtick 1 0 0 /home/jg/ruby/stats.rb
+#caption always '%{= bw}%-Lw%{= rW}%n%f+ %{+u}%t%{-}%{-}%+Lw%{= KW} /%-=/ %{= kg} %1` %{= kK}/ %{= ky}%Y/%m/%d %{= kK}/ %{= kc}%c:%s%{-}'
 caption always '%{= bw}%-Lw%{= rW}%n%f+ %{+u}%t%{-}%{-}%+Lw%{= KW} /%-=/ %{= kg} %{= kK}/ %{= ky}%Y/%m/%d %{= kK}/ %{= kc}%c:%s%{-}'
-caption always '%{= bw}%-Lw%{= rW}%n%f+ %{+u}%t%{-}%{-}%+Lw%{= KW} /%-=/ %{= kg} %1` %{= kK}/ %{= ky}%Y/%m/%d %{= kK}/ %{= kc}%c:%s%{-}'
 	# %{= bw} : color
 	# %-Lw : all window numbers and names. With '-' quailifier: up to the current window
 
