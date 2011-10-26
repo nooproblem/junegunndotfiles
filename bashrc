@@ -60,7 +60,7 @@ stty -ixoff -ixon
 export PATH=$PATH:~/bin:~/bash:~/perl:~/python:~/ruby:~/opt/bin:/opt/bin:/usr/local/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 export EDITOR=vim
-export LANG=ko_KR.UTF-8
+export LANG=en_US.UTF-8
 
 # Ruby
 export RUBYLIB=~/ruby
