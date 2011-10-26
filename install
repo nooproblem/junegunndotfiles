@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Junegunn Choi (junegunn.c@gmail.com)
+# 2011/05/25-
+
+cd `dirname $BASH_SOURCE`
+touch bashrc_extra
+for rc in *rc; do
+	mkdir -pv bak
+	mv -v ~/.$rc bak/
+	ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
+done
+
