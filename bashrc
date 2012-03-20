@@ -57,7 +57,7 @@ fi
 stty -ixoff -ixon
 
 # Global
-export PATH=$PATH:~/bin:~/bash:~/perl:~/python:~/ruby:~/opt/bin:/opt/bin:/usr/local/bin
+export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:~/opt/bin:/opt/bin:/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 export EDITOR=vim
 export LANG=en_US.UTF-8
@@ -84,11 +84,13 @@ gd() {
 }
 
 # Prompt
-PS1='\[\033k\033\\\]' # SCREEN TRICK
+# PS1='\[\033k\033\\\]' # SCREEN TRICK => TMUXIFIED
 if [ `uname -s` = "Linux" ]; then
-	PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]"$PS1"> \[\e[0m\]"
+	#PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]"$PS1"> \[\e[0m\]"
+	PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
 else
-	PS1="\[\e[1;34m\]\u\[\e[0;32m\]@\[\e[0;33m\]\h\[\e[1;30m\]:\[\e[0;37m\]\w\[\e[0;31m\]"$PS1"> \[\e[0m\]"
+	#PS1="\[\e[1;34m\]\u\[\e[0;32m\]@\[\e[0;33m\]\h\[\e[1;30m\]:\[\e[0;37m\]\w\[\e[0;31m\]"$PS1"> \[\e[0m\]"
+	PS1="\[\e[1;34m\]\u\[\e[0;32m\]@\[\e[0;33m\]\h\[\e[1;30m\]:\[\e[0;37m\]\w\[\e[0;31m\]> \[\e[0m\]"
 fi
 
 fi # RVM

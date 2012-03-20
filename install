@@ -5,9 +5,10 @@
 
 cd `dirname $BASH_SOURCE`
 touch bashrc_extra
-for rc in *rc; do
+for rc in *rc tmux.conf; do
 	mkdir -pv bak
 	mv -v ~/.$rc bak/
 	ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
+tmux source-file ~/.tmux.conf
