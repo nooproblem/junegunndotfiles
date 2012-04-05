@@ -105,3 +105,5 @@ fi
 rvm use 1.9.3 > /dev/null
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+export COPYFILE_DISABLE=true
