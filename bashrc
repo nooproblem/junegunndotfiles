@@ -64,6 +64,7 @@ export LANG=en_US.UTF-8
 
 # Ruby
 export RUBYLIB=~/ruby
+export JRUBY_OPTS=--1.9
 
 # Shortcuts
 alias ..='cd ..'
@@ -77,6 +78,7 @@ alias v='vim '
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
+alias tmuxls="ls $TMPDIR/tmux*/"
 
 [ `uname -s` = 'Darwin' ] && alias ls='ls -G'
 gd() {
