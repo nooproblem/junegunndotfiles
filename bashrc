@@ -57,8 +57,8 @@ fi
 stty -ixoff -ixon
 
 # Global
-export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:~/opt/bin:/opt/bin:/usr/local/bin:$PATH
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:/opt/bin:/usr/local/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 export EDITOR=vim
 export LANG=en_US.UTF-8
 
@@ -78,6 +78,7 @@ alias v='vim '
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
+[ -z "$TMPDIR" ] && TMPDIR=/tmp
 alias tmuxls="ls $TMPDIR/tmux*/"
 
 [ `uname -s` = 'Darwin' ] && alias ls='ls -G'
