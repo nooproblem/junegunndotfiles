@@ -81,7 +81,11 @@ alias which='type -p'
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 alias tmuxls="ls $TMPDIR/tmux*/"
 
-[ `uname -s` = 'Darwin' ] && alias ls='ls -G'
+if [ `uname -s` = 'Darwin' ]; then
+  alias ls='ls -G'
+  unset LD_LIBRARY_PATH
+fi
+
 gd() {
 	[ "$1" ] && cd *$1*
 }
