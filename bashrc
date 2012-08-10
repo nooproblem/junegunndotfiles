@@ -78,7 +78,9 @@ alias v='vim '
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
+
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
+alias tmux="tmux -2"
 alias tmuxls="ls $TMPDIR/tmux*/"
 
 if [ `uname -s` = 'Darwin' ]; then
