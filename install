@@ -23,6 +23,7 @@ if [ `uname -s` = 'Darwin' ]; then
   cd .. &&
   rm -rf tmux-MacOSX-pasteboard)
 else
+  rm ~/.tmux.conf
   grep -v default-command tmux.conf > ~/.tmux.conf
 fi
 
