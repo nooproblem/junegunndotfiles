@@ -11,4 +11,19 @@ for rc in *rc tmux.conf; do
 	ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
+# tmux on OSX
+# https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+if [ `uname -s` = 'Darwin' ]; then
+  mkdir -p ~/bin
+
+  (git clone https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard &&
+  cd tmux-MacOSX-pasteboard &&
+  make &&
+  cp reattach-to-user-namespace ~/bin &&
+  cd .. &&
+  rm -rf tmux-MacOSX-pasteboard)
+else
+  grep -v default-command tmux.conf > ~/.tmux.conf
+fi
+
 tmux source-file ~/.tmux.conf
