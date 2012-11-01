@@ -66,6 +66,11 @@ export LANG=en_US.UTF-8
 export RUBYLIB=~/ruby
 export JRUBY_OPTS=--1.9
 
+# Jars
+for jar in ~/lib/*.jar; do
+  export CLASSPATH=$CLASSPATH:$jar
+done
+
 # Shortcuts
 alias ..='cd ..'
 alias ...='cd ../..'

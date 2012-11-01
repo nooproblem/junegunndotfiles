@@ -3,6 +3,7 @@
 # Junegunn Choi (junegunn.c@gmail.com)
 # 2011/05/25-
 
+# RC files
 cd `dirname $BASH_SOURCE`
 touch bashrc_extra
 for rc in *rc tmux.conf; do
@@ -11,11 +12,16 @@ for rc in *rc tmux.conf; do
 	ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
+# Leiningen
+mkdir -p ~/bin
+wget https://raw.github.com/technomancy/leiningen/preview/bin/lein --no-check-certificate -O ~/bin/lein &&
+chmod +x ~/bin/lein &&
+~/bin/lein
+[ -e ~/.lein/profiles.clj ] || echo '{:user {:plugins [[lein-tarsier "0.9.4"]]}}' > ~/.lein/profiles.clj # TODO
+
 # tmux on OSX
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 if [ `uname -s` = 'Darwin' ]; then
-  mkdir -p ~/bin
-
   (git clone https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard &&
   cd tmux-MacOSX-pasteboard &&
   make &&
