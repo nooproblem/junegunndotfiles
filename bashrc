@@ -97,6 +97,18 @@ gd() {
 	[ "$1" ] && cd *$1*
 }
 
+csbuild() {
+  [ $# -eq 0 ] && return
+
+  cmd="find `pwd`"
+  for ext in $@; do
+    cmd=" $cmd -name '*.$ext' -o"
+  done
+  echo ${cmd: 0: ${#cmd} - 3}
+  eval "${cmd: 0: ${#cmd} - 3}" > cscope.files &&
+  cscope -b -q && rm cscope.files
+}
+
 # Prompt
 # PS1='\[\033k\033\\\]' # SCREEN TRICK => TMUXIFIED
 if [ `uname -s` = "Linux" ]; then
