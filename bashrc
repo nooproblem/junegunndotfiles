@@ -57,7 +57,7 @@ fi
 stty -ixoff -ixon
 
 # Global
-export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:/opt/bin:/usr/local/bin:$PATH
+export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:/opt/bin:/usr/local/bin:$PATH:/usr/local/share/python
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 export EDITOR=vim
 export LANG=en_US.UTF-8
@@ -83,6 +83,9 @@ alias v='vim '
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
+viw() {
+  echo vim `which "$1"`
+}
 
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 alias tmux="tmux -2"
@@ -119,13 +122,13 @@ else
 	PS1="\[\e[1;34m\]\u\[\e[0;32m\]@\[\e[0;33m\]\h\[\e[1;30m\]:\[\e[0;37m\]\w\[\e[0;31m\]> \[\e[0m\]"
 fi
 
-fi # RVM
-#################################################
-
 EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc_extra
 if [ -f "$EXTRA" ]; then
 	source "$EXTRA"
 fi
+
+fi # RVM
+#################################################
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
 rvm use 1.9.3 > /dev/null
