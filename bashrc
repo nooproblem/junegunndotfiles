@@ -84,7 +84,7 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 viw() {
-  echo vim `which "$1"`
+  vim `which "$1"`
 }
 
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
