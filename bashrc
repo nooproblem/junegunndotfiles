@@ -112,6 +112,20 @@ csbuild() {
   cscope -b -q && rm cscope.files
 }
 
+gems() {
+  for v in 2.0.0 1.8.7 jruby 1.9.3; do
+    rvm use $v
+    gem $@
+  done
+}
+
+rakes() {
+  for v in 2.0.0 1.8.7 jruby 1.9.3; do
+    rvm use $v
+    rake $@
+  done
+}
+
 # Prompt
 # PS1='\[\033k\033\\\]' # SCREEN TRICK => TMUXIFIED
 if [ `uname -s` = "Linux" ]; then
