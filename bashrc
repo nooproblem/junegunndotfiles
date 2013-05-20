@@ -62,10 +62,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 export EDITOR=vim
 export LANG=en_US.UTF-8
 
-# Ruby
-export RUBYLIB=~/ruby
-export JRUBY_OPTS=--1.9
-
 # Jars
 for jar in ~/lib/*.jar; do
   export CLASSPATH=$CLASSPATH:$jar
