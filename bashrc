@@ -130,7 +130,8 @@ source ~/.git-prompt.sh
 if [ `uname -s` = "Linux" ]; then
 	PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
 else
-  PS1="\[\e[38;5;111m\]\u\[\e[38;5;35m\]@\[\e[38;5;220m\]\h\[\e[38;5;240m\]:\[\e[38;5;252m\]\w\[\e[38;5;214m\]\$(__git_ps1)\[\e[38;5;202m\]> \[\e[0m\]"
+  PROMPT_COMMAND='printf "\[\e[38;5;214m\]%$(($COLUMNS - 4))s\r" $(__git_ps1)'
+  PS1="\[\e[38;5;111m\]\u\[\e[38;5;35m\]@\[\e[38;5;220m\]\h\[\e[38;5;240m\]:\[\e[38;5;252m\]\w\[\e[38;5;202m\]> \[\e[0m\]"
 fi
 
 EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc_extra
