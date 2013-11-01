@@ -135,6 +135,8 @@ tx() {
 # vimf - Open selected file in Vim
 alias vimf='vim `fzf`'
 
+alias fopen='fzf | xargs open'
+
 # fd - cd to selected directory
 fd() {
   DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf` && cd "$DIR"
@@ -155,8 +157,10 @@ fkill() {
   ps -ef | sed 1d | fzf | awk '{print $2}' | xargs kill -${1:-9}
 }
 
+# bind -p
 bind '"\er": redraw-current-line'
-bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
+bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
+bind '"\C-h": " \C-u \C-a\C-k$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
 
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
@@ -180,5 +184,4 @@ fi # RVM
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
 rvm use 2.0.0 > /dev/null # --default
-
 
