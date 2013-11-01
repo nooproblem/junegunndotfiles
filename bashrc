@@ -133,7 +133,9 @@ tx() {
 }
 
 # vimf - Open selected file in Vim
-alias vimf='vim `fzf`'
+vimf() {
+  FILE=`fzf` && vim "$FILE"
+}
 
 alias fopen='fzf | xargs open'
 
@@ -160,7 +162,7 @@ fkill() {
 # bind -p
 bind '"\er": redraw-current-line'
 bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
-bind '"\C-h": "\C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
+bind '"\e\C-t": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
 
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
