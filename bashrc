@@ -160,7 +160,7 @@ fkill() {
 # bind -p
 bind '"\er": redraw-current-line'
 bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
-bind '"\C-h": " \C-u \C-a\C-k$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
+bind '"\C-h": "\C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
 
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
