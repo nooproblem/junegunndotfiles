@@ -160,9 +160,12 @@ fkill() {
 }
 
 # bind -p
+# CTRL-T - Paste the selected file into the command line
 bind '"\er": redraw-current-line'
-bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-?\C-e\er"'
-bind '"\e\C-t": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
+bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
+
+# CTRL-R - Search history and paste into the command line
+bind '"\C-r": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
 
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
