@@ -132,9 +132,20 @@ tx() {
   tmux last-pane
 }
 
+# fzf (faster startup)
+alias fzf='/usr/bin/ruby --disable-gems ~/bin/fzf'
+
 # vimf - Open selected file in Vim
 vimf() {
   FILE=`fzf` && vim "$FILE"
+}
+
+# fsel - Select multiple files in the given path
+fsel() {
+  find ${1:-*} | fzf -m | while read item; do
+    echo -n "\"$item\" "
+  done
+  echo
 }
 
 alias fopen='fzf | xargs open'
@@ -157,6 +168,13 @@ fh() {
 # fkill - kill process
 fkill() {
   ps -ef | sed 1d | fzf | awk '{print $2}' | xargs kill -${1:-9}
+}
+
+# Figlet font selector
+fgl() {
+  cd /usr/local/Cellar/figlet/*/share/figlet/fonts
+  BASE=`pwd`
+  figlet -f `ls *.flf | sort | fzf` $*
 }
 
 # bind -p
