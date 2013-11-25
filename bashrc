@@ -50,7 +50,7 @@ fi
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+  . /etc/bashrc
 fi
 
 # Keystrokes
@@ -96,7 +96,7 @@ if [ `uname -s` = 'Darwin' ]; then
 fi
 
 gd() {
-	[ "$1" ] && cd *$1*
+  [ "$1" ] && cd *$1*
 }
 
 csbuild() {
@@ -131,9 +131,6 @@ tx() {
   tmux select-layout tiled
   tmux last-pane
 }
-
-# fzf (faster startup)
-alias fzf='/usr/bin/ruby --disable-gems ~/bin/fzf'
 
 # vimf - Open selected file in Vim
 vimf() {
@@ -191,15 +188,15 @@ if [ ! -e ~/.git-prompt.sh ]; then
 fi
 source ~/.git-prompt.sh
 if [ `uname -s` = "Linux" ]; then
-	PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
+  PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
 else
   PROMPT_COMMAND='printf "\[\e[38;5;214m\]%$(($COLUMNS - 4))s\r" $(__git_ps1)'
   PS1="\[\e[38;5;111m\]\u\[\e[38;5;35m\]@\[\e[38;5;220m\]\h\[\e[38;5;240m\]:\[\e[38;5;252m\]\w\[\e[38;5;202m\]> \[\e[0m\]"
 fi
 
-EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc_extra
+EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
 if [ -f "$EXTRA" ]; then
-	source "$EXTRA"
+  source "$EXTRA"
 fi
 
 fi # RVM

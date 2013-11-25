@@ -23,12 +23,8 @@ chmod +x ~/bin/lein &&
 # tmux on OSX
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 if [ `uname -s` = 'Darwin' ]; then
-  (git clone https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard &&
-  cd tmux-MacOSX-pasteboard &&
-  make &&
-  cp reattach-to-user-namespace ~/bin &&
-  cd .. &&
-  rm -rf tmux-MacOSX-pasteboard)
+  ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+  brew install reattach-to-user-namespace
 else
   rm ~/.tmux.conf
   grep -v default-command tmux.conf > ~/.tmux.conf
