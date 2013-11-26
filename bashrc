@@ -164,7 +164,7 @@ fh() {
 
 # fkill - kill process
 fkill() {
-  ps -ef | sed 1d | fzf | awk '{print $2}' | xargs kill -${1:-9}
+  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
 
 # Figlet font selector
@@ -177,7 +177,7 @@ fgl() {
 # bind -p
 # CTRL-T - Paste the selected file into the command line
 bind '"\er": redraw-current-line'
-bind '"\C-t": " \C-u \C-a\C-k$(fzf)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
+bind '"\C-t": " \C-u \C-a\C-k$(fzf -m -x)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
 
 # CTRL-R - Search history and paste into the command line
 bind '"\C-r": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
@@ -205,3 +205,5 @@ fi # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
 rvm use 2.0.0 > /dev/null # --default
 
+alias fzf='/usr/bin/ruby --disable-gems /Users/jg/.vim/plugged/fzf/fzf'
+source /Users/jg/.vim/plugged/fzf/fzf-completion.bash
