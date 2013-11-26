@@ -205,5 +205,4 @@ fi # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
 rvm use 2.0.0 > /dev/null # --default
 
-alias fzf='/usr/bin/ruby --disable-gems /Users/jg/.vim/plugged/fzf/fzf'
-source /Users/jg/.vim/plugged/fzf/fzf-completion.bash
+source ~/.fzf.bash
