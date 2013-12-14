@@ -132,19 +132,6 @@ tx() {
   tmux last-pane
 }
 
-# vimf - Open selected file in Vim
-vimf() {
-  FILE=`fzf` && vim "$FILE"
-}
-
-# fsel - Select multiple files in the given path
-fsel() {
-  find ${1:-*} | fzf -m | while read item; do
-    echo -n "\"$item\" "
-  done
-  echo
-}
-
 alias fopen='fzf | xargs open'
 
 # fd - cd to selected directory
@@ -174,12 +161,19 @@ fgl() {
   figlet -f `ls *.flf | sort | fzf` $*
 }
 
-# bind -p
-# CTRL-T - Paste the selected file into the command line
+# Key bindings
 bind '"\er": redraw-current-line'
-bind '"\C-t": " \C-u \C-a\C-k$(fzf -m -x)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
 
-# CTRL-R - Search history and paste into the command line
+# CTRL-T - Paste the selected file path into the command line
+fsel() {
+  find ${1:-*} | fzf -m | while read item; do
+    printf '%q ' "$item"
+  done
+  echo
+}
+bind '"\C-t": " \C-u \C-a\C-k$(fsel)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
+
+# CTRL-R - Paste the selected command from history into the command line
 bind '"\C-r": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
 
 # Prompt
@@ -202,7 +196,9 @@ fi
 fi # RVM
 #################################################
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
-rvm use 2.0.0 > /dev/null # --default
+load_rvm() {
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
+  rvm use 2.0.0 > /dev/null # --default
+}
 
 source ~/.fzf.bash
