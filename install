@@ -7,9 +7,9 @@
 cd `dirname $BASH_SOURCE`
 touch bashrc_extra
 for rc in *rc tmux.conf; do
-	mkdir -pv bak
-	mv -v ~/.$rc bak/
-	ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
+  mkdir -pv bak
+  mv -v ~/.$rc bak/
+  ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
 # Leiningen
