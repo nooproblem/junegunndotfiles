@@ -12,6 +12,10 @@ for rc in *rc tmux.conf; do
   ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
+# fzf
+git clone https://github.com/junegunn/fzf.git ~/.fzf
+yes | ~/.fzf/install
+
 # Leiningen
 # https://github.com/sattvik/lein-tarsier
 mkdir -p ~/bin
