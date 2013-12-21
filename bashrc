@@ -161,21 +161,6 @@ fgl() {
   figlet -f `ls *.flf | sort | fzf` $*
 }
 
-# Key bindings
-bind '"\er": redraw-current-line'
-
-# CTRL-T - Paste the selected file path into the command line
-fsel() {
-  find ${1:-*} | fzf -m | while read item; do
-    printf '%q ' "$item"
-  done
-  echo
-}
-bind '"\C-t": " \C-u \C-a\C-k$(fsel)\e\C-e\C-y\C-a\C-y\ey\C-h\C-e\er"'
-
-# CTRL-R - Paste the selected command from history into the command line
-bind '"\C-r": " \C-e\C-u$(history | fzf +s | sed \"s/ *[0-9]* *//\")\e\C-e\er"'
-
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
   curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
