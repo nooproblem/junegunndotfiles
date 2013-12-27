@@ -31,7 +31,7 @@ if [ `uname -s` = 'Darwin' ]; then
   brew install reattach-to-user-namespace
 else
   rm ~/.tmux.conf
-  grep -v default-command tmux.conf > ~/.tmux.conf
+  grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
 fi
 
 tmux source-file ~/.tmux.conf
