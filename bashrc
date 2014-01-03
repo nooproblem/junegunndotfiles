@@ -4,8 +4,6 @@
 
 # If not running interactively, don't do anything
 #################################################
-if [[ -n $PS1 ]]; then # RVM
-
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
@@ -178,12 +176,12 @@ if [ -f "$EXTRA" ]; then
   source "$EXTRA"
 fi
 
-fi # RVM
-#################################################
-
-load_rvm() {
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
-  rvm use 2.0.0 > /dev/null # --default
+rvm() {
+  unset -f rvm
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+  rvm $@
 }
 
 source ~/.fzf.bash
+
