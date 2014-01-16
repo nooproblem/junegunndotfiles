@@ -183,5 +183,9 @@ rvm() {
   rvm $@
 }
 
+gitzip() {
+  git archive -o $(basename $PWD).zip HEAD
+}
+
 source ~/.fzf.bash
 
