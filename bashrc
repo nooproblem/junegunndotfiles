@@ -175,6 +175,14 @@ rvm() {
   rvm $@
 }
 
+gitzip() {
+  git archive -o $(basename $PWD).zip HEAD
+}
+
+gittgz() {
+  git archive -o $(basename $PWD).tgz HEAD
+}
+
 source ~/.fzf.bash
 
 # unset PROMPT_COMMAND
