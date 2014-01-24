@@ -142,22 +142,14 @@ fda() {
   DIR=`find ${1:-*} -type d 2> /dev/null | fzf` && cd "$DIR"
 }
 
-# fh - repeat history
-fh() {
-  eval $(history | fzf --no-sort | sed 's/ *[0-9]* *//')
-}
-
-# fkill - kill process
-fkill() {
-  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
-}
-
 # Figlet font selector
 fgl() {
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
   BASE=`pwd`
   figlet -f `ls *.flf | sort | fzf` $*
 }
+
+export FZF_DEFAULT_OPTS='-x -s 10000'
 
 # Prompt
 if [ ! -e ~/.git-prompt.sh ]; then
@@ -185,3 +177,5 @@ rvm() {
 
 source ~/.fzf.bash
 
+# unset PROMPT_COMMAND
+# PS1="\[\e[38;5;168m\]> \[\e[0m\]"
