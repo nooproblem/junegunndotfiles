@@ -1,97 +1,112 @@
-#####################################################################
-# Ubuntu
-#####################################################################
+# .bashrc for OS X and Ubuntu
+# ====================================================================
+# - https://github.com/junegunn/dotfiles
+# - junegunn.c@gmail.com
 
-# If not running interactively, don't do anything
-#################################################
-# don't put duplicate lines in the history. See bash(1) for more options
-# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-# ... or force ignoredups and ignorespace
-export HISTCONTROL=ignoreboth
+# System default
+# --------------------------------------------------------------------
 
-# append to the history file, don't overwrite it
+export PLATFORM=$(uname -s)
+[ -f /etc/bashrc ] && . /etc/bashrc
+
+
+# Options
+# --------------------------------------------------------------------
+
+### Append to the history file
 shopt -s histappend
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+### Check the window size after each command ($LINES, $COLUMNS)
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+### Better-looking less for binary files
+[ -x /usr/bin/lesspipe    ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+### Bash completion
+[ -f /etc/bash_completion ] && . /etc/bash_completion
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    eval "`dircolors -b`"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
-
-#####################################################################
-
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
-fi
-
-# Keystrokes
+### Disable CTRL-S and CTRL-Q
 stty -ixoff -ixon
 
-# Global
-export PATH=~/bin:~/bash:~/perl:~/python:~/ruby:/opt/bin:/usr/local/bin:$PATH:/usr/local/share/python
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
+
+# Environment variables
+# --------------------------------------------------------------------
+
+### man bash
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=100000
+export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
+[ -z "$TMPDIR" ] && TMPDIR=/tmp
+
+### Global
+export PATH=~/bin:~/bash:~/ruby:/opt/bin:/usr/local/bin:$PATH:/usr/local/share/python
+[ "$PLATFORM" = 'Darwin' ] ||
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 export EDITOR=vim
 export LANG=en_US.UTF-8
 
-# OS X
+### OS X
 export COPYFILE_DISABLE=true
 
-# Jars
-for jar in ~/lib/*.jar; do
-  export CLASSPATH=$CLASSPATH:$jar
-done
+### Jars
+printf -v jars ":%s" ~/lib/*.jar
+export CLASSPATH=$CLASSPATH$jars
 
-# Shortcuts
+
+# Aliases
+# --------------------------------------------------------------------
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias cd..='cd ..'
 alias l='ls -alF'
 alias ll='ls -l'
 alias v='vim '
 alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
-viw() {
-  vim `which "$1"`
-}
 
-[ -z "$TMPDIR" ] && TMPDIR=/tmp
+### Tmux
 alias tmux="tmux -2"
 alias tmuxls="ls $TMPDIR/tmux*/"
 
-if [ `uname -s` = 'Darwin' ]; then
+### Colored ls
+if [ -x /usr/bin/dircolors ]; then
+  eval "`dircolors -b`"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+elif [ "$PLATFORM" = Darwin ]; then
   alias ls='ls -G'
-  unset LD_LIBRARY_PATH
 fi
+
+
+# Prompt
+# --------------------------------------------------------------------
+
+### git-prompt
+if [ ! -e ~/.git-prompt.sh ]; then
+  curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh \
+    -o ~/.git-prompt.sh
+fi
+source ~/.git-prompt.sh
+
+if [ "$PLATFORM" = Linux ]; then
+  PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
+else
+  PROMPT_COMMAND='printf "\[\e[38;5;179m\]%$(($COLUMNS - 4))s\r" $(__git_ps1)'
+  PS1="\[\e[38;5;110m\]\u\[\e[38;5;108m\]@\[\e[38;5;186m\]\h\[\e[38;5;95m\]:\[\e[38;5;252m\]\w\[\e[38;5;168m\]> \[\e[0m\]"
+fi
+
+
+# Shortcut functions
+# --------------------------------------------------------------------
+
+viw() {
+  vim `which "$1"`
+}
 
 gd() {
   [ "$1" ] && cd *$1*
@@ -123,14 +138,44 @@ rakes() {
   done
 }
 
-# Tmux
 tx() {
   tmux splitw "$*; echo -n Press enter to finish.; read"
   tmux select-layout tiled
   tmux last-pane
 }
 
-alias fopen='fzf | xargs open'
+rvm() {
+  unset -f rvm
+
+  # Load RVM into a shell session *as a function*
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+  # Add RVM to PATH for scripting
+  PATH=$PATH:$HOME/.rvm/bin
+  rvm $@
+}
+
+gitzip() {
+  git archive -o $(basename $PWD).zip HEAD
+}
+
+gittgz() {
+  git archive -o $(basename $PWD).tgz HEAD
+}
+
+miniprompt() {
+  unset PROMPT_COMMAND
+  PS1="\[\e[38;5;168m\]> \[\e[0m\]"
+}
+
+EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
+[ -f "$EXTRA" ] && source "$EXTRA"
+
+
+# fzf (https://github.com/junegunn/fzf)
+# --------------------------------------------------------------------
+
+export FZF_DEFAULT_OPTS='-x -s 10000'
 
 # fd - cd to selected directory
 fd() {
@@ -149,41 +194,5 @@ fgl() {
   figlet -f `ls *.flf | sort | fzf` $*
 }
 
-export FZF_DEFAULT_OPTS='-x -s 10000'
-
-# Prompt
-if [ ! -e ~/.git-prompt.sh ]; then
-  curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-fi
-source ~/.git-prompt.sh
-if [ `uname -s` = "Linux" ]; then
-  PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
-else
-  PROMPT_COMMAND='printf "\[\e[38;5;179m\]%$(($COLUMNS - 4))s\r" $(__git_ps1)'
-  PS1="\[\e[38;5;110m\]\u\[\e[38;5;108m\]@\[\e[38;5;186m\]\h\[\e[38;5;95m\]:\[\e[38;5;252m\]\w\[\e[38;5;168m\]> \[\e[0m\]"
-fi
-
-EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
-if [ -f "$EXTRA" ]; then
-  source "$EXTRA"
-fi
-
-rvm() {
-  unset -f rvm
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-  PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-  rvm $@
-}
-
-gitzip() {
-  git archive -o $(basename $PWD).zip HEAD
-}
-
-gittgz() {
-  git archive -o $(basename $PWD).tgz HEAD
-}
-
 source ~/.fzf.bash
 
-# unset PROMPT_COMMAND
-# PS1="\[\e[38;5;168m\]> \[\e[0m\]"
