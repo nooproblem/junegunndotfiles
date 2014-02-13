@@ -12,6 +12,12 @@ for rc in *rc tmux.conf; do
   ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
+# git-prompt
+if [ ! -e ~/.git-prompt.sh ]; then
+  curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh \
+    -o ~/.git-prompt.sh
+fi
+
 # fzf
 git clone https://github.com/junegunn/fzf.git ~/.fzf
 yes | ~/.fzf/install
