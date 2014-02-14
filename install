@@ -8,7 +8,7 @@ cd `dirname $BASH_SOURCE`
 touch bashrc-extra
 for rc in *rc *profile tmux.conf; do
   mkdir -pv bak
-  mv -v ~/.$rc bak/
+  [ -e ~/.$rc ] && mv -v ~/.$rc bak/
   ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
 done
 
