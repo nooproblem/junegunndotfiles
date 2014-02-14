@@ -26,7 +26,7 @@ shopt -s checkwinsize
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 
 ### Disable CTRL-S and CTRL-Q
-[ "$TERM" != 'dumb' ] && stty -ixoff -ixon
+[[ $- =~ i ]] && stty -ixoff -ixon
 
 
 # Environment variables
