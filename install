@@ -30,7 +30,7 @@ yes | ~/.fzf/install
 # https://github.com/sattvik/lein-tarsier
 mkdir -p ~/bin
 wget https://raw.github.com/technomancy/leiningen/preview/bin/lein --no-check-certificate -O ~/bin/lein &&
-chmod +x ~/bin/lein version
+chmod +x ~/bin/lein && ~/bin/lein version
 [ -e ~/.lein/profiles.clj ] || echo '{:user {:plugins [[lein-tarsier "0.10.0"]]}}' > ~/.lein/profiles.clj
 
 # tmux on OSX
