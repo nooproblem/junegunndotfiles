@@ -5,7 +5,7 @@
 
 # RC files
 cd `dirname $BASH_SOURCE`
-touch bashrc_extra
+touch bashrc-extra
 for rc in *rc tmux.conf; do
   mkdir -pv bak
   mv -v ~/.$rc bak/
