@@ -194,6 +194,30 @@ fgl() {
   figlet -f `ls *.flf | sort | fzf` $*
 }
 
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf +s +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
+# fco - checkout git commit
+fco() {
+  local commits commit
+  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+  commit=$(echo "$commits" | fzf +s +m -e) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
+
+# ftags - search ctags
+ftags() {
+  local line
+  [ -e tags ] &&
+    line=$(grep -v "^!" tags | cut -f1-3 | cut -c1-80 | fzf --nth=1) &&
+    $EDITOR $(cut -f2 <<< "$line")
+}
+
 # fq1 [QUERY]
 # - Immediately select the file when there's only one match.
 #   If not, start the fuzzy finder as usual.
