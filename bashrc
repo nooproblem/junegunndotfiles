@@ -214,31 +214,20 @@ fco() {
 ftags() {
   local line
   [ -e tags ] &&
-    line=$(grep -v "^!" tags | cut -f1-3 | cut -c1-80 | fzf --nth=1) &&
-    $EDITOR $(cut -f2 <<< "$line")
+  line=$(
+    awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
+    cut -c1-80 | fzf --nth=1,2
+  ) && $EDITOR $(cut -f3 <<< "$line") -c "set nocst" \
+                                      -c "silent tag $(cut -f2 <<< "$line")"
 }
 
-# fq1 [QUERY]
-# - Immediately select the file when there's only one match.
-#   If not, start the fuzzy finder as usual.
-fq1() {
-  local lines
-  lines=$(fzf --filter="$1" --no-sort)
-  if [ -z "$lines" ]; then
-    return 1
-  elif [ $(wc -l <<< "$lines") -eq 1 ]; then
-    echo "$lines"
-  else
-    echo "$lines" | fzf --query="$1"
-  fi
-}
-
-# fe [QUERY]
-# - Open the selected file with the default editor
-#   (Bypass fuzzy finder when there's only one match)
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
 fe() {
   local file
-  file=$(fq1 "$1") && ${EDITOR:-vim} "$file"
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
 source ~/.fzf.bash
