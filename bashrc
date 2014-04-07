@@ -33,7 +33,7 @@ shopt -s checkwinsize
 # --------------------------------------------------------------------
 
 ### man bash
-export HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth:erasedups
 export HISTFILESIZE=100000
 export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
