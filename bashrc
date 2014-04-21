@@ -168,6 +168,13 @@ miniprompt() {
   PS1="\[\e[38;5;168m\]> \[\e[0m\]"
 }
 
+repeat() {
+  while [ -n "$2" ]; do
+    eval "$2"
+    sleep $1
+  done
+}
+
 EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
