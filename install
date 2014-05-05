@@ -19,28 +19,39 @@ if [ ! -e ~/.git-prompt.sh ]; then
 fi
 
 # fzf
-if [ ! -d ~/.fzf ]; then
-  git clone https://github.com/junegunn/fzf.git ~/.fzf
+if [ -n "$(which git)" ]; then
+  if [ ! -d ~/.fzf ]; then
+    git clone https://github.com/junegunn/fzf.git ~/.fzf
+  else
+    (cd ~/.fzf; git pull origin master)
+  fi
 else
-  (cd ~/.fzf; git pull)
+  mkdir -p ~/.fzf
+  curl -L https://github.com/junegunn/fzf/archive/master.tar.gz |
+      tar xz --strip-components 1 -C ~/.fzf
 fi
 yes | ~/.fzf/install
 
 # Leiningen
-# https://github.com/sattvik/lein-tarsier
-mkdir -p ~/bin
-wget https://raw.github.com/technomancy/leiningen/preview/bin/lein --no-check-certificate -O ~/bin/lein &&
-chmod +x ~/bin/lein && ~/bin/lein version
-[ -e ~/.lein/profiles.clj ] || echo '{:user {:plugins [[lein-tarsier "0.10.0"]]}}' > ~/.lein/profiles.clj
+if [ ! -x ~/bin/lein ]; then
+  mkdir -p ~/bin
+  curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -o ~/bin/lein
+  chmod +x ~/bin/lein
+  ~/bin/lein version
+fi
 
 # tmux on OSX
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 if [ `uname -s` = 'Darwin' ]; then
-  ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
-  brew install reattach-to-user-namespace
+  [ -z "$(which brew)" ] &&
+    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+  [ -z "$(which reattach-to-user-namespace)" ] &&
+    brew install reattach-to-user-namespace
 else
   rm ~/.tmux.conf
   grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
 fi
 
 tmux source-file ~/.tmux.conf
+
+./install-vim
