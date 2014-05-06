@@ -81,6 +81,7 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'wting/rust.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
