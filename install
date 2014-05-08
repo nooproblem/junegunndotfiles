@@ -14,7 +14,7 @@ done
 
 # git-prompt
 if [ ! -e ~/.git-prompt.sh ]; then
-  curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh \
+  curl -k -k https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh \
     -o ~/.git-prompt.sh
 fi
 
@@ -27,7 +27,7 @@ if [ -n "$(which git)" ]; then
   fi
 else
   mkdir -p ~/.fzf
-  curl -L https://github.com/junegunn/fzf/archive/master.tar.gz |
+  curl -k -k -L https://github.com/junegunn/fzf/archive/master.tar.gz |
       tar xz --strip-components 1 -C ~/.fzf
 fi
 yes | ~/.fzf/install
@@ -35,7 +35,7 @@ yes | ~/.fzf/install
 # Leiningen
 if [ ! -x ~/bin/lein ]; then
   mkdir -p ~/bin
-  curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -o ~/bin/lein
+  curl -k -k https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -o ~/bin/lein
   chmod +x ~/bin/lein
   ~/bin/lein version
 fi
