@@ -949,11 +949,14 @@ onoremap <silent> ac :<C-U>call   <SID>inner_blockwise_column('',           'aw'
 onoremap <silent> aC :<C-U>call   <SID>inner_blockwise_column('',           'aW')<CR>
 
 " ----------------------------------------------------------------------------
-" ?a: | after :
+" ?a: / ?a= / ?aa= | after :/= / before =
 " ----------------------------------------------------------------------------
 vnoremap <silent> a: <Esc>^f:wvg_
 onoremap <silent> a: :<C-U>normal! ^f:wvg_<CR>
-
+vnoremap <silent> a= <Esc>^f=wvg_
+onoremap <silent> a= :<C-U>normal! ^f=wvg_<CR>
+vnoremap <silent> aa= <Esc>^vf=ge
+onoremap <silent> aa= :<C-U>normal! ^vf=ge<CR>
 
 " ============================================================================
 " PLUGINS
