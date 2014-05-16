@@ -1100,6 +1100,9 @@ silent! if emoji#available()
   let g:gitgutter_sign_modified_removed = emoji#for('collision')
 endif
 
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+
 " ----------------------------------------------------------------------------
 " vim-emoji :dog: :cat: :rabbit:!
 " ----------------------------------------------------------------------------
@@ -1126,13 +1129,6 @@ function! g:goyo_before()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
-
-  if exists('##QuitPre')
-    let b:quitting = 0
-    let b:quitting_bang = 0
-    autocmd QuitPre <buffer> let b:quitting = 1
-    cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-  endif
 endfunction
 
 function! g:goyo_after()
@@ -1142,16 +1138,6 @@ function! g:goyo_after()
     set linespace=0
   elseif exists('$TMUX')
     silent !tmux set status on
-  endif
-
-  " Quit Vim if this is the only remaining buffer
-  if exists('##QuitPre') && b:quitting &&
-        \ len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
   endif
 endfunction
 
