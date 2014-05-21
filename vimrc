@@ -5,12 +5,14 @@
 let s:darwin = has('mac')
 let s:ag     = executable('ag')
 
+let g:tmuxcomplete#capture_args = '-S -1024'
 " ============================================================================
 " VIM-PLUG BLOCK
 " ============================================================================
 
 silent! if plug#begin('~/.vim/plugged')
 
+Plug 'junegunn/tmux-complete.vim'
 if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/vim-emoji.git'
@@ -1189,6 +1191,23 @@ nnoremap <silent> <Leader>C :call fzf#run({
 \   'tmux_width': 20
 \ })<CR>
 
+function! s:tmux_words(query)
+  let g:_tmux_q = a:query
+  let matches = fzf#run({
+  \ 'source':      'tmuxwords.sh "" -a | grep -v "^.\{1,9\}$"',
+  \ 'sink':        function('g:tmux_feedkeys'),
+  \ 'options':     '--no-multi --query='.a:query,
+  \ 'tmux_height': '40%'
+  \ })
+endfunction
+
+function! g:tmux_feedkeys(data)
+  echom empty(g:_tmux_q)
+  execute "normal! ".(empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
+  startinsert!
+endfunction
+
+inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
 
 " ----------------------------------------------------------------------------
 " VimClojure

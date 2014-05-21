@@ -238,4 +238,23 @@ fe() {
   [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
+if [ -n "$TMUX_PANE" ]; then
+  fzf_tmux_helper() {
+    local sz=$1; shift
+    local cmd=$1; shift
+    tmux split-window $sz \
+      "bash -c \"\$(tmux send-keys -t $TMUX_PANE \"\$(source ~/.fzf.bash; $cmd)\" $*)\""
+  }
+
+  # https://github.com/wellle/tmux-complete.vim
+  fzf_tmux_words() {
+    fzf_tmux_helper \
+      '-p 40' \
+      'tmuxwords.sh "" -a "-S -200" | grep -v "^.\{0,7\}$" | fzf --multi | paste -sd" " -'
+  }
+
+  # Bind CTRL-X-CTRL-T to tmuxwords.sh
+  bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e"'
+fi
+
 source ~/.fzf.bash

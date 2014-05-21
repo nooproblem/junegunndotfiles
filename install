@@ -4,12 +4,13 @@
 # 2011/05/25-
 
 # RC files
-cd `dirname $BASH_SOURCE`
+cd $(dirname $BASH_SOURCE)
+BASE=$(pwd)
 touch bashrc-extra
 for rc in *rc *profile tmux.conf; do
   mkdir -pv bak
   [ -e ~/.$rc ] && mv -v ~/.$rc bak/.$rc
-  ln -sv $(cd $(dirname $rc); pwd)/$rc ~/.$rc
+  ln -sv $BASE/$rc ~/.$rc
 done
 
 # git-prompt
@@ -17,6 +18,13 @@ if [ ! -e ~/.git-prompt.sh ]; then
   curl https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh \
     -o ~/.git-prompt.sh
 fi
+
+# tmux-words
+mkdir -p ~/bin
+ln -svf $BASE/bin/tmuxwords.sh ~/bin
+
+curl https://raw.githubusercontent.com/junegunn/tmux-complete.vim/master/sh/tmuxwords.sh \
+  -o ~/bin/tmuxwords.sh && chmod +x ~/bin/tmuxwords.sh
 
 # fzf
 if [ -n "$(which git)" ]; then
@@ -42,7 +50,7 @@ fi
 
 # tmux on OSX
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-if [ `uname -s` = 'Darwin' ]; then
+if [ $(uname -s) = 'Darwin' ]; then
   [ -z "$(which brew)" ] &&
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
   [ -z "$(which reattach-to-user-namespace)" ] &&
