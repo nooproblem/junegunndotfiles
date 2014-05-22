@@ -250,7 +250,7 @@ if [ -n "$TMUX_PANE" ]; then
   fzf_tmux_words() {
     fzf_tmux_helper \
       '-p 40' \
-      'tmuxwords.sh "" -a "-S -200" | grep -v "^.\{0,7\}$" | fzf --multi | paste -sd" " -'
+      'tmuxwords.rb --all --scroll 500 --min 7 | fzf --multi | paste -sd" " -'
   }
 
   # Bind CTRL-X-CTRL-T to tmuxwords.sh

@@ -22,9 +22,7 @@ fi
 # tmux-words
 mkdir -p ~/bin
 ln -svf $BASE/bin/tmuxwords.sh ~/bin
-
-curl https://raw.githubusercontent.com/junegunn/tmux-complete.vim/master/sh/tmuxwords.sh \
-  -o ~/bin/tmuxwords.sh && chmod +x ~/bin/tmuxwords.sh
+ln -svf $BASE/bin/tmuxwords.rb ~/bin
 
 # fzf
 if [ -n "$(which git)" ]; then
