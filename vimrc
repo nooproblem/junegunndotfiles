@@ -12,7 +12,6 @@ let g:tmuxcomplete#capture_args = '-S -1024'
 
 silent! if plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/tmux-complete.vim'
 if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/vim-emoji.git'
