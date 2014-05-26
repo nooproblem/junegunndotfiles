@@ -1193,7 +1193,7 @@ nnoremap <silent> <Leader>C :call fzf#run({
 function! s:tmux_words(query)
   let g:_tmux_q = a:query
   let matches = fzf#run({
-  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 7',
+  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
   \ 'sink':        function('g:tmux_feedkeys'),
   \ 'options':     '--no-multi --query='.a:query,
   \ 'tmux_height': '40%'
