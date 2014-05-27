@@ -808,6 +808,21 @@ call s:map_change_option('t', 'textwidth',
 call s:map_change_option('b', 'background',
     \ 'let &background = &background == "dark" ? "light" : "dark"<bar>redraw')
 
+" ----------------------------------------------------------------------------
+" <Leader>? | Google it
+" ----------------------------------------------------------------------------
+function! s:goog(q)
+  let url = 'https://www.google.co.kr/search?q='
+  " Excerpt from vim-unimpared
+  let q = substitute(
+        \ '"'.a:q.'"',
+        \ '[^A-Za-z0-9_.~-]',
+        \ '\="%".printf("%02X", char2nr(submatch(0)))',
+        \ 'g')
+  call system('open ' . url . q)
+endfunction
+
+vnoremap <leader>? "gy:call <SID>goog(@g)<cr>
 
 " ============================================================================
 " TEXT OBJECTS
