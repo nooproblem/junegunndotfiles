@@ -41,7 +41,7 @@ endif
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
 Plug 'kovisoft/paredit'
 Plug 'ervandew/supertab',  { 'on': '<Plug>SuperTab' }
 Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
