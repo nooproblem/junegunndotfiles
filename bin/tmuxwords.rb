@@ -53,7 +53,7 @@ end
 def tokenize str, prefix
   tokens = str.split(/\s+/).map { |t| t.gsub(/^\W+|\W+$/, '') }.
                             concat(str.gsub(/\W/, ' ').split(/\s+/)).
-                            concat(str.split($/))
+                            concat(str.split($/).map { |e| e.strip })
   prefix &&= /^#{Regexp.escape prefix}/
   prefix ? tokens.select { |t| t =~ prefix } : tokens
 end
