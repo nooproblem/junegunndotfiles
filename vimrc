@@ -45,13 +45,13 @@ Plug 'tpope/vim-commentary'
 Plug 'kovisoft/paredit'
 Plug 'ervandew/supertab',  { 'on': '<Plug>SuperTab' }
 Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
-Plug 'kshenoy/vim-signature'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
 endif
 
 " Tmux
 Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-dispatch'
 
 " Browsing
 Plug 'Yggdroot/indentLine'
@@ -194,6 +194,9 @@ silent! if emoji#available()
   endfunction
 
   function! MyFugitiveHead()
+    if !exists('g:loaded_fugitive')
+      return ''
+    endif
     let head = fugitive#head()
     if empty(head)
       return ''
@@ -1137,7 +1140,7 @@ command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 " ----------------------------------------------------------------------------
 " goyo.vim
 " ----------------------------------------------------------------------------
-function! g:goyo_before()
+function! GoyoBefore()
   if has('gui_running')
     set fullscreen
     set background=light
@@ -1147,7 +1150,7 @@ function! g:goyo_before()
   endif
 endfunction
 
-function! g:goyo_after()
+function! GoyoAfter()
   if has('gui_running')
     set nofullscreen
     set background=dark
@@ -1157,7 +1160,7 @@ function! g:goyo_after()
   endif
 endfunction
 
-let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
+let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
 
 nnoremap <Leader>G :Goyo<CR>
 
