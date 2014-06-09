@@ -553,20 +553,12 @@ function! s:run_this_script(output)
   if exists('b:vim_exec_win')
     %d
   else
-    let      sr = &splitright
-    set      splitright
     silent!  bdelete [vim-exec-output]
-    silent!  100vnew
+    silent!  vertical botright split new
     silent!  file [vim-exec-output]
-    setlocal buftype=nofile
-    setlocal bufhidden=hide
-    setlocal noswapfile
-    set      nowrap
-    let      b:vim_exec_win = 1
+    setlocal buftype=nofile bufhidden=hide noswapfile
+    let      b:vi_exec_win = 1
     let      s:vim_exec_win = winnr()
-    if !sr
-      set nosplitright
-    endif
   endif
   execute  "silent! read ".ofile
   normal!  gg"_dd
