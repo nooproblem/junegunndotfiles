@@ -209,7 +209,7 @@ endif
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
-set synmaxcol=160
+set synmaxcol=400
 
 " For MacVim
 set noimd
@@ -396,7 +396,7 @@ vnoremap <Leader>c :s@\%V@@gn<Left><Left><Left><Left>
 nnoremap <Leader>c :%s@@@gn<Left><Left><Left><Left>
 
 " ----------------------------------------------------------------------------
-" Readline-style key binding in command-line (excerpt from rsi.vim)
+" Readline-style key bindings in command-line (excerpt from rsi.vim)
 " ----------------------------------------------------------------------------
 cnoremap        <C-A> <Home>
 cnoremap        <C-B> <Left>
@@ -432,9 +432,14 @@ nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
 nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
 " ----------------------------------------------------------------------------
-" buf-search
+" <leader>bs | buf-search
 " ----------------------------------------------------------------------------
 nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
+
+" ----------------------------------------------------------------------------
+" #! | Shebang (to cancel: CTRL-V)
+" ----------------------------------------------------------------------------
+iabbrev <expr> #! "#!/usr/bin/env ".&filetype
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
@@ -1181,20 +1186,20 @@ nnoremap U :UndotreeToggle<CR>
 set rtp+=~/.fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
-function! g:buflist()
+function! BufList()
   redir => ls
   silent ls
   redir END
   return split(ls, '\n')
 endfunction
 
-function! g:bufopen(e)
+function! BufOpen(e)
   execute 'buffer '. matchstr(a:e, '^[ 0-9]*')
 endfunction
 
 nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':      reverse(g:buflist()),
-\   'sink':        function('g:bufopen'),
+\   'source':      reverse(BufList()),
+\   'sink':        function('BufOpen'),
 \   'options':     '+m',
 \   'tmux_height': '40%'
 \ })<CR>
@@ -1212,13 +1217,13 @@ function! s:tmux_words(query)
   let g:_tmux_q = a:query
   let matches = fzf#run({
   \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
-  \ 'sink':        function('g:tmux_feedkeys'),
+  \ 'sink':        function('Tmux_feedkeys'),
   \ 'options':     '--no-multi --query='.a:query,
   \ 'tmux_height': '40%'
   \ })
 endfunction
 
-function! g:tmux_feedkeys(data)
+function! Tmux_feedkeys(data)
   echom empty(g:_tmux_q)
   execute "normal! ".(empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
   startinsert!
