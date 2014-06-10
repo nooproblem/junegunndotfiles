@@ -759,6 +759,21 @@ function! s:a()
 endfunction
 command! A call s:a()
 
+" ----------------------------------------------------------------------------
+" Todo
+" ----------------------------------------------------------------------------
+function! s:todo()
+  let entries = []
+  for line in split(system('git grep -n -e TODO -e FIXME -e XXX 2> /dev/null'), '\n')
+    let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+    call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+  endfor
+  if !empty(entries)
+    call setqflist(entries)
+    copen
+  endif
+endfunction
+command! Todo call s:todo()
 
 " ----------------------------------------------------------------------------
 " call LSD()
