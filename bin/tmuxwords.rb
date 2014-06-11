@@ -56,6 +56,8 @@ def tokenize str, prefix
                             concat(str.split($/).map { |e| e.strip })
   prefix &&= /^#{Regexp.escape prefix}/
   prefix ? tokens.select { |t| t =~ prefix } : tokens
+rescue
+  []
 end
 
 list_panes(opts[:panes]).inject(Set.new) { |set, pane_id|
