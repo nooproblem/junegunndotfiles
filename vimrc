@@ -1225,9 +1225,10 @@ nnoremap <silent> <Leader>C :call fzf#run({
 \   'source':
 \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
 \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-\   'sink':       'colo',
-\   'options':    '+m',
-\   'tmux_width': 20
+\   'sink':          'colo',
+\   'options':       '+m',
+\   'tmux_width':    20,
+\   'xterm_options': '-geometry 20x20'
 \ })<CR>
 
 function! s:tmux_words(query)
