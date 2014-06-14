@@ -163,6 +163,16 @@ gittgz() {
   git archive -o $(basename $PWD).tgz HEAD
 }
 
+gitdiffb() {
+  if [ $# -ne 2 ]; then
+    echo two branch names required
+    return
+  fi
+  git log --graph \
+  --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' \
+  --abbrev-commit --date=relative $1..$2
+}
+
 miniprompt() {
   unset PROMPT_COMMAND
   PS1="\[\e[38;5;168m\]> \[\e[0m\]"
@@ -256,5 +266,13 @@ if [ -n "$TMUX_PANE" ]; then
   # Bind CTRL-X-CTRL-T to tmuxwords.sh
   bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e"'
 fi
+
+# Switch tmux-sessions
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+}
 
 source ~/.fzf.bash
