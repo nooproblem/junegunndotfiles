@@ -21,7 +21,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-oblique.git'
   Plug 'git@github.com:junegunn/vim-fnr.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
-  Plug 'git@github.com:junegunn/vader.vim.git'
+  Plug 'git@github.com:junegunn/vader.vim.git',  { 'on': 'Vader', 'for': 'vader' }
   Plug 'git@github.com:junegunn/vim-ruby-x.git', { 'on': 'RubyX' }
   Plug 'git@github.com:junegunn/goyo.vim.git',   { 'on': 'Goyo'  }
 else
@@ -32,7 +32,7 @@ else
   Plug 'junegunn/vim-oblique'
   Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
-  Plug 'junegunn/vader.vim',  { 'on': 'Vader' }
+  Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
   Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
   Plug 'junegunn/goyo.vim',   { 'on': 'Goyo'  }
 endif
@@ -42,7 +42,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
-Plug 'kovisoft/paredit'
 Plug 'ervandew/supertab',  { 'on': '<Plug>SuperTab' }
 Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
 if s:darwin
@@ -55,10 +54,10 @@ Plug 'tpope/vim-dispatch'
 
 " Browsing
 Plug 'Yggdroot/indentLine'
-Plug 'mileszs/ack.vim',     { 'on': 'Ack' }
+Plug 'mileszs/ack.vim',     { 'on': 'Ack'            }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'   }
 endif
 
 " Git
@@ -72,17 +71,18 @@ endif
 
 " Lang
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby'
-  Plug 'vim-scripts/VimClojure'
-  Plug 'tpope/vim-fireplace'
+  Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby'       }
+  Plug 'vim-scripts/VimClojure', { 'for': 'clojure'    }
+  Plug 'tpope/vim-fireplace',    { 'for': 'clojure'    }
+  Plug 'kovisoft/paredit',       { 'for': 'clojure'    }
 endif
 Plug 'tpope/vim-rails'
-Plug 'pangloss/vim-javascript'
-Plug 'kchmck/vim-coffee-script'
-Plug 'plasticboy/vim-markdown'
-Plug 'slim-template/vim-slim'
+Plug 'pangloss/vim-javascript',  { 'for': 'javascript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee'     }
+Plug 'plasticboy/vim-markdown',  { 'for': 'markdown'   }
+Plug 'slim-template/vim-slim',   { 'for': 'slim'       }
+Plug 'wting/rust.vim',           { 'for': 'rust'       }
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'wting/rust.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
@@ -1256,6 +1256,11 @@ let vimclojure#SetupKeyMap     = 0
 let vimclojure#ParenRainbow    = 1
 let vimclojure#SearchThreshold = 30
 let vimclojure#WantNailgun     = 0
+
+" ----------------------------------------------------------------------------
+" vim-markdown
+" ----------------------------------------------------------------------------
+let g:vim_markdown_folding_disabled = 1
 
 " ============================================================================
 " AUTOCMD
