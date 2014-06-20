@@ -1064,8 +1064,7 @@ endif
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
 \ '\': { 'pattern': '\\' },
-\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['String'] },
-\ '#': { 'pattern': '#\+',            'delimiter_align': 'l', 'ignore_groups': ['String'] },
+\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['^\(.\(Comment\)\@!\)*$'] },
 \ ']': {
 \     'pattern':       '[[\]]',
 \     'left_margin':   0,
@@ -1199,7 +1198,7 @@ nnoremap U :UndotreeToggle<CR>
 set rtp+=~/.fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
-nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': winheight('.') / 2, 'sink': 'botright split' })<CR>
+nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': '40%', 'sink': 'botright split' })<CR>
 nnoremap <silent> <Leader>v :call fzf#run({ 'tmux_width': winwidth('.') / 2, 'sink': 'vertical botright split' })<CR>
 
 function! BufList()
