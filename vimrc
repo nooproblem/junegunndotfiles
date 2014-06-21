@@ -41,7 +41,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
-Plug 'ervandew/supertab',  { 'on': '<Plug>SuperTab' }
 Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
@@ -322,6 +321,22 @@ nnoremap Q @q
 " ----------------------------------------------------------------------------
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
+
+" ----------------------------------------------------------------------------
+" <tab> / <s-tab> / <c-v><tab> | super-duper-tab
+" ----------------------------------------------------------------------------
+function! s:super_duper_tab(k, o)
+  let line = getline('.')
+  let col = col('.') - 2
+  echom string([line, col, line[col], line[col + 1]])
+  if !empty(line) && line[col] !~ '\s' && line[col + 1] =~ '^\s\?$'
+    return a:k
+  else
+    return a:o
+  endif
+endfunction
+inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
+inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -1036,13 +1051,6 @@ if s:ag
 elseif !executable('ack')
   let g:ackprg = 'grep -rn "$*" * \| sed "s/:\([0-9]*\):/:\1:1:/" '
 endif
-
-" ----------------------------------------------------------------------------
-" supertab
-" ----------------------------------------------------------------------------
-let g:SuperTabDefaultCompletionType = "<c-n>"
-imap <tab> <Plug>SuperTabForward
-imap <s-tab> <Plug>SuperTabBackward
 
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
