@@ -122,6 +122,7 @@ set list
 set listchars=tab:\|\ ,
 set virtualedit=block
 set nojoinspaces
+set diffopt=filler,vertical
 
 " %< Where to truncate
 " %n buffer number
