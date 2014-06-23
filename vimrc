@@ -329,8 +329,7 @@ nnoremap <S-tab> <c-w>W
 function! s:super_duper_tab(k, o)
   let line = getline('.')
   let col = col('.') - 2
-  echom string([line, col, line[col], line[col + 1]])
-  if !empty(line) && line[col] !~ '\s' && line[col + 1] =~ '^\s\?$'
+  if !empty(line) && line[col] =~ '\k' && line[col + 1] !~ '\k'
     return a:k
   else
     return a:o
