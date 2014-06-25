@@ -19,10 +19,11 @@ if [ ! -e ~/.git-prompt.sh ]; then
     -o ~/.git-prompt.sh
 fi
 
-# tmux-words
+# scripts
 mkdir -p ~/bin
-ln -svf $BASE/bin/tmuxwords.sh ~/bin
-ln -svf $BASE/bin/tmuxwords.rb ~/bin
+for bin in $BASE/bin/*; do
+  ln -svf $bin ~/bin
+done
 
 # fzf
 if [ -n "$(which git)" ]; then

@@ -1234,7 +1234,7 @@ nnoremap <silent> <Leader>C :call fzf#run({
 \   'sink':       'colo',
 \   'options':    '+m',
 \   'tmux_width': 20,
-\   'launcher':   'xterm -geometry 20x30 -e bash -ic %s'
+\   'launcher':   'iterm2-launcher 20 30 %s'
 \ })<CR>
 
 function! s:tmux_words(query)
