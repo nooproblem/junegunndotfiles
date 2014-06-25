@@ -694,7 +694,8 @@ function! s:file_type_handler()
     else
       highlight def Snip ctermfg=232
     endif
-    set textwidth=80
+    setlocal textwidth=78
+    setlocal completefunc=emoji#complete
   endif
 endfunction
 
