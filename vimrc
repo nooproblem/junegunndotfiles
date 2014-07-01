@@ -125,6 +125,7 @@ set listchars=tab:\|\ ,
 set virtualedit=block
 set nojoinspaces
 set diffopt=filler,vertical
+set autoread
 
 " %< Where to truncate
 " %n buffer number
@@ -797,6 +798,18 @@ function! s:todo() abort
   endif
 endfunction
 command! Todo call s:todo()
+
+" ----------------------------------------------------------------------------
+" EX | chmod +x
+" ----------------------------------------------------------------------------
+command! EX if !empty(expand('%')) && filereadable(expand('%'))
+         \|   silent! execute '!chmod +x %'
+         \|   redraw!
+         \| else
+         \|   echohl WarningMsg
+         \|   echo 'Save the file first'
+         \|   echohl None
+         \| endif
 
 " ----------------------------------------------------------------------------
 " call LSD()
