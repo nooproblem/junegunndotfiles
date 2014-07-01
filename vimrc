@@ -20,9 +20,10 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-oblique.git'
   Plug 'git@github.com:junegunn/vim-fnr.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
-  Plug 'git@github.com:junegunn/vader.vim.git',  { 'on': 'Vader', 'for': 'vader' }
-  Plug 'git@github.com:junegunn/vim-ruby-x.git', { 'on': 'RubyX' }
-  Plug 'git@github.com:junegunn/goyo.vim.git',   { 'on': 'Goyo'  }
+  Plug 'git@github.com:junegunn/vader.vim.git',     { 'on': 'Vader', 'for': 'vader' }
+  Plug 'git@github.com:junegunn/vim-ruby-x.git',    { 'on': 'RubyX' }
+  Plug 'git@github.com:junegunn/goyo.vim.git',      { 'on': 'Goyo'  }
+  Plug 'git@github.com:junegunn/limelight.vim.git', { 'on': 'Limelight' }
 else
   let $GIT_SSL_NO_VERIFY = 'true'
   Plug 'junegunn/vim-easy-align'
@@ -34,6 +35,7 @@ else
   Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
   Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
   Plug 'junegunn/goyo.vim',   { 'on': 'Goyo'  }
+  Plug 'limelight.vim',       { 'on': 'Limelight' }
 endif
 
 " Edit
@@ -1174,6 +1176,7 @@ function! GoyoBefore()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
+  Limelight
 endfunction
 
 function! GoyoAfter()
@@ -1184,6 +1187,7 @@ function! GoyoAfter()
   elseif exists('$TMUX')
     silent !tmux set status on
   endif
+  Limelight!
 endfunction
 
 let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
