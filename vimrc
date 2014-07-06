@@ -32,10 +32,10 @@ else
   Plug 'junegunn/vim-oblique'
   Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
-  Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
-  Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
-  Plug 'junegunn/goyo.vim',   { 'on': 'Goyo'  }
-  Plug 'limelight.vim',       { 'on': 'Limelight' }
+  Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
+  Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
+  Plug 'junegunn/goyo.vim',      { 'on': 'Goyo'  }
+  Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 endif
 
 " Edit
