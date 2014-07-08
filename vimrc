@@ -41,10 +41,10 @@ endif
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
-Plug 'mbbill/undotree',      { 'on': 'UndotreeToggle'   }
+Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
+Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 if s:darwin
-  Plug 'zerowidth/vim-copy-as-rtf'
+  Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
 endif
 
 " Tmux
