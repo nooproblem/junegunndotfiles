@@ -51,6 +51,7 @@ export COPYFILE_DISABLE=true
 ### Jars
 printf -v jars ":%s" ~/lib/*.jar
 export CLASSPATH=$CLASSPATH$jars
+unset jars
 
 
 # Aliases
