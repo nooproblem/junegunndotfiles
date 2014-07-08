@@ -12,38 +12,37 @@ let s:ag     = executable('ag')
 silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
-  Plug 'git@github.com:junegunn/vim-easy-align.git'
+  Plug 'git@github.com:junegunn/vim-easy-align.git',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+  Plug 'git@github.com:junegunn/vim-github-dashboard.git', { 'on': ['GHDashboard', 'GHActivity']      }
   Plug 'git@github.com:junegunn/vim-emoji.git'
-  Plug 'git@github.com:junegunn/vim-github-dashboard.git',
-                         \ { 'on': ['GHDashboard', 'GHActivity'] }
   Plug 'git@github.com:junegunn/vim-pseudocl.git'
   Plug 'git@github.com:junegunn/vim-oblique.git'
   Plug 'git@github.com:junegunn/vim-fnr.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
   Plug 'git@github.com:junegunn/vader.vim.git',     { 'on': 'Vader', 'for': 'vader' }
-  Plug 'git@github.com:junegunn/vim-ruby-x.git',    { 'on': 'RubyX' }
-  Plug 'git@github.com:junegunn/goyo.vim.git',      { 'on': 'Goyo'  }
-  Plug 'git@github.com:junegunn/limelight.vim.git', { 'on': 'Limelight' }
+  Plug 'git@github.com:junegunn/vim-ruby-x.git',    { 'on': 'RubyX'                 }
+  Plug 'git@github.com:junegunn/goyo.vim.git',      { 'on': 'Goyo'                  }
+  Plug 'git@github.com:junegunn/limelight.vim.git', { 'on': 'Limelight'             }
 else
   let $GIT_SSL_NO_VERIFY = 'true'
-  Plug 'junegunn/vim-easy-align'
-  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
+  Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
   Plug 'junegunn/vim-pseudocl'
   Plug 'junegunn/vim-oblique'
   Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
-  Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
-  Plug 'junegunn/goyo.vim',      { 'on': 'Goyo'  }
-  Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+  Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX'                 }
+  Plug 'junegunn/goyo.vim',      { 'on': 'Goyo'                  }
+  Plug 'junegunn/limelight.vim', { 'on': 'Limelight'             }
 endif
 
 " Edit
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-commentary'
-Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'mbbill/undotree',      { 'on': 'UndotreeToggle'   }
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
 endif
@@ -53,11 +52,11 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-dispatch'
 
 " Browsing
-Plug 'Yggdroot/indentLine'
-Plug 'mileszs/ack.vim',     { 'on': 'Ack'            }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+Plug 'mileszs/ack.vim',     { 'on': 'Ack'               }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'   }
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
 
 " Git
@@ -1031,6 +1030,12 @@ onoremap <silent> aa= :<C-U>normal! ^vf=ge<CR>
 let g:matchparen_insert_timeout=5
 
 " ----------------------------------------------------------------------------
+" vim-commentary
+" ----------------------------------------------------------------------------
+map  gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
+
+" ----------------------------------------------------------------------------
 " vim-fugitive
 " ----------------------------------------------------------------------------
 nnoremap <Leader>g :Gstatus<CR>
@@ -1272,6 +1277,27 @@ function! Tmux_feedkeys(data)
 endfunction
 
 inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
+
+command! FZFLines call fzf#run({
+  \ 'source':  BuffersLines(),
+  \ 'sink':    function('LineHandler'),
+  \ 'options': '--extended --nth=3..,'
+\})
+
+function! LineHandler(l)
+  let keys = split(a:l, ':\t')
+  exec 'buf ' . keys[0]
+  exec keys[1]
+  normal! ^zz
+endfunction
+
+function! BuffersLines()
+  let res = []
+  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+  endfor
+  return res
+endfunction
 
 " ----------------------------------------------------------------------------
 " VimClojure
