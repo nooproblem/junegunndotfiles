@@ -921,6 +921,11 @@ vnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
+" <Leader>I | Prepend to all adjacent lines with same indentation
+" ----------------------------------------------------------------------------
+nmap <silent> <leader>I vio^<C-V>I
+
+" ----------------------------------------------------------------------------
 " ?i_ ?a_ ?i. ?a. ?i, ?a, ?i/
 " ----------------------------------------------------------------------------
 function! s:between_the_bars(incll, inclr, char)
@@ -1281,7 +1286,8 @@ inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
 command! FZFLines call fzf#run({
   \ 'source':  BuffersLines(),
   \ 'sink':    function('LineHandler'),
-  \ 'options': '--extended --nth=3..,'
+  \ 'options': '--extended --nth=3..,',
+  \ 'tmux_height': '60%'
 \})
 
 function! LineHandler(l)
