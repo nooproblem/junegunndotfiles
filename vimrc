@@ -929,7 +929,7 @@ onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.')
 " ----------------------------------------------------------------------------
 " <Leader>I | Prepend to all adjacent lines with same indentation
 " ----------------------------------------------------------------------------
-nmap <silent> <leader>I vio^<C-V>I
+nmap <silent> <leader>I ^vio<C-V>I
 
 " ----------------------------------------------------------------------------
 " ?i_ ?a_ ?i. ?a. ?i, ?a, ?i/
