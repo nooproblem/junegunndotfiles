@@ -1018,12 +1018,17 @@ onoremap <silent> aC :<C-U>call   <SID>inner_blockwise_column('',           'aW'
 " ----------------------------------------------------------------------------
 " ?a: / ?a= / ?aa= | after :/= / before =
 " ----------------------------------------------------------------------------
-vnoremap <silent> a: <Esc>^f:wvg_
-onoremap <silent> a: :<C-U>normal! ^f:wvg_<CR>
-vnoremap <silent> a= <Esc>^f=wvg_
-onoremap <silent> a= :<C-U>normal! ^f=wvg_<CR>
-vnoremap <silent> aa= <Esc>^vf=ge
-onoremap <silent> aa= :<C-U>normal! ^vf=ge<CR>
+" *map-error*
+"   Note that when an error is encountered (that causes an error message or beep)
+"   the rest of the mapping is not executed.  This is Vi-compatible.
+vnoremap <silent> a: <Esc>0f:wvg_
+onoremap <silent> a: :<C-U>normal! 0f:wvg_<CR>
+vnoremap <silent> a- <Esc>0f-wvg_
+onoremap <silent> a- :<C-U>normal! 0f-wvg_<CR>
+vnoremap <silent> a= <Esc>0f=wvg_
+onoremap <silent> a= :<C-U>normal! 0f=wvg_<CR>
+vnoremap <silent> aa= <Esc>0vf=ge
+onoremap <silent> aa= :<C-U>normal! 0vf=ge<CR>
 
 " ============================================================================
 " PLUGINS
