@@ -87,6 +87,8 @@ if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
 
+Plug '~/.fzf'
+
 call plug#end()
 endif
 
@@ -300,8 +302,8 @@ endif
 nnoremap <F12> :set nonumber!<cr>
 
 " jk | Escaping!
-noremap! jk <C-c>
-vnoremap jk <C-c>
+noremap! jk <Esc>
+vnoremap jk <Esc>
 
 " No delay in visual mode by jk
 vnoremap v <down>
@@ -1242,7 +1244,6 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 " fzf
 " ----------------------------------------------------------------------------
-set rtp+=~/.fzf
 nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
 nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': '40%', 'sink': 'botright split' })<CR>
