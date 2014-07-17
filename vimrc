@@ -929,9 +929,10 @@ vnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
-" <Leader>I | Prepend to all adjacent lines with same indentation
+" <Leader>I/A | Prepend/Append to all adjacent lines with same indentation
 " ----------------------------------------------------------------------------
 nmap <silent> <leader>I ^vio<C-V>I
+nmap <silent> <leader>A ^vio<C-V>$A
 
 " ----------------------------------------------------------------------------
 " ?i_ ?a_ ?i. ?a. ?i, ?a, ?i/
