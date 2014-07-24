@@ -213,7 +213,7 @@ endif
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
-set synmaxcol=400
+set synmaxcol=1000
 
 " For MacVim
 set noimd
