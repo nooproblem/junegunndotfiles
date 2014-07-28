@@ -128,6 +128,8 @@ set virtualedit=block
 set nojoinspaces
 set diffopt=filler,vertical
 set autoread
+set clipboard=unnamed
+
 
 " %< Where to truncate
 " %n buffer number
@@ -1096,14 +1098,7 @@ endif
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
 if s:darwin
-  " Clipboard
-  vnoremap <C-c> "*y
-
-  " <C-V><C-V> Paste clipboard content
-  inoremap <C-V><C-V> <c-o>"*P
-
-  " Clipboard-RTF
-  vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
+  vnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
 
 " ----------------------------------------------------------------------------
@@ -1213,6 +1208,7 @@ function! GoyoBefore()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
+  set scrolloff=999
   Limelight
 endfunction
 
@@ -1224,6 +1220,7 @@ function! GoyoAfter()
   elseif exists('$TMUX')
     silent !tmux set status on
   endif
+  set scrolloff=5
   Limelight!
 endfunction
 
