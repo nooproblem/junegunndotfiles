@@ -174,6 +174,8 @@ gitdiffb() {
   --abbrev-commit --date=relative $1..$2
 }
 
+alias gitv='git log --decorate=full --graph --oneline'
+
 miniprompt() {
   unset PROMPT_COMMAND
   PS1="\[\e[38;5;168m\]> \[\e[0m\]"
