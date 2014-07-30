@@ -25,6 +25,23 @@ for bin in $BASE/bin/*; do
   ln -svf $bin ~/bin
 done
 
+if [ $(uname -s) = 'Darwin' ]; then
+  # Homebrew
+  [ -z "$(which brew)" ] &&
+    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+
+  brew install \
+    ag ant cmus coreutils cscope ctags \
+    fish git gnuplot graphviz imagemagick leiningen libgit2 \
+    macvim maven memcached mysql ranger reattach-to-user-namespace redis \
+    rust sl tmux tree unrar vim wget zsh
+else
+  rm ~/.tmux.conf
+  grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
+fi
+
+tmux source-file ~/.tmux.conf
+
 # fzf
 if [ -n "$(which git)" ]; then
   if [ ! -d ~/.fzf ]; then
@@ -38,27 +55,5 @@ else
       tar xz --strip-components 1 -C ~/.fzf
 fi
 yes | ~/.fzf/install
-
-# Leiningen
-if [ ! -x ~/bin/lein ]; then
-  mkdir -p ~/bin
-  curl https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -o ~/bin/lein
-  chmod +x ~/bin/lein
-  ~/bin/lein version
-fi
-
-# tmux on OSX
-# https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-if [ $(uname -s) = 'Darwin' ]; then
-  [ -z "$(which brew)" ] &&
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
-  [ -z "$(which reattach-to-user-namespace)" ] &&
-    brew install reattach-to-user-namespace
-else
-  rm ~/.tmux.conf
-  grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
-fi
-
-tmux source-file ~/.tmux.conf
 
 ./install-vim
