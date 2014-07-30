@@ -274,6 +274,9 @@ nnoremap <C-s> :update<cr>
 " Select-all (don't need confusing increment C-a)
 noremap  <C-a> gg0vG$
 
+" Copy
+vnoremap <C-c> y
+
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
