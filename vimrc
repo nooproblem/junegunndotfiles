@@ -12,30 +12,29 @@ let s:ag     = executable('ag')
 silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
-  Plug 'git@github.com:junegunn/vim-easy-align.git',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  Plug 'git@github.com:junegunn/vim-github-dashboard.git', { 'on': ['GHDashboard', 'GHActivity']      }
-  Plug 'git@github.com:junegunn/vim-emoji.git'
-  Plug 'git@github.com:junegunn/vim-pseudocl.git'
-  Plug 'git@github.com:junegunn/vim-oblique.git'
-  Plug 'git@github.com:junegunn/vim-fnr.git'
-  Plug 'git@github.com:junegunn/seoul256.vim.git'
-  Plug 'git@github.com:junegunn/vader.vim.git',     { 'on': 'Vader', 'for': 'vader' }
-  Plug 'git@github.com:junegunn/vim-ruby-x.git',    { 'on': 'RubyX'                 }
-  Plug 'git@github.com:junegunn/goyo.vim.git',      { 'on': 'Goyo'                  }
-  Plug 'git@github.com:junegunn/limelight.vim.git', { 'on': 'Limelight'             }
+  function! s:plug(name, ...)
+    Plug 'git@github.com:junegunn/'.a:name.'.git', a:0 == 0 ? {} : a:1
+  endfunction
 else
   let $GIT_SSL_NO_VERIFY = 'true'
-  Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-  Plug 'junegunn/vim-pseudocl'
-  Plug 'junegunn/vim-oblique'
-  Plug 'junegunn/vim-fnr'
-  Plug 'junegunn/seoul256.vim'
-  Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
-  Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX'                 }
-  Plug 'junegunn/goyo.vim',      { 'on': 'Goyo'                  }
-  Plug 'junegunn/limelight.vim', { 'on': 'Limelight'             }
+  function! s:plug(repo, ...)
+    Plug 'junegunn/'.a:repo, a:0 == 0 ? {} : a:1
+  endfunction
 endif
+command! -nargs=+ -bar Pl call s:plug(<args>)
+
+Pl 'vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Pl 'vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
+Pl 'vim-emoji'
+Pl 'vim-pseudocl'
+Pl 'vim-oblique'
+Pl 'vim-fnr'
+Pl 'seoul256.vim'
+Pl 'vader.vim',     { 'on': 'Vader', 'for': 'vader' }
+Pl 'vim-ruby-x',    { 'on': 'RubyX' }
+Pl 'goyo.vim',      { 'on': 'Goyo' }
+Pl 'limelight.vim', { 'on': 'Limelight' }
+Pl 'fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -86,8 +85,6 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
-
-Plug '~/.fzf'
 
 call plug#end()
 endif
