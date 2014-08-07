@@ -460,7 +460,7 @@ nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><
 " ----------------------------------------------------------------------------
 " #! | Shebang (to cancel: CTRL-V)
 " ----------------------------------------------------------------------------
-iabbrev <expr> #! "#!/usr/bin/env ".&filetype
+iabbrev <expr> #! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
@@ -1386,4 +1386,9 @@ augroup END
 " map  <tab> <nop>
 " imap <tab> <nop>
 " vmap <tab> <nop>
+
+autocmd! User Oblique
+autocmd  User Oblique       normal! zz
+autocmd! User ObliqueRepeat
+autocmd  User ObliqueRepeat normal! zz
 
