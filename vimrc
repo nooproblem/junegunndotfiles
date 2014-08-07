@@ -21,20 +21,24 @@ else
     Plug 'junegunn/'.a:repo, a:0 == 0 ? {} : a:1
   endfunction
 endif
-command! -nargs=+ -bar Pl call s:plug(<args>)
+command! -nargs=+ -bar MyPlug call s:plug(<args>)
 
-Pl 'vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Pl 'vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-Pl 'vim-emoji'
-Pl 'vim-pseudocl'
-Pl 'vim-oblique'
-Pl 'vim-fnr'
-Pl 'seoul256.vim'
-Pl 'vader.vim',     { 'on': 'Vader', 'for': 'vader' }
-Pl 'vim-ruby-x',    { 'on': 'RubyX' }
-Pl 'goyo.vim',      { 'on': 'Goyo' }
-Pl 'limelight.vim', { 'on': 'Limelight' }
-Pl 'fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+MyPlug 'vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+MyPlug 'vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
+MyPlug 'vim-emoji'
+MyPlug 'vim-pseudocl'
+MyPlug 'vim-oblique'
+MyPlug 'vim-fnr'
+MyPlug 'seoul256.vim'
+MyPlug 'vader.vim',     { 'on': 'Vader', 'for': 'vader' }
+MyPlug 'vim-ruby-x',    { 'on': 'RubyX' }
+MyPlug 'goyo.vim',      { 'on': 'Goyo' }
+MyPlug 'limelight.vim', { 'on': 'Limelight' }
+MyPlug 'fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+" Colors
+Plug 'tomasr/molokai'
+Plug 'chriskempson/vim-tomorrow-theme'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -1354,8 +1358,7 @@ augroup vimrc
   au Filetype,ColorScheme * call <SID>file_type_handler()
 
   " Clojure
-  au FileType clojure nmap     <Leader><Enter> cpa)
-  au FileType clojure vnoremap <Leader><Enter> :Eval<CR>
+  au FileType clojure vnoremap <Leader><Leader> :Eval<CR>
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
