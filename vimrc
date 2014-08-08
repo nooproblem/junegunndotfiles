@@ -493,7 +493,7 @@ function! s:build_cscope_db(...)
   let tmp = tempname()
   try
     echon 'Building cscope.files'
-    call system(cmd.' > '.tmp)
+    call system(cmd.' | grep -v /test/ > '.tmp)
     echon ' - cscoped db'
     call system('cscope -b -q -i'.tmp)
     echon ' - complete!'
@@ -1150,7 +1150,13 @@ nmap <Leader>a <Plug>(EasyAlign)
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
-let g:github_dashboard = { 'username': 'junegunn' }
+let g:github_dashboard   = { 'username': 'junegunn' }
+let g:github_dashboard#d = {
+\ 'username':     'gunn',
+\ 'api_endpoint': 'http://'.$GHE.'/api/v3',
+\ 'web_endpoint': 'http://'.$GHE,
+\ 'emoji_map':    { 'user_dashboard': 'office' }
+\ }
 
 " ----------------------------------------------------------------------------
 " <leader>t | vim-tbone
