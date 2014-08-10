@@ -122,7 +122,6 @@ set shiftwidth=2
 set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 set list
 set listchars=tab:\|\ ,
 set virtualedit=block
@@ -213,8 +212,7 @@ silent! if emoji#available()
   endfunction
 endif
 
-set pastetoggle=<Ins>
-set pastetoggle=<F9> " For Mac
+set pastetoggle=<F9>
 set modelines=2
 set synmaxcol=1000
 
@@ -303,9 +301,6 @@ if v:version >= 703
   nnoremap <F11> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
-
-" <F12> Toggle line number display
-nnoremap <F12> :set nonumber!<cr>
 
 " jk | Escaping!
 noremap! jk <Esc>
@@ -634,29 +629,6 @@ endfunction
 command! -range Shuffle <line1>,<line2>call s:shuffle()
 
 " ----------------------------------------------------------------------------
-" <tab> | Case conversion
-" ----------------------------------------------------------------------------
-function! s:coerce()
-  " snake_case -> kebab-case -> camelCase -> MixedCase
-  let word = @"
-  if word =~# '^[a-z0-9_]\+[!?]\?$'
-    let @" = substitute(word, '_', '-', 'g')
-  elseif word =~# '^[a-z0-9?!-]\+[!?]\?$'
-    let @" = substitute(word, '\C-\([^-]\)', '\u\1', 'g')
-  elseif word =~# '^[a-z0-9]\+\([A-Z][a-z0-9]*\)\+[!?]\?$'
-    let @" = toupper(word[0]) . strpart(word, 1)
-  elseif word =~# '^\([A-Z][a-z0-9]*\)\{2,}[!?]\?$'
-    let @" = strpart(substitute(word, '\C\([A-Z]\)', '_\l\1', 'g'), 1)
-  else
-    normal gv
-  endif
-
-  let e = col("'>") + len(@") - len(word)
-  execute "normal gv\"_c\<C-R>\"\<esc>".col("'<"). "|v" . e . '|'
-endfunction
-vnoremap <silent> <tab> y:call <sid>coerce()<cr>
-
-" ----------------------------------------------------------------------------
 " Syntax highlighting in code snippets
 " ----------------------------------------------------------------------------
 function! s:syntax_include(lang, b, e, inclusive)
@@ -742,28 +714,6 @@ function! s:hl()
   echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")'), '/')
 endfunction
 command! HL call <SID>hl()
-
-" ----------------------------------------------------------------------------
-" (v) <c-t>d / <c-t>n / <c-t>s | indenTation adjustment
-" ----------------------------------------------------------------------------
-function! s:adjust_indentation(idt) range
-  let [min, max, range] = [10000, 0, range(a:firstline, a:lastline)]
-  for l in range
-    let line = getline(l)
-    if empty(line) | continue | endif
-    let ilen = len(matchstr(line, '^\s\+'))
-    let [min, max] = [min([ilen, min]), max([ilen, max])]
-  endfor
-  let idt = repeat(' ', a:idt == 'd' ? max : (a:idt == 's' ? min : 0))
-  for l in range
-    let line = getline(l)
-    if empty(line) | continue | endif
-    call setline(l, substitute(line, '^\s*', idt, ''))
-  endfor
-endfunction
-vnoremap <silent> <c-t>d :call <sid>adjust_indentation('d')<cr>
-vnoremap <silent> <c-t>n :call <sid>adjust_indentation('n')<cr>
-vnoremap <silent> <c-t>s :call <sid>adjust_indentation('s')<cr>
 
 " ----------------------------------------------------------------------------
 " :A
@@ -1081,15 +1031,6 @@ endif
 runtime macros/matchit.vim
 
 " ----------------------------------------------------------------------------
-" vim-scroll-position
-" ----------------------------------------------------------------------------
-" let g:scroll_position_jump = '-'
-" let g:scroll_position_change = 'x'
-" let g:scroll_position_auto_enable = 0
-" let g:scroll_position_auto_enable = 0
-" call scroll_position#show()
-
-" ----------------------------------------------------------------------------
 " ack.vim
 " ----------------------------------------------------------------------------
 if s:ag
@@ -1240,11 +1181,6 @@ autocmd  User GoyoEnter call <SID>goyo_enter()
 autocmd  User GoyoLeave call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
-
-" ----------------------------------------------------------------------------
-" tcomment.vim
-" ----------------------------------------------------------------------------
-let g:tcommentTextObjectInlineComment = ''
 
 " ----------------------------------------------------------------------------
 " undotree
