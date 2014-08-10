@@ -1210,7 +1210,7 @@ command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 " ----------------------------------------------------------------------------
 " goyo.vim
 " ----------------------------------------------------------------------------
-function! GoyoBefore()
+function! s:goyo_enter()
   if has('gui_running')
     set fullscreen
     set background=light
@@ -1222,7 +1222,7 @@ function! GoyoBefore()
   Limelight
 endfunction
 
-function! GoyoAfter()
+function! s:goyo_leave()
   if has('gui_running')
     set nofullscreen
     set background=dark
@@ -1234,7 +1234,10 @@ function! GoyoAfter()
   Limelight!
 endfunction
 
-let g:goyo_callbacks = [function('GoyoBefore'), function('GoyoAfter')]
+autocmd! User GoyoEnter
+autocmd! User GoyoLeave
+autocmd  User GoyoEnter call <SID>goyo_enter()
+autocmd  User GoyoLeave call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
 
@@ -1395,9 +1398,4 @@ augroup END
 " map  <tab> <nop>
 " imap <tab> <nop>
 " vmap <tab> <nop>
-
-autocmd! User Oblique
-autocmd  User Oblique       normal! zz
-autocmd! User ObliqueRepeat
-autocmd  User ObliqueRepeat normal! zz
 
