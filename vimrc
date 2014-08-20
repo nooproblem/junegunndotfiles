@@ -29,6 +29,7 @@ MyPlug 'vim-emoji'
 MyPlug 'vim-pseudocl'
 MyPlug 'vim-oblique'
 MyPlug 'vim-fnr'
+MyPlug 'vim-after-object'
 MyPlug 'seoul256.vim'
 MyPlug 'vader.vim',     { 'on': 'Vader', 'for': 'vader' }
 MyPlug 'vim-ruby-x',    { 'on': 'RubyX' }
@@ -980,21 +981,6 @@ onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW'
 onoremap <silent> ac :<C-U>call   <SID>inner_blockwise_column('',           'aw')<CR>
 onoremap <silent> aC :<C-U>call   <SID>inner_blockwise_column('',           'aW')<CR>
 
-" ----------------------------------------------------------------------------
-" ?a: / ?a= / ?aa= | after :/= / before =
-" ----------------------------------------------------------------------------
-" *map-error*
-"   Note that when an error is encountered (that causes an error message or beep)
-"   the rest of the mapping is not executed.  This is Vi-compatible.
-vnoremap <silent> a: <Esc>0f:wvg_
-onoremap <silent> a: :<C-U>normal! 0f:wvg_<CR>
-vnoremap <silent> a- <Esc>0f-wvg_
-onoremap <silent> a- :<C-U>normal! 0f-wvg_<CR>
-vnoremap <silent> a= <Esc>0f=wvg_
-onoremap <silent> a= :<C-U>normal! 0f=wvg_<CR>
-vnoremap <silent> aa= <Esc>0vf=ge
-onoremap <silent> aa= :<C-U>normal! 0vf=ge<CR>
-
 " ============================================================================
 " PLUGINS
 " ============================================================================
@@ -1045,6 +1031,11 @@ endif
 if s:darwin
   vnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
+
+" ----------------------------------------------------------------------------
+" vim-after-object
+" ----------------------------------------------------------------------------
+autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '.', '|')
 
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
