@@ -1310,7 +1310,7 @@ augroup END
 function! s:helptab()
   if &buftype == 'help'
     execute "normal! \<C-W>T"
-    nnoremap q :q<cr>
+    nnoremap <buffer> q :q<cr>
   endif
 endfunction
 
