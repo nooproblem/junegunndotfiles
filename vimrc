@@ -12,30 +12,26 @@ let s:ag     = executable('ag')
 silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
-  function! s:plug(name, ...)
-    Plug 'git@github.com:junegunn/'.a:name.'.git', a:0 == 0 ? {} : a:1
-  endfunction
+  let g:plug_url_format = 'git@github.com:%s.git'
 else
   let $GIT_SSL_NO_VERIFY = 'true'
-  function! s:plug(repo, ...)
-    Plug 'junegunn/'.a:repo, a:0 == 0 ? {} : a:1
-  endfunction
 endif
-command! -nargs=+ -bar MyPlug call s:plug(<args>)
 
-MyPlug 'vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-MyPlug 'vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-MyPlug 'vim-emoji'
-MyPlug 'vim-pseudocl'
-MyPlug 'vim-oblique'
-MyPlug 'vim-fnr'
-MyPlug 'vim-after-object'
-MyPlug 'seoul256.vim'
-MyPlug 'vader.vim',     { 'on': 'Vader', 'for': 'vader' }
-MyPlug 'vim-ruby-x',    { 'on': 'RubyX' }
-MyPlug 'goyo.vim',      { 'on': 'Goyo' }
-MyPlug 'limelight.vim', { 'on': 'Limelight' }
-MyPlug 'fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+" My plugins
+Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
+Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-oblique'
+Plug 'junegunn/vim-fnr'
+Plug 'junegunn/vim-after-object'
+Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
+Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
+Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+Plug 'junegunn/fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+unlet! g:plug_url_format
 
 " Colors
 Plug 'tomasr/molokai'
