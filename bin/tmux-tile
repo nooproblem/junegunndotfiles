@@ -12,6 +12,4 @@ while [ $# -gt 0 ]; do
 done
 
 tmux set-window-option synchronize-panes on > /dev/null
-bash -ci "$FIRST"
-$TAIL
-read
+bash -ci "$FIRST; $TAIL; read"
