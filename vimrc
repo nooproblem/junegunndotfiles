@@ -1081,6 +1081,7 @@ nmap <Leader>a <Plug>(EasyAlign)
 let g:github_dashboard   = { 'username': 'junegunn' }
 let g:github_dashboard#d = {
 \ 'username':     'gunn',
+\ 'password':     $GHE_TOKEN,
 \ 'api_endpoint': 'http://'.$GHE.'/api/v3',
 \ 'web_endpoint': 'http://'.$GHE,
 \ 'emoji_map':    { 'user_dashboard': 'office' }
