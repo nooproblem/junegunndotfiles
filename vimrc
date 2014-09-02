@@ -239,9 +239,6 @@ silent! colo seoul256
 set ttymouse=xterm2
 set mouse=a
 
-" Googling
-" set keywordprg=open\ http://www.google.com/search?q=\
-
 " 80 chars/line
 set textwidth=0
 if exists('&colorcolumn')
@@ -267,11 +264,11 @@ noremap <C-B> <C-U>
 inoremap <C-s> <C-O>:update<cr>
 nnoremap <C-s> :update<cr>
 
-" Select-all (don't need confusing increment C-a)
-noremap  <C-a> gg0vG$
-
-" Copy
-vnoremap <C-c> y
+" Disable CTRL-A on tmux or on screen
+if $TERM =~ 'screen'
+  nnoremap <C-a> <nop>
+  nnoremap <Leader><C-a> <C-a>
+endif
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
@@ -353,12 +350,12 @@ nnoremap <leader>5 m`^i##### <esc>``6l
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-nnoremap <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
-nnoremap <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
+nnoremap <silent> <C-k> :execute ':move '.max([0,         line('.') - 2])<cr>
+nnoremap <silent> <C-j> :execute ':move '.min([line('$'), line('.') + 1])<cr>
 nnoremap <silent> <C-h> <<
 nnoremap <silent> <C-l> >>
-vnoremap <silent> <C-k> :<C-U>execute "normal! gv:move ".max([0,         line("'<") - 2])."\n"<cr>gv
-vnoremap <silent> <C-j> :<C-U>execute "normal! gv:move ".min([line('$'), line("'>") + 1])."\n"<cr>gv
+vnoremap <silent> <C-k> :<C-U>execute 'normal! gv:move '.max([0,         line("'<") - 2])."\n"<cr>gv
+vnoremap <silent> <C-j> :<C-U>execute 'normal! gv:move '.min([line('$'), line("'>") + 1])."\n"<cr>gv
 vnoremap <silent> <C-h> <gv
 vnoremap <silent> <C-l> >gv
 vnoremap < <gv
@@ -458,6 +455,7 @@ nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><
 " ----------------------------------------------------------------------------
 iabbrev <expr> #! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
+
 " ============================================================================
 " FUNCTIONS & COMMANDS
 " ============================================================================
@@ -511,7 +509,7 @@ function! s:root()
   let me = expand('%:p:h')
   let gitd = finddir('.git', me.';')
   if empty(gitd)
-    echo "Not in Git repo"
+    echo "Not in git repo"
   else
     let gitp = fnamemodify(gitd, ':h')
     echo "Change directory to: ".gitp
@@ -550,10 +548,10 @@ function! s:run_this_script(output)
   let file  = expand('%:p')
   let ofile = tempname()
   let rdr   = " 2>&1 | tee ".ofile
-  " She-bang found
+  " Shebang found
   if pos != -1
     execute '!'.strpart(head, pos + 2).' '.file.rdr
-  " She-bang not found but executable
+  " Shebang not found but executable
   elseif executable(file)
     execute '!'.file.rdr
   elseif &filetype == 'ruby'
@@ -708,7 +706,7 @@ command! -nargs=* LoadMacro call <SID>load_macro(<f-args>)
 " ----------------------------------------------------------------------------
 function! s:hl()
   " echo synIDattr(synID(line('.'), col('.'), 0), 'name')
-  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val,"name")'), '/')
+  echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), '/')
 endfunction
 command! HL call <SID>hl()
 
@@ -818,18 +816,19 @@ call s:map_change_option('b', 'background',
 " ----------------------------------------------------------------------------
 " <Leader>? | Google it
 " ----------------------------------------------------------------------------
-function! s:goog(q)
+function! s:goog()
   let url = 'https://www.google.co.kr/search?q='
   " Excerpt from vim-unimpared
   let q = substitute(
-        \ '"'.a:q.'"',
+        \ '"'.@0.'"',
         \ '[^A-Za-z0-9_.~-]',
         \ '\="%".printf("%02X", char2nr(submatch(0)))',
         \ 'g')
   call system('open ' . url . q)
 endfunction
 
-vnoremap <leader>? "gy:call <SID>goog(@g)<cr>
+vnoremap <leader>? y:call <SID>goog()<cr>
+
 
 " ============================================================================
 " TEXT OBJECTS
@@ -1008,7 +1007,7 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
 endif
 
 " ----------------------------------------------------------------------------
-" vim-textobj-rubyblock
+" matchit.vim
 " ----------------------------------------------------------------------------
 runtime macros/matchit.vim
 
@@ -1096,7 +1095,7 @@ function! s:tmux_send(dest) range
   call inputrestore()
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
 endfunction
-noremap <silent> <leader>t  :call <SID>tmux_send('')<cr>
+noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>
 noremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
 noremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
 
@@ -1148,6 +1147,7 @@ function! s:goyo_enter()
     silent !tmux set status off
   endif
   set scrolloff=999
+  Limelight
 endfunction
 
 function! s:goyo_leave()
@@ -1159,14 +1159,13 @@ function! s:goyo_leave()
     silent !tmux set status on
   endif
   set scrolloff=5
+  Limelight!
 endfunction
 
 autocmd! User GoyoEnter
 autocmd! User GoyoLeave
-autocmd  User GoyoEnter call <SID>goyo_enter()
-autocmd  User GoyoLeave call <SID>goyo_leave()
-autocmd  User GoyoEnter Limelight
-autocmd  User GoyoLeave Limelight!
+autocmd  User GoyoEnter nested call <SID>goyo_enter()
+autocmd  User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
 
@@ -1264,6 +1263,7 @@ let vimclojure#WantNailgun     = 0
 " vim-markdown
 " ----------------------------------------------------------------------------
 let g:vim_markdown_folding_disabled = 1
+
 
 " ============================================================================
 " AUTOCMD
