@@ -5,6 +5,7 @@
 let s:darwin = has('mac')
 let s:ag     = executable('ag')
 
+
 " ============================================================================
 " VIM-PLUG BLOCK
 " ============================================================================
@@ -89,6 +90,7 @@ endif
 
 call plug#end()
 endif
+
 
 " ============================================================================
 " Basic settings
@@ -976,6 +978,7 @@ onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW'
 onoremap <silent> ac :<C-U>call   <SID>inner_blockwise_column('',           'aw')<CR>
 onoremap <silent> aC :<C-U>call   <SID>inner_blockwise_column('',           'aW')<CR>
 
+
 " ============================================================================
 " PLUGINS
 " ============================================================================
@@ -1176,82 +1179,6 @@ let g:undotree_WindowLayout = 2
 nnoremap U :UndotreeToggle<CR>
 
 " ----------------------------------------------------------------------------
-" fzf
-" ----------------------------------------------------------------------------
-nnoremap <silent> <Leader><Leader> :FZF -m<CR>
-
-nnoremap <silent> <Leader>s :call fzf#run({ 'tmux_height': '40%', 'sink': 'botright split' })<CR>
-nnoremap <silent> <Leader>v :call fzf#run({ 'tmux_width': winwidth('.') / 2, 'sink': 'vertical botright split' })<CR>
-
-function! BufList()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! BufOpen(e)
-  execute 'buffer '. matchstr(a:e, '^[ 0-9]*')
-endfunction
-
-nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':      reverse(BufList()),
-\   'sink':        function('BufOpen'),
-\   'options':     '+m',
-\   'tmux_height': '40%'
-\ })<CR>
-
-nnoremap <silent> <Leader>C :call fzf#run({
-\   'source':
-\     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
-\         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-\   'sink':       'colo',
-\   'options':    '+m',
-\   'tmux_width': 20,
-\   'launcher':   'iterm2-launcher 20 30 %s'
-\ })<CR>
-
-function! s:tmux_words(query)
-  let g:_tmux_q = a:query
-  let matches = fzf#run({
-  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
-  \ 'sink':        function('Tmux_feedkeys'),
-  \ 'options':     '--no-multi --query='.a:query,
-  \ 'tmux_height': '40%'
-  \ })
-endfunction
-
-function! Tmux_feedkeys(data)
-  echom empty(g:_tmux_q)
-  execute "normal! ".(empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
-  startinsert!
-endfunction
-
-inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
-
-command! FZFLines call fzf#run({
-  \ 'source':  BuffersLines(),
-  \ 'sink':    function('LineHandler'),
-  \ 'options': '--extended --nth=3..,',
-  \ 'tmux_height': '60%'
-\})
-
-function! LineHandler(l)
-  let keys = split(a:l, ':\t')
-  exec 'buf ' . keys[0]
-  exec keys[1]
-  normal! ^zz
-endfunction
-
-function! BuffersLines()
-  let res = []
-  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
-    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
-  endfor
-  return res
-endfunction
-
-" ----------------------------------------------------------------------------
 " VimClojure
 " ----------------------------------------------------------------------------
 let vimclojure#SetupKeyMap     = 0
@@ -1263,6 +1190,106 @@ let vimclojure#WantNailgun     = 0
 " vim-markdown
 " ----------------------------------------------------------------------------
 let g:vim_markdown_folding_disabled = 1
+
+
+" ============================================================================
+" fzf
+" ============================================================================
+
+" ----------------------------------------------------------------------------
+" Open files
+" ----------------------------------------------------------------------------
+nnoremap <silent> <Leader><Leader> :FZF -m<CR>
+
+" Open files in horizontal split
+nnoremap <silent> <Leader>s :call fzf#run({
+\   'tmux_height': '40%',
+\   'sink':        'botright split' })<CR>
+
+" Open files in vertical horizontal split
+nnoremap <silent> <Leader>v :call fzf#run({
+\   'tmux_width': winwidth('.') / 2,
+\   'sink':       'vertical botright split' })<CR>
+
+" ----------------------------------------------------------------------------
+" Choose color scheme
+" ----------------------------------------------------------------------------
+nnoremap <silent> <Leader>C :call fzf#run({
+\   'source':
+\     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
+\         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
+\   'sink':       'colo',
+\   'options':    '+m',
+\   'tmux_width': 20,
+\   'launcher':   'iterm2-launcher 20 30 %s'
+\ })<CR>
+
+" ----------------------------------------------------------------------------
+" Select buffer
+" ----------------------------------------------------------------------------
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer '. matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader><Enter> :call fzf#run({
+\   'source':      reverse(<sid>buflist()),
+\   'sink':        function('<sid>bufopen'),
+\   'options':     '+m',
+\   'tmux_height': '40%'
+\ })<CR>
+
+" ----------------------------------------------------------------------------
+" Tmux complete
+" ----------------------------------------------------------------------------
+function! s:tmux_feedkeys(data)
+  echom empty(g:_tmux_q)
+  execute "normal! ".(empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
+  startinsert!
+endfunction
+
+function! s:tmux_words(query)
+  let g:_tmux_q = a:query
+  let matches = fzf#run({
+  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
+  \ 'sink':        function('s:tmux_feedkeys'),
+  \ 'options':     '--no-multi --query='.a:query,
+  \ 'tmux_height': '40%'
+  \ })
+endfunction
+
+inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
+
+" ----------------------------------------------------------------------------
+" Buffer search
+" ----------------------------------------------------------------------------
+function! s:line_handler(l)
+  let keys = split(a:l, ':\t')
+  exec 'buf ' . keys[0]
+  exec keys[1]
+  normal! ^zz
+endfunction
+
+function! s:buffer_lines()
+  let res = []
+  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+  endfor
+  return res
+endfunction
+
+command! FZFLines call fzf#run({
+\   'source':  <sid>buffer_lines(),
+\   'sink':    function('<sid>line_handler'),
+\   'options': '--extended --nth=3..,',
+\   'tmux_height': '60%'
+\})
 
 
 " ============================================================================
@@ -1302,7 +1329,7 @@ augroup vimrc
 augroup END
 
 " ----------------------------------------------------------------------------
-" gt / q | Help in new tabs
+" Help in new tabs
 " ----------------------------------------------------------------------------
 function! s:helptab()
   if &buftype == 'help'
@@ -1311,15 +1338,8 @@ function! s:helptab()
   endif
 endfunction
 
-augroup helptxt
+augroup vimrc_help
   autocmd!
   autocmd BufEnter *.txt call s:helptab()
 augroup END
-
-" ----------------------------------------------------------------------------
-" For screencasting with Keycastr
-" ----------------------------------------------------------------------------
-" map  <tab> <nop>
-" imap <tab> <nop>
-" vmap <tab> <nop>
 
