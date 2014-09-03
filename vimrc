@@ -73,11 +73,12 @@ endif
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby'       }
-  Plug 'vim-scripts/VimClojure', { 'for': 'clojure'    }
+  Plug 'VimClojure',             { 'for': 'clojure'    }
   Plug 'tpope/vim-fireplace',    { 'for': 'clojure'    }
   Plug 'kovisoft/paredit',       { 'for': 'clojure'    }
 endif
 Plug 'tpope/vim-rails'
+Plug 'groenewege/vim-less',      { 'for': 'less'       }
 Plug 'pangloss/vim-javascript',  { 'for': 'javascript' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee'     }
 Plug 'plasticboy/vim-markdown',  { 'for': 'markdown'   }
@@ -146,8 +147,6 @@ set clipboard=unnamed
 " %#HighlightGroup#
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
 silent! if emoji#available()
-  set statusline=%{emoji#for('cherry_blossom')}\ %<[%n]\ %F\ %{MyModified()}%{MyReadonly()}%{MyFileType()}\ %{MyFugitiveHead()}\ %=%-14.(%l,%c%V%)\ %P\ %{emoji#for('cherry_blossom')}
-
   let s:ft_emoji = map({
     \ 'c':          'baby_chick',
     \ 'clojure':    'lollipop',
@@ -176,7 +175,9 @@ silent! if emoji#available()
     \ 'yaml.jinja': 'yum'
   \ }, 'emoji#for(v:val)')
 
-  function! MyFileType()
+  let s:cherry = emoji#for('cherry_blossom')
+
+  function! s:statusline_filetype()
     if empty(&filetype)
       return emoji#for('grey_question')
     else
@@ -184,7 +185,7 @@ silent! if emoji#available()
     endif
   endfunction
 
-  function! MyModified()
+  function! s:statusline_modified()
     if &modified
       return emoji#for('kiss').' '
     elseif !&modifiable
@@ -194,11 +195,7 @@ silent! if emoji#available()
     endif
   endfunction
 
-  function! MyReadonly()
-    return &readonly ? emoji#for('lock') . ' ' : ''
-  endfunction
-
-  function! MyFugitiveHead()
+  function! s:statusline_fugitive()
     if !exists('g:loaded_fugitive')
       return ''
     endif
@@ -209,6 +206,16 @@ silent! if emoji#available()
       return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
     endif
   endfunction
+
+  function! MyStatusLine()
+    let modified = s:statusline_modified()
+    let readonly = &readonly ? emoji#for('lock') . ' ' : ''
+    let fugitive = s:statusline_fugitive()
+    let ft       = s:statusline_filetype()
+    return s:cherry.' %<[%n] %F '.modified.readonly.ft.' '.fugitive.' %=%-14.(%l,%c%V%) %P '.s:cherry
+  endfunction
+
+  set statusline=%!MyStatusLine()
 endif
 
 set pastetoggle=<F9>
@@ -1300,7 +1307,7 @@ augroup vimrc
   autocmd!
 
   au BufRead * setlocal foldmethod=manual nofoldenable
-  au BufWritePost .vimrc if expand('%') !~ 'fugitive' | source % | endif
+  au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
   au Filetype slim if get(b:, 'indentLine_enabled', 0) == 0
@@ -1308,10 +1315,8 @@ augroup vimrc
                \ | endif
 
   " File types
-  au BufNewFile,BufRead *.md                set filetype=markdown
   au BufNewFile,BufRead *.icc               set filetype=cpp
   au BufNewFile,BufRead *.pde               set filetype=java
-  au BufNewFile,BufRead *.less              set filetype=less
   au BufNewFile,BufRead *.coffee-processing set filetype=coffee
 
   " Included syntax
