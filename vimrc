@@ -1048,7 +1048,7 @@ autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '.', '|')
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
 \ '\': { 'pattern': '\\' },
-\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['^\(.\(Comment\)\@!\)*$'] },
+\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
 \ ']': {
 \     'pattern':       '[[\]]',
 \     'left_margin':   0,
