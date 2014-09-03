@@ -378,11 +378,11 @@ function! s:add_cscope_db()
   let db = findfile('cscope.out', '.;')
   if !empty(db)
     silent cs reset
-    silent! execute "cs add ".db
+    silent! execute 'cs add' db
   " else add database pointed to by environment
   elseif !empty($CSCOPE_DB)
     silent cs reset
-    silent! execute "cs add ".$CSCOPE_DB
+    silent! execute 'cs add' $CSCOPE_DB
   endif
 endfunction
 
@@ -482,7 +482,7 @@ function! s:build_cscope_db(...)
   let chdired = 0
   if !v:shell_error
     let chdired = 1
-    execute 'cd '. substitute(fnamemodify(git_dir, ':p:h'), ' ', '\\ ', 'g')
+    execute 'cd' substitute(fnamemodify(git_dir, ':p:h'), ' ', '\\ ', 'g')
   endif
 
   let exts = empty(a:000) ?
@@ -522,7 +522,7 @@ function! s:root()
   else
     let gitp = fnamemodify(gitd, ':h')
     echo "Change directory to: ".gitp
-    execute 'lcd '.gitp
+    execute 'lcd' gitp
   endif
 endfunction
 command! Root call s:root()
@@ -589,7 +589,7 @@ function! s:run_this_script(output)
     let      b:vi_exec_win = 1
     let      s:vim_exec_win = winnr()
   endif
-  execute  "silent! read ".ofile
+  execute  'silent! read' ofile
   normal!  gg"_dd
   execute  "normal! \<C-W>p"
 endfunction
@@ -602,18 +602,18 @@ nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 " <F8> | Color scheme selector
 " ----------------------------------------------------------------------------
 function! s:rotate_colors()
-  if !exists("s:colors_list")
+  if !exists('s:colors_list')
     let s:colors_list =
     \ sort(map(
     \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
     \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
   endif
-  if !exists("s:colors_index")
+  if !exists('s:colors_index')
     let s:colors_index = index(s:colors_list, g:colors_name)
   endif
   let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
   let name = s:colors_list[s:colors_index]
-  execute "colorscheme " . name
+  execute 'colorscheme' name
   redraw
   echo name
 endfunction
@@ -734,7 +734,7 @@ function! s:a()
         let aname = name.'.'.h
         for a in [aname, toupper(aname)]
           if filereadable(a)
-            execute "e ".a
+            execute 'e' a
             return
           end
         endfor
@@ -1274,7 +1274,7 @@ function! s:buflist()
 endfunction
 
 function! s:bufopen(e)
-  execute 'buffer '. matchstr(a:e, '^[ 0-9]*')
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
 nnoremap <silent> <Leader><Enter> :call fzf#run({
@@ -1289,7 +1289,7 @@ nnoremap <silent> <Leader><Enter> :call fzf#run({
 " ----------------------------------------------------------------------------
 function! s:tmux_feedkeys(data)
   echom empty(g:_tmux_q)
-  execute "normal! ".(empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
+  execute 'normal!' (empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
   startinsert!
 endfunction
 
