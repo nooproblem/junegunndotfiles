@@ -81,7 +81,7 @@ Plug 'tpope/vim-rails'
 Plug 'groenewege/vim-less',      { 'for': 'less'       }
 Plug 'pangloss/vim-javascript',  { 'for': 'javascript' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee'     }
-Plug 'plasticboy/vim-markdown',  { 'for': 'markdown'   }
+Plug 'plasticboy/vim-markdown',  { 'for': 'mkd'        }
 Plug 'slim-template/vim-slim',   { 'for': 'slim'       }
 Plug 'wting/rust.vim',           { 'for': 'rust'       }
 Plug 'Glench/Vim-Jinja2-Syntax'
