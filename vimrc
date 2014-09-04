@@ -25,13 +25,15 @@ Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-fnr'
-Plug 'junegunn/vim-after-object'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
 Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
 Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'junegunn/fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+if v:version >= 703
+  Plug 'junegunn/vim-after-object'
+endif
 unlet! g:plug_url_format
 
 " Colors
@@ -1072,7 +1074,9 @@ endif
 " ----------------------------------------------------------------------------
 " vim-after-object
 " ----------------------------------------------------------------------------
-autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '|')
+if v:version >= 703
+  autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '|')
+endif
 
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
