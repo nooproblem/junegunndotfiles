@@ -1067,14 +1067,14 @@ endif
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
-if s:darwin
+if has_key(g:plugs, 'vim-copy-as-rtf')
   vnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
 
 " ----------------------------------------------------------------------------
 " vim-after-object
 " ----------------------------------------------------------------------------
-if v:version >= 703
+if has_key(g:plugs, 'vim-after-object')
   autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '|')
 endif
 
@@ -1141,9 +1141,12 @@ function! s:tmux_send(dest) range
   call inputrestore()
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
 endfunction
-noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>
-noremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
-noremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
+nnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>
+nnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
+nnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
+vnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>gv
+vnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>gv
+vnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>gv
 
 " ----------------------------------------------------------------------------
 " indentLine
