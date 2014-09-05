@@ -312,8 +312,8 @@ noremap! jk <Esc>
 vnoremap jk <Esc>
 
 " No delay in visual mode by jk
-vnoremap v <down>
-vnoremap V <down>
+xnoremap v <down>
+xnoremap V <down>
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h
@@ -365,12 +365,12 @@ nnoremap <silent> <C-k> :execute ':move '.max([0,         line('.') - 2])<cr>
 nnoremap <silent> <C-j> :execute ':move '.min([line('$'), line('.') + 1])<cr>
 nnoremap <silent> <C-h> <<
 nnoremap <silent> <C-l> >>
-vnoremap <silent> <C-k> :<C-U>execute 'normal! gv:move '.max([0,         line("'<") - 2])."\n"<cr>gv
-vnoremap <silent> <C-j> :<C-U>execute 'normal! gv:move '.min([line('$'), line("'>") + 1])."\n"<cr>gv
-vnoremap <silent> <C-h> <gv
-vnoremap <silent> <C-l> >gv
-vnoremap < <gv
-vnoremap > >gv
+xnoremap <silent> <C-k> :<C-U>execute 'normal! gv:move '.max([0,         line("'<") - 2])."\n"<cr>gv
+xnoremap <silent> <C-j> :<C-U>execute 'normal! gv:move '.min([line('$'), line("'>") + 1])."\n"<cr>gv
+xnoremap <silent> <C-h> <gv
+xnoremap <silent> <C-l> >gv
+xnoremap < <gv
+xnoremap > >gv
 
 " ----------------------------------------------------------------------------
 " Cscope mappings
@@ -417,7 +417,7 @@ endif
 " ----------------------------------------------------------------------------
 " <Leader>c Counting occurrences of the pattern
 " ----------------------------------------------------------------------------
-vnoremap <Leader>c :s@\%V@@gn<Left><Left><Left><Left>
+xnoremap <Leader>c :s@\%V@@gn<Left><Left><Left><Left>
 nnoremap <Leader>c :%s@@@gn<Left><Left><Left><Left>
 
 " ----------------------------------------------------------------------------
@@ -547,8 +547,8 @@ function! s:replace()
     endif
   endif
 endfunction
-" vnoremap R "_dP
-vnoremap R :<C-U>call <SID>replace()<cr>
+" xnoremap R "_dP
+xnoremap R :<C-U>call <SID>replace()<cr>
 
 " ----------------------------------------------------------------------------
 " <F5> / <F6> | Run script
@@ -838,7 +838,7 @@ function! s:goog()
   call system('open ' . url . q)
 endfunction
 
-vnoremap <leader>? y:call <SID>goog()<cr>
+xnoremap <leader>? y:call <SID>goog()<cr>
 
 
 " ============================================================================
@@ -884,11 +884,11 @@ function! s:indent_object(op, skip_blank, b, e, bd, ed)
   endfor
   execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
 endfunction
-vnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
+xnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
 onoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), 0, 0)<cr>
-vnoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), -1, 1)<cr>
+xnoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), -1, 1)<cr>
 onoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), -1, 1)<cr>
-vnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
+xnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
 onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
@@ -953,22 +953,22 @@ noremap         <Plug>(BTC) <c-l>
 inoremap <expr> <Plug>(BTC) <sid>btc_after()
 
 for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1})
-  execute printf("vmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(BTC)", s:c, s:c)
+  execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(BTC)", s:c, s:c)
   execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(BTC)", s:c, s:c)
-  execute printf("vmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(BTC)", s:c, s:l, s:c)
+  execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(BTC)", s:c, s:l, s:c)
   execute printf("omap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 0)<CR><Plug>(BTC)", s:c, s:l, s:c)
 endfor
 
 " ----------------------------------------------------------------------------
 " ?ie | entire object
 " ----------------------------------------------------------------------------
-vnoremap <silent> ie gg0oG$
+xnoremap <silent> ie gg0oG$
 onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
 
 " ----------------------------------------------------------------------------
 " ?il | inner line
 " ----------------------------------------------------------------------------
-vnoremap <silent> il <Esc>^vg_
+xnoremap <silent> il <Esc>^vg_
 onoremap <silent> il :<C-U>normal! ^vg_<CR>
 
 " ----------------------------------------------------------------------------
@@ -1010,10 +1010,10 @@ function! s:inner_blockwise_column(vmode, cmd)
   endif
 endfunction
 
-vnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iw')<CR>
-vnoremap <silent> iC mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iW')<CR>
-vnoremap <silent> ac mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'aw')<CR>
-vnoremap <silent> aC mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'aW')<CR>
+xnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iw')<CR>
+xnoremap <silent> iC mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iW')<CR>
+xnoremap <silent> ac mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'aw')<CR>
+xnoremap <silent> aC mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'aW')<CR>
 onoremap <silent> ic :<C-U>call   <SID>inner_blockwise_column('',           'iw')<CR>
 onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW')<CR>
 onoremap <silent> ac :<C-U>call   <SID>inner_blockwise_column('',           'aw')<CR>
@@ -1068,7 +1068,7 @@ endif
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
 if has_key(g:plugs, 'vim-copy-as-rtf')
-  vnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
+  xnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
 
 " ----------------------------------------------------------------------------
@@ -1110,12 +1110,12 @@ let g:easy_align_delimiters = {
 \ }
 
 " Start interactive EasyAlign in visual mode
-vmap <Enter> <Plug>(EasyAlign)
+xmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
 nmap <Leader>a <Plug>(EasyAlign)
 
-" vmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+" xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
@@ -1144,9 +1144,9 @@ endfunction
 nnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>
 nnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
 nnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
-vnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>gv
-vnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>gv
-vnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>gv
+xnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>gv
+xnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>gv
+xnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>gv
 
 " ----------------------------------------------------------------------------
 " indentLine
@@ -1362,7 +1362,7 @@ augroup vimrc
   au Filetype,ColorScheme * call <SID>file_type_handler()
 
   " Clojure
-  au FileType clojure vnoremap <Leader><Leader> :Eval<CR>
+  au FileType clojure xnoremap <Leader><Leader> :Eval<CR>
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
