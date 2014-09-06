@@ -62,6 +62,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
+Plug 'justinmk/vim-gtfo'
 
 " Git
 Plug 'tpope/vim-fugitive'
