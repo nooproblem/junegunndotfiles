@@ -75,18 +75,18 @@ endif
 
 " Lang
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby'       }
-  Plug 'VimClojure',             { 'for': 'clojure'    }
-  Plug 'tpope/vim-fireplace',    { 'for': 'clojure'    }
-  Plug 'kovisoft/paredit',       { 'for': 'clojure'    }
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'VimClojure',          { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'kovisoft/paredit',    { 'for': 'clojure' }
 endif
 Plug 'tpope/vim-rails'
-Plug 'groenewege/vim-less',      { 'for': 'less'       }
-Plug 'pangloss/vim-javascript',  { 'for': 'javascript' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee'     }
-Plug 'plasticboy/vim-markdown',  { 'for': 'mkd'        }
-Plug 'slim-template/vim-slim',   { 'for': 'slim'       }
-Plug 'wting/rust.vim',           { 'for': 'rust'       }
+Plug 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+Plug 'kchmck/vim-coffee-script'
+Plug 'plasticboy/vim-markdown'
+Plug 'slim-template/vim-slim'
+Plug 'wting/rust.vim',        { 'for': 'rust'    }
 Plug 'Glench/Vim-Jinja2-Syntax'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
