@@ -210,15 +210,38 @@ silent! if emoji#available()
     endif
   endfunction
 
-  function! MyStatusLine()
+  let s:moons = map(
+  \ ['new_moon', 'waning_crescent_moon', 'last_quarter_moon', 'waning_gibbous_moon', 'full_moon'],
+  \ 'emoji#for(v:val)')
+
+  function! s:statusline_bar(...)
+    let width = 10
+    let [cur, max] = a:0 > 0 ? a:000 : [line('.'), line('$')]
+    let icon = s:moons[(len(s:moons) - 1) * cur / max]
+    let pos = (width - 1) * cur / max
+    return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
+  endfunction
+
+  function! MyStatusLine(...)
+    let active   = a:0 == 0
     let modified = s:statusline_modified()
     let readonly = &readonly ? emoji#for('lock') . ' ' : ''
     let fugitive = s:statusline_fugitive()
     let ft       = s:statusline_filetype()
-    return s:cherry.' %<[%n] %F '.modified.readonly.ft.' '.fugitive.' %=%-14.(%l,%c%V%) %P '.s:cherry
+    let sep      = ' %= '
+    let pos      = ' %l,%c%V '
+    let barhl    = '%#TablineFill#'
+    let bar      = call('s:statusline_bar', a:000)
+    let hl       = active ? '%#StatusLine#' : '%#StatusLineNC#'
+    let pct      = ' %P '
+    return s:cherry.' [%n] %F %<'.modified.readonly.ft.' '.fugitive.sep.pos.barhl.bar.hl.pct.s:cherry
   endfunction
 
-  set statusline=%!MyStatusLine()
+  augroup statusline
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * call setwinvar(winnr(), '&statusline', '%!MyStatusLine()')
+    autocmd WinLeave * call setwinvar(winnr(), '&statusline', printf('%%!MyStatusLine(%d,%d)', line('.'), line('$')))
+  augroup END
 endif
 
 set pastetoggle=<F9>
