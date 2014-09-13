@@ -178,8 +178,6 @@ silent! if emoji#available()
     \ 'yaml.jinja': 'yum'
   \ }, 'emoji#for(v:val)')
 
-  let s:cherry = emoji#for('cherry_blossom')
-
   function! s:statusline_filetype()
     if empty(&filetype)
       return emoji#for('grey_question')
@@ -211,30 +209,31 @@ silent! if emoji#available()
   endfunction
 
   let s:moons = map(
-  \ ['new_moon', 'waning_crescent_moon', 'last_quarter_moon', 'waning_gibbous_moon', 'full_moon'],
-  \ 'emoji#for(v:val)')
+  \ ['new_moon', 'waxing_crescent_moon', 'first_quarter_moon',
+  \  'waxing_gibbous_moon', 'full_moon', 'waning_gibbous_moon',
+  \  'last_quarter_moon', 'waning_crescent_moon', 'new_moon'], 'emoji#for(v:val)')
 
-  function! s:statusline_bar(...)
-    let width = 10
+  function! s:statusline_moonbar(...)
+    let width = len(s:moons)
     let [cur, max] = a:0 > 0 ? a:000 : [line('.'), line('$')]
-    let icon = s:moons[(len(s:moons) - 1) * cur / max]
-    let pos = (width - 1) * cur / max
+    let pos   = width * (cur - 1) / max
+    let icon  = s:moons[pos]
     return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
   endfunction
 
+  let s:cherry = emoji#for('cherry_blossom')
   function! MyStatusLine(...)
-    let active   = a:0 == 0
-    let modified = s:statusline_modified()
-    let readonly = &readonly ? emoji#for('lock') . ' ' : ''
-    let fugitive = s:statusline_fugitive()
-    let ft       = s:statusline_filetype()
-    let sep      = ' %= '
-    let pos      = ' %l,%c%V '
-    let barhl    = '%#TablineFill#'
-    let bar      = call('s:statusline_bar', a:000)
-    let hl       = active ? '%#StatusLine#' : '%#StatusLineNC#'
-    let pct      = ' %P '
-    return s:cherry.' [%n] %F %<'.modified.readonly.ft.' '.fugitive.sep.pos.barhl.bar.hl.pct.s:cherry
+    let mod   = s:statusline_modified()
+    let ro    = &readonly ? emoji#for('lock') . ' ' : ''
+    let fug   = s:statusline_fugitive()
+    let ft    = s:statusline_filetype()
+    let sep   = ' %= '
+    let pos   = ' %l,%c%V '
+    let barhl = '%#TablineFill#'
+    let bar   = call('s:statusline_moonbar', a:000)
+    let hl    = a:0 == 0 ? '%#StatusLine#' : '%#StatusLineNC#'
+    let pct   = ' %P '
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.' '.fug.sep.pos.barhl.bar.hl.pct.s:cherry
   endfunction
 
   augroup statusline
