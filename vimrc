@@ -486,9 +486,9 @@ nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
 
 " ----------------------------------------------------------------------------
-" #! | Shebang (to cancel: CTRL-V)
+" #!! | Shebang
 " ----------------------------------------------------------------------------
-iabbrev <expr> #! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
+iabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
 
 " ============================================================================
