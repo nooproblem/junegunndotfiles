@@ -256,8 +256,9 @@ set ims=-1
 set tags=./tags;/
 
 " Annoying temporary files
-set backupdir=/tmp,.
-set directory=/tmp,.
+set backupdir=/tmp//,.
+set directory=/tmp//,.
+set undodir=/tmp//,.
 
 " Shift-tab on GNU screen
 " http://superuser.com/questions/195794/gnu-screen-shift-tab-issue
