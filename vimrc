@@ -216,7 +216,7 @@ silent! if emoji#available()
   function! s:statusline_moonbar(...)
     let width = len(s:moons)
     let [cur, max] = a:0 > 0 ? a:000 : [line('.'), line('$')]
-    let pos   = width * (cur - 1) / max
+    let pos   = min([width * (cur - 1) / max([1, max - 1]), width - 1])
     let icon  = s:moons[pos]
     return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
   endfunction
