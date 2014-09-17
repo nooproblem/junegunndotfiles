@@ -132,6 +132,7 @@ set nojoinspaces
 set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
+set foldlevelstart=99
 
 
 " %< Where to truncate
@@ -1073,6 +1074,7 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
     \ glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".
     \ glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"), ',')
 endif
+let g:ruby_fold = 1
 
 " ----------------------------------------------------------------------------
 " matchit.vim
@@ -1259,7 +1261,7 @@ let vimclojure#WantNailgun     = 0
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_initial_foldlevel = &foldlevelstart
 
 
 " ============================================================================
@@ -1369,7 +1371,6 @@ command! FZFLines call fzf#run({
 augroup vimrc
   autocmd!
 
-  au BufRead * setlocal foldmethod=manual nofoldenable
   au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
