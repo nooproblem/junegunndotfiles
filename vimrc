@@ -1093,14 +1093,14 @@ endif
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
-if has_key(g:plugs, 'vim-copy-as-rtf')
+silent! if has_key(g:plugs, 'vim-copy-as-rtf')
   xnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
 
 " ----------------------------------------------------------------------------
 " vim-after-object
 " ----------------------------------------------------------------------------
-if has_key(g:plugs, 'vim-after-object')
+silent! if has_key(g:plugs, 'vim-after-object')
   autocmd VimEnter * call after_object#enable('=', '-', ':', '#', ' ', '|')
 endif
 
