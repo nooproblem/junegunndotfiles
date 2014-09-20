@@ -10,11 +10,6 @@ let s:ag     = executable('ag')
 " VIM-PLUG BLOCK
 " ============================================================================
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  !curl --insecure -fLo ~/.vim/autoload/plug.vim
-        \ https://raw.github.com/junegunn/vim-plug/master/plug.vim
-endif
-
 silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
