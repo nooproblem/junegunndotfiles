@@ -214,16 +214,16 @@ silent! if emoji#available()
   \  'waxing_gibbous_moon', 'full_moon', 'waning_gibbous_moon',
   \  'last_quarter_moon', 'waning_crescent_moon', 'new_moon'], 'emoji#for(v:val)')
 
-  function! s:statusline_moonbar(...)
+  function! Moonbar()
     let width = len(s:moons)
-    let [cur, max] = a:0 > 0 ? a:000 : [line('.'), line('$')]
+    let [cur, max] = [line('.'), line('$')]
     let pos   = min([width * (cur - 1) / max([1, max - 1]), width - 1])
     let icon  = s:moons[pos]
     return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
   endfunction
 
   let s:cherry = emoji#for('cherry_blossom')
-  function! MyStatusLine(...)
+  function! MyStatusLine()
     let mod   = s:statusline_modified()
     let ro    = &readonly ? emoji#for('lock') . ' ' : ''
     let fug   = s:statusline_fugitive()
@@ -231,17 +231,19 @@ silent! if emoji#available()
     let sep   = ' %= '
     let pos   = ' %l,%c%V '
     let barhl = '%#TablineFill#'
-    let bar   = call('s:statusline_moonbar', a:000)
-    let hl    = a:0 == 0 ? '%#StatusLine#' : '%#StatusLineNC#'
+    let hl    = w:active ? '%#StatusLine#' : '%#StatusLineNC#'
     let pct   = ' %P '
-    return s:cherry.' [%n] %F %<'.mod.ro.ft.' '.fug.sep.pos.barhl.bar.hl.pct.s:cherry
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.' '.fug.sep.pos.
+          \ barhl.'%{Moonbar()}'.hl.pct.s:cherry
   endfunction
 
   augroup statusline
     autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * call setwinvar(winnr(), '&statusline', '%!MyStatusLine()')
-    autocmd WinLeave * call setwinvar(winnr(), '&statusline', printf('%%!MyStatusLine(%d,%d)', line('.'), line('$')))
+    autocmd VimEnter,WinEnter,BufWinEnter * let w:active = 1
+    autocmd WinLeave * let w:active = 0
   augroup END
+
+  set statusline=%!MyStatusLine()
 endif
 
 set pastetoggle=<F9>
@@ -1101,7 +1103,7 @@ endif
 " vim-after-object
 " ----------------------------------------------------------------------------
 silent! if has_key(g:plugs, 'vim-after-object')
-  autocmd VimEnter * silent! call after_object#enable('=', '-', ':', '#', ' ', '|')
+  " autocmd VimEnter * silent! call after_object#enable('=', '-', ':', '#', ' ', '|')
 endif
 
 " ----------------------------------------------------------------------------
