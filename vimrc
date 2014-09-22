@@ -222,19 +222,18 @@ silent! if emoji#available()
     return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
   endfunction
 
+  hi def link User1 TablineFill
   let s:cherry = emoji#for('cherry_blossom')
   function! MyStatusLine()
-    let mod   = s:statusline_modified()
-    let ro    = &readonly ? emoji#for('lock') . ' ' : ''
-    let fug   = s:statusline_fugitive()
-    let ft    = s:statusline_filetype()
-    let sep   = ' %= '
-    let pos   = ' %l,%c%V '
-    let barhl = '%#TablineFill#'
-    let hl    = w:active ? '%#StatusLine#' : '%#StatusLineNC#'
-    let pct   = ' %P '
+    let mod = s:statusline_modified()
+    let ro  = &readonly ? emoji#for('lock') . ' ' : ''
+    let fug = s:statusline_fugitive()
+    let ft  = s:statusline_filetype()
+    let sep = ' %= '
+    let pos = ' %l,%c%V '
+    let pct = ' %P '
     return s:cherry.' [%n] %F %<'.mod.ro.ft.' '.fug.sep.pos.
-          \ barhl.'%{Moonbar()}'.hl.pct.s:cherry
+          \ '%1*%{Moonbar()}%*'.pct.s:cherry
   endfunction
 
   augroup statusline
