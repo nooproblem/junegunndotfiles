@@ -1102,7 +1102,7 @@ endif
 " vim-after-object
 " ----------------------------------------------------------------------------
 silent! if has_key(g:plugs, 'vim-after-object')
-  " autocmd VimEnter * silent! call after_object#enable('=', '-', ':', '#', ' ', '|')
+  autocmd VimEnter * silent! call after_object#enable('=', '-', ':', '#', ' ', '|')
 endif
 
 " ----------------------------------------------------------------------------
