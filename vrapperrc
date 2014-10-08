@@ -1,5 +1,4 @@
 inoremap jk <Esc>
-vnoremap jk <Esc>
 
 noremap <C-F> <C-D>
 noremap <C-B> <C-U>

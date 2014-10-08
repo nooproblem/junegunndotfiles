@@ -337,7 +337,7 @@ endif
 
 " jk | Escaping!
 noremap! jk <Esc>
-vnoremap jk <Esc>
+xnoremap jk <Esc>
 
 " No delay in visual mode by jk
 xnoremap v <down>
@@ -1149,7 +1149,7 @@ nmap <Leader>a <Plug>(EasyAlign)
 " ----------------------------------------------------------------------------
 let g:github_dashboard   = { 'username': 'junegunn' }
 let g:github_dashboard#d = {
-\ 'username':     'gunn',
+\ 'username':     'jg-choi',
 \ 'password':     $GHE_TOKEN,
 \ 'api_endpoint': 'http://'.$GHE.'/api/v3',
 \ 'web_endpoint': 'http://'.$GHE,
