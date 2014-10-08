@@ -336,8 +336,9 @@ if v:version >= 703
 endif
 
 " jk | Escaping!
-noremap! jk <Esc>
+inoremap jk <Esc>
 xnoremap jk <Esc>
+cnoremap jk <C-c>
 
 " No delay in visual mode by jk
 xnoremap v <down>
