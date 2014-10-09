@@ -181,7 +181,7 @@ silent! if emoji#available()
     \ 'yaml.jinja': 'yum'
   \ }, 'emoji#for(v:val)')
 
-  function! s:statusline_filetype()
+  function! S_filetype()
     if empty(&filetype)
       return emoji#for('grey_question')
     else
@@ -189,7 +189,7 @@ silent! if emoji#available()
     endif
   endfunction
 
-  function! s:statusline_modified()
+  function! S_modified()
     if &modified
       return emoji#for('kiss').' '
     elseif !&modifiable
@@ -199,7 +199,7 @@ silent! if emoji#available()
     endif
   endfunction
 
-  function! s:statusline_fugitive()
+  function! S_fugitive()
     if !exists('g:loaded_fugitive')
       return ''
     endif
@@ -227,23 +227,21 @@ silent! if emoji#available()
   hi def link User1 TablineFill
   let s:cherry = emoji#for('cherry_blossom')
   function! MyStatusLine()
-    let mod = s:statusline_modified()
-    let ro  = &readonly ? emoji#for('lock') . ' ' : ''
-    let fug = s:statusline_fugitive()
-    let ft  = s:statusline_filetype()
+    let mod = '%{S_modified()}'
+    let ro  = "%{&readonly ? emoji#for('lock') . ' ' : ''}"
+    let ft  = '%{S_filetype()}'
+    let fug = ' %{S_fugitive()}'
     let sep = ' %= '
     let pos = ' %l,%c%V '
     let pct = ' %P '
-    return s:cherry.' [%n] %F %<'.mod.ro.ft.' '.fug.sep.pos.
+
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.
           \ '%1*%{Moonbar()}%*'.pct.s:cherry
   endfunction
 
-  augroup statusline
-    autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * let w:active = 1
-    autocmd WinLeave * let w:active = 0
-  augroup END
-
+  " Note that the "%!" expression is evaluated in the context of the
+  " current window and buffer, while %{} items are evaluated in the
+  " context of the window that the statusline belongs to.
   set statusline=%!MyStatusLine()
 endif
 
