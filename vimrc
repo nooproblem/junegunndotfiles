@@ -260,7 +260,9 @@ set tags=./tags;/
 " Annoying temporary files
 set backupdir=/tmp//,.
 set directory=/tmp//,.
-set undodir=/tmp//,.
+if v:version >= 703
+  set undodir=/tmp//,.
+endif
 
 " Shift-tab on GNU screen
 " http://superuser.com/questions/195794/gnu-screen-shift-tab-issue
