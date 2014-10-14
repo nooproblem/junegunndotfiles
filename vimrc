@@ -89,7 +89,6 @@ Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim',        { 'for': 'rust'    }
 Plug 'derekwyatt/vim-scala',  { 'for': 'scala'   }
-Plug 'scrooloose/syntastic',  { 'for': 'scala'   }
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
@@ -1261,11 +1260,6 @@ let vimclojure#WantNailgun     = 0
 " vim-markdown
 " ----------------------------------------------------------------------------
 let g:vim_markdown_initial_foldlevel = &foldlevelstart
-
-" ----------------------------------------------------------------------------
-" syntastic
-" ----------------------------------------------------------------------------
-let g:syntastic_check_on_wq = 0
 
 
 " ============================================================================
