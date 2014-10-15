@@ -72,6 +72,7 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
+alias temp='vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile"'
 
 ### Tmux
 alias tmux="tmux -2"
