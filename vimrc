@@ -492,8 +492,14 @@ nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><
 " ----------------------------------------------------------------------------
 " #!! | Shebang
 " ----------------------------------------------------------------------------
-iabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
+inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
+" ----------------------------------------------------------------------------
+" Gcommit --author
+" ----------------------------------------------------------------------------
+if exists('$GIT_AUTHOR')
+  execute 'cnoreabbrev Gc Gcommit --author="'.$GIT_AUTHOR.'"'
+endif
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
