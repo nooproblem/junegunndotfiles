@@ -30,7 +30,7 @@ Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
 Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
 Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-Plug 'junegunn/fzf',           { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf',           { 'do': 'yes \| ./install' }
 if v:version >= 703
   Plug 'junegunn/vim-after-object'
 endif
