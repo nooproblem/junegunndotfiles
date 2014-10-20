@@ -10,7 +10,7 @@ touch bashrc-extra
 for rc in *rc *profile tmux.conf; do
   mkdir -pv bak
   [ -e ~/.$rc ] && mv -v ~/.$rc bak/.$rc
-  ln -sv $BASE/$rc ~/.$rc
+  ln -sfv $BASE/$rc ~/.$rc
 done
 
 # git-prompt
@@ -30,6 +30,7 @@ if [ $(uname -s) = 'Darwin' ]; then
   [ -z "$(which brew)" ] &&
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
 
+  brew update
   brew install \
     ag ant cmus coreutils cscope ctags \
     fish git gnuplot graphviz imagemagick leiningen libgit2 \
@@ -42,19 +43,5 @@ else
 fi
 
 tmux source-file ~/.tmux.conf
-
-# fzf
-if [ -n "$(which git)" ]; then
-  if [ ! -d ~/.fzf ]; then
-    git clone https://github.com/junegunn/fzf.git ~/.fzf
-  else
-    (cd ~/.fzf; git pull origin master)
-  fi
-else
-  mkdir -p ~/.fzf
-  curl -L https://github.com/junegunn/fzf/archive/master.tar.gz |
-      tar xz --strip-components 1 -C ~/.fzf
-fi
-yes | ~/.fzf/install
 
 ./install-vim
