@@ -49,12 +49,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 ### OS X
 export COPYFILE_DISABLE=true
 
-### Jars
-printf -v jars ":%s" ~/lib/*.jar
-export CLASSPATH=$CLASSPATH$jars
-unset jars
-
-
 # Aliases
 # --------------------------------------------------------------------
 
