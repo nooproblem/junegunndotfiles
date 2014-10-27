@@ -150,14 +150,15 @@ tx() {
 }
 
 rvm() {
-  unset -f rvm
-
   # Load RVM into a shell session *as a function*
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+  if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+    unset -f rvm
 
-  # Add RVM to PATH for scripting
-  PATH=$PATH:$HOME/.rvm/bin
-  rvm $@
+    source "$HOME/.rvm/scripts/rvm"
+    # Add RVM to PATH for scripting
+    PATH=$PATH:$HOME/.rvm/bin
+    rvm $@
+  fi
 }
 
 gitzip() {
