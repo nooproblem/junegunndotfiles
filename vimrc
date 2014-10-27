@@ -89,6 +89,7 @@ Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim',        { 'for': 'rust'    }
 Plug 'derekwyatt/vim-scala',  { 'for': 'scala'   }
+Plug 'honza/dockerfile.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
