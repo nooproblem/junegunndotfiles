@@ -31,6 +31,7 @@ Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
 Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 Plug 'junegunn/fzf',           { 'do': 'yes \| ./install' }
+Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
   Plug 'junegunn/vim-after-object'
 endif
@@ -76,9 +77,10 @@ endif
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
-  Plug 'VimClojure',          { 'for': 'clojure' }
-  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'kovisoft/paredit',    { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace',        { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-static',    { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
+  Plug 'kovisoft/paredit',           { 'for': 'clojure' }
 endif
 Plug 'tpope/vim-rails'
 Plug 'groenewege/vim-less'
@@ -1256,12 +1258,12 @@ let g:undotree_WindowLayout = 2
 nnoremap U :UndotreeToggle<CR>
 
 " ----------------------------------------------------------------------------
-" VimClojure
+" clojure
 " ----------------------------------------------------------------------------
-let vimclojure#SetupKeyMap     = 0
-let vimclojure#ParenRainbow    = 1
-let vimclojure#SearchThreshold = 30
-let vimclojure#WantNailgun     = 0
+augroup clojure
+  autocmd!
+  autocmd FileType clojure RainbowParentheses
+augroup END
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -1379,7 +1381,7 @@ augroup vimrc
   au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
-  au Filetype slim if get(b:, 'indentLine_enabled', 0) == 0
+  au FileType slim if get(b:, 'indentLine_enabled', 0) == 0
                \ |   execute 'IndentLinesToggle'
                \ | endif
 
@@ -1389,7 +1391,7 @@ augroup vimrc
   au BufNewFile,BufRead *.coffee-processing set filetype=coffee
 
   " Included syntax
-  au Filetype,ColorScheme * call <SID>file_type_handler()
+  au FileType,ColorScheme * call <SID>file_type_handler()
 
   " Clojure
   au FileType clojure xnoremap <Leader><Leader> :Eval<CR>
