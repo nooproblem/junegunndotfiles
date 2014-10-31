@@ -80,7 +80,8 @@ if v:version >= 703
   Plug 'tpope/vim-fireplace',        { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static',    { 'for': 'clojure' }
   Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
-  Plug 'kovisoft/paredit',           { 'for': 'clojure' }
+  " Plug 'kovisoft/paredit',           { 'for': 'clojure' }
+  Plug 'junegunn/paredit', { 'branch': 'leader', 'for': 'clojure' }
 endif
 Plug 'tpope/vim-rails'
 Plug 'groenewege/vim-less'
