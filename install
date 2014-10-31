@@ -25,6 +25,10 @@ for bin in $BASE/bin/*; do
   ln -svf $bin ~/bin
 done
 
+# leiningen
+mkdir -p ~/.lein
+ln -sfv $BASE/profiles.clj ~/.lein/
+
 if [ $(uname -s) = 'Darwin' ]; then
   # Homebrew
   [ -z "$(which brew)" ] &&
