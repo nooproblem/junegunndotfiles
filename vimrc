@@ -1082,6 +1082,7 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
     \ glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"), ',')
 endif
 let g:ruby_fold = 1
+let g:ruby_no_expensive = 1
 
 " ----------------------------------------------------------------------------
 " matchit.vim
