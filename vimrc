@@ -69,8 +69,6 @@ Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 if v:version >= 703
-  Plug 'airblade/vim-gitgutter'
-else
   Plug 'mhinz/vim-signify'
 endif
 
@@ -1188,20 +1186,9 @@ xnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>gv
 let g:indentLine_enabled = 0
 
 " ----------------------------------------------------------------------------
-" vim-gitgutter
+" vim-signify
 " ----------------------------------------------------------------------------
-nmap gh <Plug>GitGutterNextHunk
-nmap gph <Plug>GitGutterPrevHunk
-
-silent! if emoji#available()
-  let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
-  let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
-  let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
-  let g:gitgutter_sign_modified_removed = emoji#for('collision')
-endif
-
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
+let g:signify_vcs_list = [ 'git', 'hg' ]
 
 " ----------------------------------------------------------------------------
 " vim-emoji :dog: :cat: :rabbit:!
