@@ -979,7 +979,7 @@ function! s:btc_after()
   endif
 endfunction
 
-noremap         <Plug>(BTC) <c-l>
+noremap         <Plug>(BTC) <nop>
 inoremap <expr> <Plug>(BTC) <sid>btc_after()
 
 for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1})
