@@ -71,6 +71,11 @@ alias temp='vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile"'
 ### Tmux
 alias tmux="tmux -2"
 alias tmuxls="ls $TMPDIR/tmux*/"
+tping() {
+  for p in $(tmux list-windows -F "#{pane_id}"); do
+    tmux send-keys -t $p Enter
+  done
+}
 
 ### Colored ls
 if [ -x /usr/bin/dircolors ]; then

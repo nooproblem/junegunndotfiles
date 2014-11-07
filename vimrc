@@ -709,7 +709,7 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft == 'mkd' || &ft == 'markdown'
     let map = { 'bash': 'sh' }
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash', 'python', 'java', 'c', 'sql']
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash', 'python', 'java', 'c', 'sql', 'gnuplot']
       call s:syntax_include(get(map, lang, lang), '```'.lang, '```', 0)
     endfor
 
