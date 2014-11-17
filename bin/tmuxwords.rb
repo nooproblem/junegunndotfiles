@@ -50,21 +50,31 @@ else
   end
 end
 
-def tokenize str, prefix
-  tokens = str.split(/\s+/).map { |t| t.gsub(/^\W+|\W+$/, '') }.
-                            concat(str.gsub(/\W/, ' ').split(/\s+/)).
-                            concat(str.split($/).map { |e| e.strip })
+def tokenize str, prefix, min
+  set = Set.new
+  set.merge(chunks = str.split(/\s+/))
+  set.merge(strip_chunks = chunks.map { |t| t.gsub(/^\W+|\W+$/, '') })
+  set.merge(lines = str.split($/).map { |e| e.strip })
+  set.merge(words = str.gsub(/\W/, ' ').split(/\s+/))
+
   prefix &&= /^#{Regexp.escape prefix}/
-  prefix ? tokens.select { |t| t =~ prefix } : tokens
+  case
+  when prefix && min
+    set.select { |t| t =~ prefix && t.length >= min }
+  when prefix
+    set.select { |t| t =~ prefix }
+  when min
+    set.select { |t| t.length >= min }
+  else
+    set
+  end
 rescue
   []
 end
 
 list_panes(opts[:panes]).inject(Set.new) { |set, pane_id|
-  tokens = tokenize(capture_pane(pane_id, opts[:scroll]), opts[:prefix])
-  if min = opts[:min]
-    tokens = tokens.select { |t| t.length >= min }
-  end
+  tokens = tokenize(capture_pane(pane_id, opts[:scroll]),
+                    opts[:prefix], opts[:min])
   set.merge tokens
 }.each do |token|
   puts token
