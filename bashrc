@@ -196,6 +196,11 @@ EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
 
+# boot2docker
+# --------------------------------------------------------------------
+[ "$PLATFORM" = 'Darwin' ] && $(boot2docker shellinit 2> /dev/null)
+
+
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
