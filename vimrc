@@ -1248,10 +1248,12 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 " clojure
 " ----------------------------------------------------------------------------
-augroup clojure
+augroup lisp
   autocmd!
-  autocmd FileType clojure RainbowParentheses
+  autocmd FileType clojure,scheme RainbowParentheses
 augroup END
+
+let g:paredit_smartjump = 1
 
 " ----------------------------------------------------------------------------
 " vim-markdown
