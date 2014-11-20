@@ -115,8 +115,7 @@ set visualbell
 set backspace=indent,eol,start
 set timeoutlen=500
 set whichwrap=b,s
-set shortmess=aI
-set shortmess+=T
+set shortmess=aIT
 set hlsearch " CTRL-L / CTRL-R W
 set incsearch
 set hidden
@@ -135,6 +134,7 @@ set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
 set foldlevelstart=99
+set formatoptions+=j
 
 
 " %< Where to truncate
