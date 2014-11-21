@@ -134,7 +134,7 @@ set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
 set foldlevelstart=99
-set formatoptions+=j
+silent! set formatoptions+=j
 
 
 " %< Where to truncate
@@ -713,11 +713,8 @@ function! s:file_type_handler()
       call s:syntax_include(get(map, lang, lang), '```'.lang, '```', 0)
     endfor
 
-    if &background == 'light'
-      highlight def Snip ctermfg=231
-    else
-      highlight def Snip ctermfg=232
-    endif
+    highlight def link Snip Folded
+
     setlocal textwidth=78
     setlocal completefunc=emoji#complete
   endif
