@@ -100,8 +100,8 @@ else
   fi
   source ~/.git-prompt.sh
   PROMPT_COMMAND='printf "\[\e[38;5;59m\]%$(($COLUMNS - 4))s\r" "$(__git_ps1) ($(date +%m/%d\ %H:%M:%S))"'
-  PS1="\[\e[38;5;110m\]\u\[\e[38;5;108m\]@\[\e[38;5;186m\]\h\[\e[38;5;95m\]:"
-  PS1="$PS1\[\e[38;5;252m\]\w\[\e[38;5;168m\]> \[\e[0m\]"
+  PS1="\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:"
+  PS1="$PS1\[\e[m\]\w\[\e[1;31m\]> \[\e[0m\]"
 fi
 
 
@@ -287,4 +287,4 @@ fs() {
   tmux switch-client -t "$session"
 }
 
-source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
