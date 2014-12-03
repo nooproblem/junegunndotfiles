@@ -35,6 +35,9 @@ Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
   Plug 'junegunn/vim-after-object'
 endif
+if s:darwin
+  Plug 'junegunn/vim-xmark'
+endif
 unlet! g:plug_url_format
 
 " Colors
@@ -1142,7 +1145,7 @@ let g:easy_align_delimiters = {
 xmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
-nmap <Leader>a <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
