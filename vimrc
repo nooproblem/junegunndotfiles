@@ -343,10 +343,6 @@ inoremap jk <Esc>
 xnoremap jk <Esc>
 cnoremap jk <C-c>
 
-" No delay in visual mode by jk
-xnoremap v <down>
-xnoremap V <down>
-
 " Movement in insert mode
 inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
