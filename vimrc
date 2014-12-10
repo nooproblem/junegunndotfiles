@@ -602,7 +602,7 @@ function! s:run_this_script(output)
     let svg = expand('%:r') . '.svg'
     let png = expand('%:r') . '.png'
     execute '!dot -Tsvg '.file.' -o '.svg.' && '
-          \ 'mogrify -density 300 -format png '.svg.' && open '.png.rdr
+          \ 'mogrify -density 300 -format png '.svg.' && open '.svg.rdr
   else
     return
   end
