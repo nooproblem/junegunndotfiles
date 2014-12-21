@@ -75,6 +75,9 @@ if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
 
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
@@ -495,12 +498,6 @@ nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><
 " ----------------------------------------------------------------------------
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
-" ----------------------------------------------------------------------------
-" Gcommit --author
-" ----------------------------------------------------------------------------
-if exists('$GIT_AUTHOR')
-  execute 'cnoreabbrev Gc Gcommit --author="'.$GIT_AUTHOR.'"'
-endif
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
@@ -1406,4 +1403,13 @@ augroup vimrc_help
   autocmd!
   autocmd BufEnter *.txt call s:helptab()
 augroup END
+
+
+" ============================================================================
+" Local vimrc
+" ============================================================================
+let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/vimrc-extra'
+if filereadable(s:local_vimrc)
+  execute 'source' s:local_vimrc
+endif
 

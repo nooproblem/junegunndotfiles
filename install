@@ -7,7 +7,7 @@
 cd $(dirname $BASH_SOURCE)
 BASE=$(pwd)
 touch bashrc-extra
-for rc in *rc *profile tmux.conf; do
+for rc in *rc *profile tmux.conf agignore; do
   mkdir -pv bak
   [ -e ~/.$rc ] && mv -v ~/.$rc bak/.$rc
   ln -sfv $BASE/$rc ~/.$rc
