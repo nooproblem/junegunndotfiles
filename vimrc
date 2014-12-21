@@ -83,6 +83,7 @@ if v:version >= 703
   Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
   Plug 'kovisoft/paredit',           { 'for': 'clojure' }
 endif
+Plug 'fatih/vim-go'
 Plug 'tpope/vim-rails'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'

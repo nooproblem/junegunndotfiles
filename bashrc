@@ -40,7 +40,9 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 
 ### Global
-export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:$PATH:/usr/local/share/python
+mkdir -p ~/go
+export GOPATH=~/go
+export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
 export EDITOR=vim
 export LANG=en_US.UTF-8
 [ "$PLATFORM" = 'Darwin' ] ||
