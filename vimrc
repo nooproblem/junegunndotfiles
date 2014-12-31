@@ -99,6 +99,7 @@ Plug 'derekwyatt/vim-scala',  { 'for': 'scala'   }
 Plug 'honza/dockerfile.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
+  Plug 'rizzatti/dash.vim'
 endif
 
 call plug#end()
