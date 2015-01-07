@@ -41,8 +41,11 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 
 ### Global
 mkdir -p ~/go
-export GOPATH=~/go
-export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
+export GOPATH=~/gosrc
+if [ -z "$PATH_EXPANDED" ]; then
+  export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
+  export PATH_EXPANDED=1
+fi
 export EDITOR=vim
 export LANG=en_US.UTF-8
 [ "$PLATFORM" = 'Darwin' ] ||

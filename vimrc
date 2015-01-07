@@ -1375,6 +1375,7 @@ augroup vimrc
   au BufNewFile,BufRead *.icc               set filetype=cpp
   au BufNewFile,BufRead *.pde               set filetype=java
   au BufNewFile,BufRead *.coffee-processing set filetype=coffee
+  au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
 
   " Included syntax
   au FileType,ColorScheme * call <SID>file_type_handler()
