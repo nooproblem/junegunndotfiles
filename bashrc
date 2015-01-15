@@ -231,7 +231,7 @@ EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
-export FZF_DEFAULT_OPTS='-x -s 10000'
+export FZF_DEFAULT_OPTS='-x'
 
 # fd - cd to selected directory
 fd() {
