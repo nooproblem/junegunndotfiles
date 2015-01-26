@@ -142,7 +142,15 @@ set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
 set foldlevelstart=99
-silent! set formatoptions+=j
+
+if has('patch-7.3.541')
+  set formatoptions+=j
+endif
+if has('patch-7.4.338')
+  let &showbreak = '↳ '
+  set breakindent
+  set breakindentopt=sbr
+endif
 
 
 " %< Where to truncate
@@ -1211,7 +1219,7 @@ function! s:goyo_enter()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
-  set scrolloff=999
+  hi NonText ctermfg=101
   Limelight
 endfunction
 
@@ -1223,7 +1231,6 @@ function! s:goyo_leave()
   elseif exists('$TMUX')
     silent !tmux set status on
   endif
-  set scrolloff=5
   Limelight!
 endfunction
 
