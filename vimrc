@@ -26,11 +26,11 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/vader.vim',     { 'on': 'Vader', 'for': 'vader' }
-Plug 'junegunn/vim-ruby-x',    { 'on': 'RubyX' }
-Plug 'junegunn/goyo.vim',      { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-Plug 'junegunn/fzf',           { 'do': 'yes \| ./install' }
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
+Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
+Plug 'junegunn/fzf',        { 'do': 'yes \| ./install' }
 Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
   Plug 'junegunn/vim-after-object'
@@ -1219,7 +1219,7 @@ function! s:goyo_enter()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
-  hi NonText ctermfg=101
+  " hi NonText ctermfg=101
   Limelight
 endfunction
 
