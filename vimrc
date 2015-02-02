@@ -1372,7 +1372,6 @@ augroup vimrc
   autocmd!
 
   au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
-  au BufWritePost tmux.conf,.tmux.conf silent !tmux source-file %:p
 
   " IndentLines
   au FileType slim if get(b:, 'indentLine_enabled', 0) == 0

@@ -34,16 +34,13 @@ if [ $(uname -s) = 'Darwin' ]; then
   [ -z "$(which brew)" ] &&
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
 
+  echo "Updating homebrew"
   brew update
   brew install \
     ag ant cmus coreutils cscope ctags \
     fish git gnuplot graphviz imagemagick leiningen libgit2 \
-    macvim maven memcached mysql ranger reattach-to-user-namespace redis \
-    rust sl tmux tree unrar vim wget zsh \
-    scala sbt
-else
-  rm ~/.tmux.conf
-  grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
+    macvim maven memcached mysql redis \
+    rust sl tmux tree unrar vim wget zsh
 fi
 
 tmux source-file ~/.tmux.conf
