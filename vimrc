@@ -3,8 +3,6 @@
 " ============================================================================
 
 let s:darwin = has('mac')
-let s:ag     = executable('ag')
-
 
 " ============================================================================
 " VIM-PLUG BLOCK
@@ -62,7 +60,6 @@ Plug 'tpope/vim-dispatch'
 
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
-Plug 'mileszs/ack.vim',     { 'on': 'Ack'               }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
@@ -143,6 +140,7 @@ set diffopt=filler,vertical
 set autoread
 set clipboard=unnamed
 set foldlevelstart=99
+set grepformat=%f:%l:%c:%m,%f:%l:%m
 
 if has('patch-7.3.541')
   set formatoptions+=j
@@ -1094,11 +1092,12 @@ runtime macros/matchit.vim
 " ----------------------------------------------------------------------------
 " ack.vim
 " ----------------------------------------------------------------------------
-if s:ag
-  let g:ackprg = 'ag --nogroup --nocolor --column'
-elseif !executable('ack')
-  let g:ackprg = 'grep -rn "$*" * \| sed "s/:\([0-9]*\):/:\1:1:/" '
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
 endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
