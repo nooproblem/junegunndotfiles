@@ -366,7 +366,7 @@ inoremap <C-^> <C-o><C-^>
 nnoremap Y y$
 
 " qq to record, Q to replay
-nnoremap Q @q
+nmap Q @q
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
