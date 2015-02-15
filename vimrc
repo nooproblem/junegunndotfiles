@@ -85,15 +85,15 @@ if v:version >= 703
   Plug 'kovisoft/paredit',           { 'for': 'clojure' }
 endif
 Plug 'fatih/vim-go'
-Plug 'tpope/vim-rails'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'wting/rust.vim',        { 'for': 'rust'    }
-Plug 'derekwyatt/vim-scala',  { 'for': 'scala'   }
+Plug 'tpope/vim-rails',      { 'for': []      }
+Plug 'wting/rust.vim',       { 'for': 'rust'  }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'honza/dockerfile.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
