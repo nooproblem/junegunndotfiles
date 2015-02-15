@@ -95,6 +95,7 @@ Plug 'tpope/vim-rails',      { 'for': []      }
 Plug 'wting/rust.vim',       { 'for': 'rust'  }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'honza/dockerfile.vim'
+Plug 'solarnz/thrift.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
   Plug 'rizzatti/dash.vim'
