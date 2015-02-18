@@ -1210,8 +1210,10 @@ endfunction
 command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 
 " ----------------------------------------------------------------------------
-" goyo.vim
+" goyo.vim + limelight.vim
 " ----------------------------------------------------------------------------
+let g:limelight_paragraph_span = 1
+
 function! s:goyo_enter()
   if has('gui_running')
     set fullscreen
