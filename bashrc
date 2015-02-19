@@ -305,7 +305,7 @@ if [ -n "$TMUX_PANE" ]; then
   }
 
   # ftpane - switch pane (@george-b)
-  ftpane () {
+  ftpane() {
     local panes current_window target target_window target_pane
     panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
     current_window=$(tmux display-message -p '#I')
