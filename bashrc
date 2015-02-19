@@ -9,6 +9,7 @@
 export PLATFORM=$(uname -s)
 [ -f /etc/bashrc ] && . /etc/bashrc
 
+BASE=$(dirname $(readlink $BASH_SOURCE))
 
 # Options
 # --------------------------------------------------------------------
@@ -72,6 +73,8 @@ alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
 alias temp='vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile"'
+
+[ "$PLATFORM" = 'Darwin' ] && alias tac='tail -r'
 
 ### Tmux
 alias tmux="tmux -2"
@@ -219,7 +222,7 @@ repeat() {
   done
 }
 
-EXTRA=$(dirname $(readlink $BASH_SOURCE))/bashrc-extra
+EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
 
@@ -333,6 +336,17 @@ fs() {
   session=$(tmux list-sessions -F "#{session_name}" | \
     fzf --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
+}
+
+# Z integration
+source $BASE/z.sh
+unalias z 2> /dev/null
+z() {
+  if [[ -z "$*" ]]; then
+    cd "$(_z -l 2>&1 | tac | fzf | sed 's/^[0-9]* *//')"
+  else
+    _z "$@"
+  fi
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
