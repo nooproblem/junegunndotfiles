@@ -32,16 +32,20 @@ ln -sfv $BASE/profiles.clj ~/.lein/
 if [ $(uname -s) = 'Darwin' ]; then
   # Homebrew
   [ -z "$(which brew)" ] &&
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
   brew update
   brew install \
     ag ant cmus coreutils cscope ctags \
-    fish git gnuplot graphviz imagemagick leiningen libgit2 \
-    macvim maven memcached mysql redis \
-    rust sl tmux tree unrar vim wget zsh
+    fish git gnuplot graphviz imagemagick leiningen \
+    maven memcached mysql redis \
+    sl tmux tree unrar vim wget zsh
+  brew install macvim
 fi
+
+git config --global user.email "junegunn.c@gmail.com"
+git config --global user.name "Junegunn Choi"
 
 tmux source-file ~/.tmux.conf
 

@@ -41,8 +41,8 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 
 ### Global
-mkdir -p ~/go
 export GOPATH=~/gosrc
+mkdir -p $GOPATH
 if [ -z "$PATH_EXPANDED" ]; then
   export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
   export PATH_EXPANDED=1
