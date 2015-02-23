@@ -402,12 +402,12 @@ nnoremap <leader>5 m`^i##### <esc>``6l
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-nnoremap <silent> <C-k> :execute ':move '.max([0,         line('.') - 2])<cr>
-nnoremap <silent> <C-j> :execute ':move '.min([line('$'), line('.') + 1])<cr>
+nnoremap <silent> <C-k> :move-2<cr>
+nnoremap <silent> <C-j> :move+<cr>
 nnoremap <silent> <C-h> <<
 nnoremap <silent> <C-l> >>
-xnoremap <silent> <C-k> :<C-U>execute 'normal! gv:move '.max([0,         line("'<") - 2])."\n"<cr>gv
-xnoremap <silent> <C-j> :<C-U>execute 'normal! gv:move '.min([line('$'), line("'>") + 1])."\n"<cr>gv
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
 xnoremap <silent> <C-h> <gv
 xnoremap <silent> <C-l> >gv
 xnoremap < <gv
