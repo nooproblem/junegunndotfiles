@@ -241,13 +241,13 @@ export FZF_DEFAULT_OPTS='-x'
 
 # fd - cd to selected directory
 fd() {
-  DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf` \
+  DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf-tmux` \
     && cd "$DIR"
 }
 
 # fda - including hidden directories
 fda() {
-  DIR=`find ${1:-*} -type d 2> /dev/null | fzf` && cd "$DIR"
+  DIR=`find ${1:-*} -type d 2> /dev/null | fzf-tmux` && cd "$DIR"
 }
 
 # Figlet font selector
@@ -261,7 +261,7 @@ fgl() {
 fbr() {
   local branches branch
   branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf +s +m) &&
+  branch=$(echo "$branches" | fzf-tmux -h 15 +m) &&
   git checkout $(echo "$branch" | sed "s/.* //")
 }
 
@@ -289,7 +289,7 @@ ftags() {
 #   - Exit if there's no match (--exit-0)
 fe() {
   local file
-  file=$(fzf --query="$1" --select-1 --exit-0)
+  file=$(fzf-tmux --query="$1" --select-1 --exit-0)
   [ -n "$file" ] && ${EDITOR:-vim} "$file"
 }
 
@@ -336,7 +336,7 @@ fi
 fs() {
   local session
   session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
+    fzf-tmux --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
 }
 
@@ -345,7 +345,7 @@ source $BASE/z.sh
 unalias z 2> /dev/null
 z() {
   if [[ -z "$*" ]]; then
-    cd "$(_z -l 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
+    cd "$(_z -l 2>&1 | fzf-tmux +s --tac | sed 's/^[0-9,.]* *//')"
   else
     _z "$@"
   fi
