@@ -260,9 +260,9 @@ fgl() {
 # fbr - checkout git branch
 fbr() {
   local branches branch
-  branches=$(git branch) &&
+  branches=$(git branch --all --contains | grep -v HEAD) &&
   branch=$(echo "$branches" | fzf-tmux -h 15 +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //")
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
 # fco - checkout git commit
