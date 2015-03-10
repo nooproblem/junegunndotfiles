@@ -333,8 +333,7 @@ nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
 
 " Tag stack
-nnoremap g<Left>  :pop<cr>
-nnoremap g<Right> :tag<cr>
+nnoremap g[ :pop<cr>
 
 " Jump list
 nnoremap _ <C-o>
@@ -1277,13 +1276,13 @@ nnoremap <silent> <Leader><Leader> :FZF -m<CR>
 
 " Open files in horizontal split
 nnoremap <silent> <Leader>s :call fzf#run({
-\   'tmux_height': '40%',
-\   'sink':        'botright split' })<CR>
+\   'down': '40%',
+\   'sink': 'botright split' })<CR>
 
 " Open files in vertical horizontal split
 nnoremap <silent> <Leader>v :call fzf#run({
-\   'tmux_width': winwidth('.') / 2,
-\   'sink':       'vertical botright split' })<CR>
+\   'right': winwidth('.') / 2,
+\   'sink':  'vertical botright split' })<CR>
 
 " ----------------------------------------------------------------------------
 " Choose color scheme
@@ -1292,10 +1291,10 @@ nnoremap <silent> <Leader>C :call fzf#run({
 \   'source':
 \     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
 \         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-\   'sink':       'colo',
-\   'options':    '+m',
-\   'tmux_width': 20,
-\   'launcher':   'iterm2-launcher 20 30 %s'
+\   'sink':     'colo',
+\   'options':  '+m',
+\   'left':     30,
+\   'launcher': 'iterm2-launcher 20 30 %s'
 \ })<CR>
 
 " ----------------------------------------------------------------------------
@@ -1313,10 +1312,10 @@ function! s:bufopen(e)
 endfunction
 
 nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':      reverse(<sid>buflist()),
-\   'sink':        function('<sid>bufopen'),
-\   'options':     '+m',
-\   'tmux_height': '40%'
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
 \ })<CR>
 
 " ----------------------------------------------------------------------------
@@ -1362,7 +1361,7 @@ command! FZFLines call fzf#run({
 \   'source':  <sid>buffer_lines(),
 \   'sink':    function('<sid>line_handler'),
 \   'options': '--extended --nth=3..',
-\   'tmux_height': '60%'
+\   'down':    '60%'
 \})
 
 " ----------------------------------------------------------------------------

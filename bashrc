@@ -261,7 +261,7 @@ fgl() {
 fbr() {
   local branches branch
   branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf +s +m) &&
+  branch=$(echo "$branches" | fzf-tmux +s +m -h 15) &&
   git checkout $(echo "$branch" | sed "s/.* //")
 }
 
