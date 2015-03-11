@@ -335,9 +335,8 @@ nnoremap <Leader>Q :qa!<cr>
 " Tag stack
 nnoremap g[ :pop<cr>
 
-" Jump list
-nnoremap _ <C-o>
-nnoremap + <C-i>
+" Jump list (to newer position)
+nnoremap <C-p> <C-i>
 
 " <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -1149,6 +1148,7 @@ xmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
 nmap ga <Plug>(EasyAlign)
+nmap gaa ga_
 
 " xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
