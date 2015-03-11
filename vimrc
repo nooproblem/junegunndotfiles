@@ -1402,6 +1402,9 @@ augroup vimrc
 
   " Unset paste on InsertLeave
   au InsertLeave * silent! set nopaste
+
+  " Close preview window
+  au InsertLeave * if !pumvisible()|pclose|endif
 augroup END
 
 " ----------------------------------------------------------------------------
