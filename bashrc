@@ -340,6 +340,12 @@ fs() {
   tmux switch-client -t "$session"
 }
 
+# RVM integration
+frb() {
+  rb=$(rvm list | grep ruby | cut -c 4- | awk '{print $1}' | fzf-tmux -l 30 +m --reverse) &&
+  rvm use $rb
+}
+
 # Z integration
 source $BASE/z.sh
 unalias z 2> /dev/null
