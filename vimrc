@@ -1050,6 +1050,14 @@ onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW'
 onoremap <silent> ac :<C-U>call   <SID>inner_blockwise_column('',           'aw')<CR>
 onoremap <silent> aC :<C-U>call   <SID>inner_blockwise_column('',           'aW')<CR>
 
+" ----------------------------------------------------------------------------
+" ?i<shift>-` | Inside ``` block
+" ----------------------------------------------------------------------------
+xnoremap <silent> i~ g_?^```<cr>jo/^```<cr>kV:<c-u>nohl<cr>gv
+xnoremap <silent> a~ g_?^```<cr>o/^```<cr>V:<c-u>nohl<cr>gv
+onoremap <silent> i~ :<C-U>execute "normal vi`"<cr>
+onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
+
 
 " ============================================================================
 " PLUGINS
