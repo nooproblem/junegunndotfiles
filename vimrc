@@ -447,10 +447,17 @@ if has("cscope")
   nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
   nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
   nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  " nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
   nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  " nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
   nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+  " extends
+  nnoremap <C-\>e :cs find t extends <C-R>=expand("<cword>")<CR><CR>
+  " implements
+  nnoremap <C-\>i :cs find t implements <C-R>=expand("<cword>")<CR><CR>
+  " new
+  nnoremap <C-\>n :cs find t new <C-R>=expand("<cword>")<CR><CR>
 endif
 
 " ----------------------------------------------------------------------------
