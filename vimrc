@@ -882,7 +882,23 @@ xnoremap <leader>? y:call <SID>goog()<cr>
 " ============================================================================
 " TEXT OBJECTS
 " ============================================================================
-"
+
+" ----------------------------------------------------------------------------
+" Common
+" ----------------------------------------------------------------------------
+function! s:textobj_cancel()
+  if v:operator == 'c'
+    augroup textobj_undo_empty_change
+      autocmd InsertLeave <buffer> execute 'normal! u'
+            \| execute 'autocmd! textobj_undo_empty_change'
+            \| execute 'augroup! textobj_undo_empty_change'
+    augroup END
+  endif
+endfunction
+
+noremap         <Plug>(TOC) <nop>
+inoremap <expr> <Plug>(TOC) exists('#textobj_undo_empty_change')?"\<esc>":''
+
 " ----------------------------------------------------------------------------
 " ?ii / ?ai | indent-object
 " ?io       | strictly-indent-object
@@ -944,7 +960,6 @@ function! s:between_the_chars(incll, inclr, char, vis)
   let before = line[0 : cursor - 1]
   let after  = line[cursor : -1]
   let [b, e] = [cursor, cursor]
-  let s:btc  = 1
 
   try
     let i = stridx(join(reverse(split(before, '\zs')), ''), a:char)
@@ -957,16 +972,9 @@ function! s:between_the_chars(incll, inclr, char, vis)
 
     execute printf("normal! 0%dlhv0%dlh", b, e)
   catch 'exit'
-    let s:btc = 0
+    call s:textobj_cancel()
     if a:vis
       normal! gv
-    endif
-    " Undo invalid change on repeat
-    if v:operator == 'c'
-      let &l:undolevels = &l:undolevels
-      augroup btc_undo_invalid_change
-        autocmd InsertLeave <buffer> execute 'normal! u' | autocmd! btc_undo_invalid_change
-      augroup END
     endif
   finally
     " Cleanup command history
@@ -977,24 +985,11 @@ function! s:between_the_chars(incll, inclr, char, vis)
   endtry
 endfunction
 
-" To exit insert mode immediately on fail
-function! s:btc_after()
-  if s:btc
-    return ''
-  else
-    autocmd! btc_undo_invalid_change
-    return "\<esc>" . (col('.') > 1 ? 'l' : '')
-  endif
-endfunction
-
-noremap         <Plug>(BTC) <nop>
-inoremap <expr> <Plug>(BTC) <sid>btc_after()
-
 for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1})
-  execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(BTC)", s:c, s:c)
-  execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(BTC)", s:c, s:c)
-  execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(BTC)", s:c, s:l, s:c)
-  execute printf("omap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 0)<CR><Plug>(BTC)", s:c, s:l, s:c)
+  execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(TOC)", s:c, s:c)
+  execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(TOC)", s:c, s:c)
+  execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(TOC)", s:c, s:l, s:c)
+  execute printf("omap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 0)<CR><Plug>(TOC)", s:c, s:l, s:c)
 endfor
 
 " ----------------------------------------------------------------------------
