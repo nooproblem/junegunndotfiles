@@ -104,10 +104,10 @@ if [ "$PLATFORM" = Linux ]; then
   PS1="$PS1\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
 else
   ### git-prompt
-  if [ ! -e ~/.git-prompt.sh ]; then
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -O ~/.git-prompt.sh
+  __git_ps1() { :;}
+  if [ -e ~/.git-prompt.sh ]; then
+    source ~/.git-prompt.sh
   fi
-  source ~/.git-prompt.sh
   PROMPT_COMMAND='printf "\[\e[38;5;59m\]%$(($COLUMNS - 4))s\r" "$(__git_ps1) ($(date +%m/%d\ %H:%M:%S))"'
   PS1="\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:"
   PS1="$PS1\[\e[m\]\w\[\e[1;31m\]> \[\e[0m\]"
