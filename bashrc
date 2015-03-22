@@ -273,15 +273,16 @@ fco() {
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 
-# fshow - git show commit
+# fshow - git commit browser
 fshow() {
-  local sha q
-  while sha=$(
+  local out sha q
+  while out=$(
       git log --decorate=full --graph --oneline --color=always |
-      fzf --ansi --no-multi --no-sort --reverse --query="$q" --print-query); do
-    q=$(head -1 <<< "$sha")
-    sha=$(sed '1d;/[a-z0-9]/!d;s/^[^a-z0-9]*//' <<< "$sha" | awk '{print $1}')
-    [ -n "$sha" ] && git show --color=always $sha | less -R
+      fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
+    q=$(head -1 <<< "$out")
+    while read sha; do
+      [ -n "$sha" ] && git show --color=always $sha | less -R
+    done < <(sed '1d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
   done
 }
 
