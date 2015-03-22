@@ -247,7 +247,7 @@ fd() {
 
 # fda - including hidden directories
 fda() {
-  DIR=`find ${1:-*} -type d 2> /dev/null | fzf-tmux` && cd "$DIR"
+  DIR=`find ${1:-.} -type d 2> /dev/null | fzf-tmux` && cd "$DIR"
 }
 
 # Figlet font selector
@@ -271,6 +271,18 @@ fco() {
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf +s +m -e) &&
   git checkout $(echo "$commit" | sed "s/ .*//")
+}
+
+# fshow - git show commit
+fshow() {
+  local sha q
+  while sha=$(
+      git log --decorate=full --graph --oneline --color=always |
+      fzf --ansi --no-multi --no-sort --reverse --query="$q" --print-query); do
+    q=$(head -1 <<< "$sha")
+    sha=$(sed '1d;/[a-z0-9]/!d;s/^[^a-z0-9]*//' <<< "$sha" | awk '{print $1}')
+    [ -n "$sha" ] && git show --color=always $sha | less -R
+  done
 }
 
 # ftags - search ctags
