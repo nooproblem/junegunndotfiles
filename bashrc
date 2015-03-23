@@ -277,7 +277,8 @@ fco() {
 fshow() {
   local out sha q
   while out=$(
-      git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" --color=always |
+      git log --graph --color=always \
+          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" |
       fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
     q=$(head -1 <<< "$out")
     while read sha; do
