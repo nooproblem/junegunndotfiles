@@ -209,7 +209,7 @@ gitdiffb() {
   --abbrev-commit --date=relative $1..$2
 }
 
-alias gitv='git log --decorate=short --graph --oneline'
+alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 miniprompt() {
   unset PROMPT_COMMAND
@@ -277,7 +277,7 @@ fco() {
 fshow() {
   local out sha q
   while out=$(
-      git log --decorate=short --graph --oneline --color=always |
+      git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" --color=always |
       fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
     q=$(head -1 <<< "$out")
     while read sha; do
