@@ -343,6 +343,14 @@ if [ -n "$TMUX_PANE" ]; then
 
   # Bind CTRL-X-CTRL-T to tmuxwords.sh
   bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e"'
+
+elif [ -d ~/github/iTerm2-Color-Schemes/ ]; then
+  ftheme() {
+    local base
+    base=~/github/iTerm2-Color-Schemes
+    $base/tools/preview.rb "$(
+      ls {$base/schemes,~/.vim/plugged/seoul256.vim/iterm2}/*.itermcolors | fzf)"
+  }
 fi
 
 # Switch tmux-sessions
@@ -355,8 +363,10 @@ fs() {
 
 # RVM integration
 frb() {
-  rb=$((echo system; rvm list | grep ruby | cut -c 4-) | awk '{print $1}' | fzf-tmux -l 30 +m --reverse) &&
-  rvm use $rb
+  local rb
+  rb=$((echo system; rvm list | grep ruby | cut -c 4-) |
+       awk '{print $1}' |
+       fzf-tmux -l 30 +m --reverse) && rvm use $rb
 }
 
 # Z integration
