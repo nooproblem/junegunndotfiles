@@ -275,7 +275,7 @@ fco() {
 
 # fshow - git commit browser (enter for show, ctrl-d for diff)
 fshow() {
-  local out sha q k
+  local out shas sha q k
   while out=$(
       git log --graph --color=always \
           --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" |
@@ -283,11 +283,13 @@ fshow() {
           --print-query --expect=ctrl-d); do
     q=$(head -1 <<< "$out")
     k=$(head -2 <<< "$out" | tail -1)
-    sha=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
     if [ "$k" = 'ctrl-d' ]; then
-      git diff --color=always $sha | less -R
+      git diff --color=always $shas | less -R
     else
-      git show --color=always $sha | less -R
+      while read sha; do
+        [ -n "$sha" ] && git show --color=always $sha | less -R
+      done <<< "$shas"
     fi
   done
 }
