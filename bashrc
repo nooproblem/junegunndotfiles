@@ -273,36 +273,22 @@ fco() {
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 
-# fdiff - show diff between two commits
-fdiff() {
-  local out sha q
-  while out=$(
-      git log --graph --color=always \
-          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" |
-      fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
-    q=$(head -1 <<< "$out")
-
-    if [ $(wc -l <<< "$out") -ne 3 ]; then
-      echo -n "Please select only two commits."
-      read
-    else
-      git diff --color=always $(
-        sed '1d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}') | less -R
-    fi
-  done
-}
-
-# fshow - git commit browser
+# fshow - git commit browser (enter for show, ctrl-d for diff)
 fshow() {
-  local out sha q
+  local out sha q k
   while out=$(
       git log --graph --color=always \
           --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" |
-      fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
+      fzf --ansi --multi --no-sort --reverse --query="$q" \
+          --print-query --expect=ctrl-d); do
     q=$(head -1 <<< "$out")
-    while read sha; do
-      [ -n "$sha" ] && git show --color=always $sha | less -R
-    done < <(sed '1d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    k=$(head -2 <<< "$out" | tail -1)
+    sha=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    if [ "$k" = 'ctrl-d' ]; then
+      git diff --color=always $sha | less -R
+    else
+      git show --color=always $sha | less -R
+    fi
   done
 }
 
