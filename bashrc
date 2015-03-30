@@ -273,16 +273,24 @@ fco() {
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 
-# fshow - git commit browser
+# fshow - git commit browser (enter for show, ctrl-d for diff)
 fshow() {
-  local out sha q
+  local out shas sha q k
   while out=$(
-      git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" --color=always |
-      fzf --ansi --multi --no-sort --reverse --query="$q" --print-query); do
+      git log --graph --color=always \
+          --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" |
+      fzf --ansi --multi --no-sort --reverse --query="$q" \
+          --print-query --expect=ctrl-d); do
     q=$(head -1 <<< "$out")
-    while read sha; do
-      [ -n "$sha" ] && git show --color=always $sha | less -R
-    done < <(sed '1d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    k=$(head -2 <<< "$out" | tail -1)
+    shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
+    if [ "$k" = 'ctrl-d' ]; then
+      git diff --color=always $shas | less -R
+    else
+      while read sha; do
+        [ -n "$sha" ] && git show --color=always $sha | less -R
+      done <<< "$shas"
+    fi
   done
 }
 
