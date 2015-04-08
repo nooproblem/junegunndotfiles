@@ -144,6 +144,7 @@ set autoread
 set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
+set completeopt=menuone,preview,longest
 
 if has('patch-7.3.541')
   set formatoptions+=j
@@ -261,6 +262,7 @@ silent! if emoji#available()
   " current window and buffer, while %{} items are evaluated in the
   " context of the window that the statusline belongs to.
   set statusline=%!MyStatusLine()
+  set completefunc=emoji#complete
 endif
 
 set pastetoggle=<F9>
@@ -380,14 +382,26 @@ nnoremap <S-tab> <c-w>W
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
 " ----------------------------------------------------------------------------
 function! s:super_duper_tab(k, o)
+  if pumvisible()
+    return a:k
+  endif
+
   let line = getline('.')
   let col = col('.') - 2
-  if !empty(line) && line[col] =~ '\k' && line[col + 1] !~ '\k'
-    return a:k
-  else
+  if empty(line) || line[col] !~ '\k\|[/~.]' || line[col + 1] =~ '\k'
     return a:o
   endif
+
+  let prefix = expand(matchstr(line[0:col], '\S*$'))
+  if prefix =~ '^[~/.]'
+    return "\<c-x>\<c-f>"
+  endif
+  if !empty(&completefunc) && call(&completefunc, [1, prefix]) >= 0
+    return "\<c-x>\<c-u>"
+  endif
+  return a:k
 endfunction
+
 inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
 inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
 
@@ -732,7 +746,6 @@ function! s:file_type_handler()
     highlight def link Snip Folded
 
     setlocal textwidth=78
-    setlocal completefunc=emoji#complete
   endif
 endfunction
 
