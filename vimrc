@@ -1119,6 +1119,29 @@ onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
 " ============================================================================
 
 " ----------------------------------------------------------------------------
+" vim-plug extension
+" ----------------------------------------------------------------------------
+function! s:plug_gx()
+  let sha = matchstr(getline('.'), '^  \zs[0-9a-f]\{7}\ze ')
+  if empty(sha)
+    return
+  endif
+  let name = getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri = get(g:plugs[name], 'uri', '')
+  if uri !~ 'github.com'
+    return
+  endif
+  execute printf('silent !open https://github.com/%s/commit/%s',
+          \ matchstr(uri, '[^:/]*/'.name), sha)
+  redraw!
+endfunction
+
+augroup PlugGx
+  autocmd!
+  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+augroup END
+
+" ----------------------------------------------------------------------------
 " MatchParen delay
 " ----------------------------------------------------------------------------
 let g:matchparen_insert_timeout=5
