@@ -145,6 +145,7 @@ set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview,longest
+set cursorline
 
 if has('patch-7.3.541')
   set formatoptions+=j
@@ -321,8 +322,9 @@ noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
 " Save
-inoremap <C-s> <C-O>:update<cr>
-nnoremap <C-s> :update<cr>
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <leader>s :update<cr>
 
 " Disable CTRL-A on tmux or on screen
 if $TERM =~ 'screen'
