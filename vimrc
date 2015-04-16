@@ -1447,6 +1447,11 @@ command! FZFLines call fzf#run({
 command! -nargs=1 Locate call fzf#run(
       \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
 
+command! FZFTag if !empty(tagfiles()) | call fzf#run({
+\   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
+\   'sink':   'tag',
+\ }) | else | echo 'No tags' | endif
+
 " }}}
 " ============================================================================
 " AUTOCMD {{{
