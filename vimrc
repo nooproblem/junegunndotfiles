@@ -1398,23 +1398,37 @@ nnoremap <silent> <Leader><Enter> :call fzf#run({
 " ----------------------------------------------------------------------------
 " Tmux complete
 " ----------------------------------------------------------------------------
-function! s:tmux_feedkeys(data)
-  echom empty(g:_tmux_q)
-  execute 'normal!' (empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
+function! s:fzf_insert(data)
+  execute 'normal!' (empty(s:fzf_query) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
   startinsert!
 endfunction
 
 function! s:tmux_words(query)
-  let g:_tmux_q = a:query
+  let s:fzf_query = a:query
   let matches = fzf#run({
-  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
-  \ 'sink':        function('s:tmux_feedkeys'),
-  \ 'options':     '--no-multi --query='.a:query,
-  \ 'tmux_height': '40%'
+  \ 'source':  'tmuxwords.rb --all-but-current --scroll 500 --min 5',
+  \ 'sink':    function('s:fzf_insert'),
+  \ 'options': '--no-multi --query="'.escape(a:query, '"').'"',
+  \ 'down':    '40%'
   \ })
 endfunction
 
 inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
+
+" ----------------------------------------------------------------------------
+" Dictionary word completion
+" ----------------------------------------------------------------------------
+function! s:fzf_words(query)
+  let s:fzf_query = a:query
+  let matches = fzf#run({
+  \ 'source':  'cat /usr/share/dict/words',
+  \ 'sink':    function('s:fzf_insert'),
+  \ 'options': '--no-multi --query="'.escape(a:query, '"').'"',
+  \ 'down':    '40%'
+  \ })
+endfunction
+
+inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 
 " ----------------------------------------------------------------------------
 " Buffer search
