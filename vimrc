@@ -746,6 +746,8 @@ function! s:file_type_handler()
     highlight def link Snip Folded
 
     setlocal textwidth=78
+  elseif &ft == 'sh'
+    call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
   endif
 endfunction
 
