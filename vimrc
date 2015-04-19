@@ -26,6 +26,7 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-journal'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -817,6 +818,7 @@ function! s:todo() abort
       let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
       call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
     endfor
+    break
   endfor
 
   if !empty(entries)
@@ -1342,7 +1344,7 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 augroup lisp
   autocmd!
-  autocmd FileType clojure,scheme RainbowParentheses
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
 let g:paredit_smartjump = 1
