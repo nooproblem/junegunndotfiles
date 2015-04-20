@@ -1254,8 +1254,8 @@ let g:github_dashboard   = { 'username': 'junegunn' }
 let g:github_dashboard#d = {
 \ 'username':     'jg-choi',
 \ 'password':     $GHE_TOKEN,
-\ 'api_endpoint': 'http://'.$GHE.'/api/v3',
-\ 'web_endpoint': 'http://'.$GHE,
+\ 'api_endpoint': 'https://'.$GHE.'/api/v3',
+\ 'web_endpoint': 'https://'.$GHE,
 \ 'emoji_map':    { 'user_dashboard': 'office' }
 \ }
 
