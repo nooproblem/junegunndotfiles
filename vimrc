@@ -26,6 +26,7 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-journal'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -748,6 +749,8 @@ function! s:file_type_handler()
     highlight def link Snip Folded
 
     setlocal textwidth=78
+  elseif &ft == 'sh'
+    call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
   endif
 endfunction
 
@@ -817,6 +820,7 @@ function! s:todo() abort
       let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
       call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
     endfor
+    break
   endfor
 
   if !empty(entries)
@@ -1342,7 +1346,7 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 augroup lisp
   autocmd!
-  autocmd FileType clojure,scheme RainbowParentheses
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
 let g:paredit_smartjump = 1
@@ -1400,23 +1404,37 @@ nnoremap <silent> <Leader><Enter> :call fzf#run({
 " ----------------------------------------------------------------------------
 " Tmux complete
 " ----------------------------------------------------------------------------
-function! s:tmux_feedkeys(data)
-  echom empty(g:_tmux_q)
-  execute 'normal!' (empty(g:_tmux_q) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
+function! s:fzf_insert(data)
+  execute 'normal!' (empty(s:fzf_query) ? 'a' : 'ciW')."\<C-R>=a:data\<CR>"
   startinsert!
 endfunction
 
 function! s:tmux_words(query)
-  let g:_tmux_q = a:query
+  let s:fzf_query = a:query
   let matches = fzf#run({
-  \ 'source':      'tmuxwords.rb --all-but-current --scroll 500 --min 5',
-  \ 'sink':        function('s:tmux_feedkeys'),
-  \ 'options':     '--no-multi --query='.a:query,
-  \ 'tmux_height': '40%'
+  \ 'source':  'tmuxwords.rb --all-but-current --scroll 500 --min 5',
+  \ 'sink':    function('s:fzf_insert'),
+  \ 'options': '--no-multi --query="'.escape(a:query, '"').'"',
+  \ 'down':    '40%'
   \ })
 endfunction
 
 inoremap <silent> <C-X><C-T> <C-o>:call <SID>tmux_words(expand('<cWORD>'))<CR>
+
+" ----------------------------------------------------------------------------
+" Dictionary word completion
+" ----------------------------------------------------------------------------
+function! s:fzf_words(query)
+  let s:fzf_query = a:query
+  let matches = fzf#run({
+  \ 'source':  'cat /usr/share/dict/words',
+  \ 'sink':    function('s:fzf_insert'),
+  \ 'options': '--no-multi --query="'.escape(a:query, '"').'"',
+  \ 'down':    '40%'
+  \ })
+endfunction
+
+inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 
 " ----------------------------------------------------------------------------
 " Buffer search
@@ -1448,6 +1466,11 @@ command! FZFLines call fzf#run({
 " ----------------------------------------------------------------------------
 command! -nargs=1 Locate call fzf#run(
       \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
+
+command! FZFTag if !empty(tagfiles()) | call fzf#run({
+\   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
+\   'sink':   'tag',
+\ }) | else | echo 'No tags' | endif
 
 " }}}
 " ============================================================================

@@ -423,7 +423,8 @@ c() {
     "select substr(title, 1, $cols), url
      from urls order by last_visit_time desc" |
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
+  fzf --ansi --multi --no-hscroll --tiebreak=begin |
+  sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
