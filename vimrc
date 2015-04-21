@@ -91,7 +91,7 @@ Plug 'fatih/vim-go'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'tpope/vim-rails',      { 'for': []      }
@@ -148,6 +148,7 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview,longest
 set cursorline
 
+set formatoptions+=1
 if has('patch-7.3.541')
   set formatoptions+=j
 endif
