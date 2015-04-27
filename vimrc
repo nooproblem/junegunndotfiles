@@ -1364,7 +1364,7 @@ let g:vim_markdown_initial_foldlevel = &foldlevelstart
 " ============================================================================
 
 if has('nvim')
-  let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS.' --inline-info'
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
 endif
 
 " ----------------------------------------------------------------------------
