@@ -146,7 +146,7 @@ set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview,longest
-set cursorline
+set nocursorline
 
 set formatoptions+=1
 if has('patch-7.3.541')
@@ -1162,7 +1162,7 @@ nmap gcc <Plug>CommentaryLine
 " ----------------------------------------------------------------------------
 " vim-fugitive
 " ----------------------------------------------------------------------------
-nmap     <Leader>g :Gstatus<CR><c-n>
+nmap     <Leader>g :Gstatus<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
 
 " ----------------------------------------------------------------------------
