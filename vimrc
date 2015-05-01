@@ -374,7 +374,7 @@ inoremap <C-^> <C-o><C-^>
 nnoremap Y y$
 
 " qq to record, Q to replay
-nmap Q @q
+nnoremap Q @q
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
@@ -723,7 +723,7 @@ function! s:syntax_include(lang, b, e, inclusive)
 
   silent! exec printf("syntax include @%s %s", a:lang, syns[0])
   if a:inclusive
-    exec printf('syntax region %sSnip start=%s\(\)\(%s\)\@=%s ' .
+    exec printf('syntax region %sSnip start=%s\(%s\)\@=%s ' .
                 \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
                 \ a:lang, z, a:b, z, z, a:e, z, a:lang)
   else
@@ -1512,7 +1512,7 @@ augroup vimrc
   au InsertLeave * silent! set nopaste
 
   " Close preview window
-  au InsertLeave * if !pumvisible()&&empty(getcmdwintype())|pclose|endif
+  au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
 augroup END
 
 " ----------------------------------------------------------------------------
