@@ -59,10 +59,9 @@ endif
 
 " Tmux
 Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-dispatch'
 
 " Browsing
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesToggle' }
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
@@ -76,9 +75,6 @@ if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
 
-Plug 'mattn/gist-vim'
-Plug 'mattn/webapi-vim'
-
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
@@ -91,7 +87,7 @@ Plug 'fatih/vim-go'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
-" Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim'
@@ -1488,9 +1484,7 @@ augroup vimrc
   au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
-  au FileType slim if get(b:, 'indentLine_enabled', 0) == 0
-               \ |   execute 'IndentLinesToggle'
-               \ | endif
+  au FileType slim execute 'IndentLinesEnable' | doautocmd indentLine Syntax
 
   " File types
   au BufNewFile,BufRead *.icc               set filetype=cpp
