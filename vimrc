@@ -380,6 +380,14 @@ nnoremap <S-tab> <c-w>W
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
 " ----------------------------------------------------------------------------
+function! s:can_complete(func, prefix)
+  if empty(a:func) || call(a:func, [1, '']) < 0
+    return 0
+  endif
+  let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+  return !empty(type(result) == type([]) ? result : result.words)
+endfunction
+
 function! s:super_duper_tab(k, o)
   if pumvisible()
     return a:k
@@ -395,10 +403,10 @@ function! s:super_duper_tab(k, o)
   if prefix =~ '^[~/.]'
     return "\<c-x>\<c-f>"
   endif
-  if !empty(&omnifunc) && call(&omnifunc, [1, prefix]) >= 0
+  if s:can_complete(&omnifunc, prefix)
     return "\<c-x>\<c-o>"
   endif
-  if !empty(&completefunc) && call(&completefunc, [1, prefix]) >= 0
+  if s:can_complete(&completefunc, prefix)
     return "\<c-x>\<c-u>"
   endif
   return a:k
