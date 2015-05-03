@@ -395,6 +395,9 @@ function! s:super_duper_tab(k, o)
   if prefix =~ '^[~/.]'
     return "\<c-x>\<c-f>"
   endif
+  if !empty(&omnifunc) && call(&omnifunc, [1, prefix]) >= 0
+    return "\<c-x>\<c-o>"
+  endif
   if !empty(&completefunc) && call(&completefunc, [1, prefix]) >= 0
     return "\<c-x>\<c-u>"
   endif
