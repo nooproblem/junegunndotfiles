@@ -261,7 +261,6 @@ silent! if emoji#available()
   " current window and buffer, while %{} items are evaluated in the
   " context of the window that the statusline belongs to.
   set statusline=%!MyStatusLine()
-  set completefunc=emoji#complete
 endif
 
 set pastetoggle=<F9>
@@ -746,6 +745,7 @@ function! s:file_type_handler()
     highlight def link Snip Folded
 
     setlocal textwidth=78
+    setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
     call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
   endif
