@@ -1509,7 +1509,11 @@ augroup vimrc
   au InsertLeave * silent! set nopaste
 
   " Close preview window
-  au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+  if exists('##CompleteDone')
+    au CompleteDone * pclose
+  else
+    au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
+  endif
 augroup END
 
 " ----------------------------------------------------------------------------
