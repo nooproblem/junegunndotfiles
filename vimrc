@@ -1409,7 +1409,7 @@ endfunction
 nnoremap <silent> <Leader><Enter> :call fzf#run({
 \   'source':  reverse(<sid>buflist()),
 \   'sink':    function('<sid>bufopen'),
-\   'options': '+m',
+\   'options': '+m --prompt="Buf> "',
 \   'down':    len(<sid>buflist()) + 2
 \ })<CR>
 
