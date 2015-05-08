@@ -289,9 +289,6 @@ set t_kB=[Z
 " set complete=.,w,b,u,t
 set complete-=i
 
-" Color setting
-silent! colo seoul256
-
 " mouse
 set ttymouse=xterm2
 set mouse=a
@@ -305,6 +302,12 @@ endif
 " Keep the cursor on the same column
 set nostartofline
 
+if has('gui_running')
+  set guifont=Monaco:h14 columns=80 lines=40
+  silent! colo seoul256-light
+else
+  silent! colo seoul256
+endif
 
 " }}}
 " ============================================================================
