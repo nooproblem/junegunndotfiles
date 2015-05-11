@@ -228,9 +228,12 @@ EXTRA=$BASE/bashrc-extra
 
 # boot2docker
 # --------------------------------------------------------------------
-dockerinit() {
-  $(boot2docker shellinit 2> /dev/null)
-}
+if [ "$PLATFORM" = 'Darwin' ]; then
+  dockerinit() {
+    [ $(boot2docker status) = 'running' ] || boot2docker start
+    $(boot2docker shellinit 2> /dev/null)
+  }
+fi
 
 
 # fzf (https://github.com/junegunn/fzf)
