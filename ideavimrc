@@ -4,9 +4,6 @@ vnoremap jk <Esc>
 noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
-nnoremap _ <C-o>
-nnoremap + <C-i>
-
 nnoremap Y y$
 nnoremap Q @q
 

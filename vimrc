@@ -536,7 +536,7 @@ nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 " ----------------------------------------------------------------------------
 " <leader>bs | buf-search
 " ----------------------------------------------------------------------------
-nnoremap <leader>bs :cex [] <BAR> bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
+nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
 
 " ----------------------------------------------------------------------------
 " #!! | Shebang
