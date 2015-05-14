@@ -1388,9 +1388,9 @@ ruby << EOF
     items = json[:plugins].map do |info|
       pair = info.values_at :github_owner, :github_repo_name
       next if pair.any? { |e| e.nil? || e.empty? }
-      {:word => pair.join('/'),
-       :menu => info[:category].to_s,
-       :info => info.values_at(:short_desc, :author).compact.join($/)}
+      {word: pair.join('/'),
+       menu: info[:category].to_s,
+       info: info.values_at(:short_desc, :author).compact.join($/)}
     end.compact
     VIM::command("call extend(cands, #{JSON.dump items})")
     break if page >= json[:total_pages]
