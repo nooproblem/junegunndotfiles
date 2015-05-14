@@ -1487,6 +1487,27 @@ command! FZFTag if !empty(tagfiles()) | call fzf#run({
 \   'sink':   'tag',
 \ }) | else | echo 'No tags' | endif
 
+" ----------------------------------------------------------------------------
+" Ag
+" ----------------------------------------------------------------------------
+function! s:ag_handler(lines)
+  if len(a:lines) < 2 | return | endif
+
+  let [key, line] = a:lines[0:1]
+  let [file, line, col] = split(line, ':')[0:2]
+  let cmd = get({'ctrl-x': 'split', 'ctrl-v': 'vertical split', 'ctrl-t': 'tabe'}, key, 'e')
+  execute cmd escape(file, ' %#\')
+  execute line
+  execute 'normal!' col.'|'
+endfunction
+
+command! -nargs=1 Ag call fzf#run({
+\ 'source':  'ag --nogroup --column --color "'.escape(<q-args>, '"\').'"',
+\ 'sink*':    function('<sid>ag_handler'),
+\ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --no-multi',
+\ 'down':    '50%'
+\ })
+
 " }}}
 " ============================================================================
 " AUTOCMD {{{
