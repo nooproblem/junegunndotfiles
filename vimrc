@@ -1372,7 +1372,6 @@ let g:vim_markdown_initial_foldlevel = &foldlevelstart
 " ----------------------------------------------------------------------------
 function! VimAwesomeComplete() abort
   let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[a-zA-Z0-9_/-]*$')
-  let cands = []
   echohl WarningMsg
   echo 'Downloading plugin list from VimAwesome'
   echohl None
@@ -1380,21 +1379,22 @@ ruby << EOF
   require 'json'
   require 'open-uri'
 
-  page, query = 0, VIM::evaluate('prefix').gsub('/', '%20')
-  1.upto(max_pages = 3) do |page|
-    url   = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
-    data  = open(url).read
-    json  = JSON.parse(data, symbolize_names: true)
-    items = json[:plugins].map do |info|
-      pair = info.values_at :github_owner, :github_repo_name
-      next if pair.any? { |e| e.nil? || e.empty? }
-      {word: pair.join('/'),
-       menu: info[:category].to_s,
-       info: info.values_at(:short_desc, :author).compact.join($/)}
-    end.compact
-    VIM::command("call extend(cands, #{JSON.dump items})")
-    break if page >= json[:total_pages]
-  end
+  query = VIM::evaluate('prefix').gsub('/', '%20')
+  items = 1.upto(max_pages = 3).map do |page|
+    Thread.new do
+      url   = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
+      data  = open(url).read
+      json  = JSON.parse(data, symbolize_names: true)
+      json[:plugins].map do |info|
+        pair = info.values_at :github_owner, :github_repo_name
+        next if pair.any? { |e| e.nil? || e.empty? }
+        {word: pair.join('/'),
+         menu: info[:category].to_s,
+         info: info.values_at(:short_desc, :author).compact.join($/)}
+      end.compact
+    end
+  end.each(&:join).map(&:value).inject(:+)
+  VIM::command("let cands = #{JSON.dump items}")
 EOF
   if !empty(cands)
     inoremap <buffer> <c-v> <c-n>
