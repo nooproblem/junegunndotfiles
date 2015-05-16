@@ -1371,7 +1371,7 @@ let g:vim_markdown_initial_foldlevel = &foldlevelstart
 " vimawesome.com
 " ----------------------------------------------------------------------------
 function! VimAwesomeComplete() abort
-  let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[a-zA-Z0-9_/-]*$')
+  let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[.a-zA-Z0-9_/-]*$')
   echohl WarningMsg
   echo 'Downloading plugin list from VimAwesome'
   echohl None
@@ -1382,9 +1382,9 @@ ruby << EOF
   query = VIM::evaluate('prefix').gsub('/', '%20')
   items = 1.upto(max_pages = 3).map do |page|
     Thread.new do
-      url   = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
-      data  = open(url).read
-      json  = JSON.parse(data, symbolize_names: true)
+      url  = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
+      data = open(url).read
+      json = JSON.parse(data, symbolize_names: true)
       json[:plugins].map do |info|
         pair = info.values_at :github_owner, :github_repo_name
         next if pair.any? { |e| e.nil? || e.empty? }
