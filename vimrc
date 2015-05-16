@@ -78,10 +78,10 @@ endif
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
-  Plug 'tpope/vim-fireplace',        { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-static',    { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
-  Plug 'kovisoft/paredit',           { 'for': 'clojure' }
+  Plug 'kovisoft/paredit',    { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-static'
+  Plug 'guns/vim-clojure-highlight'
 endif
 Plug 'fatih/vim-go'
 Plug 'groenewege/vim-less'
