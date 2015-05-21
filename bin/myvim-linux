@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+sed -n '1,/^exit/d; p' "$0" | docker build -t ubuntu-base -
+
+docker run -it -v $(pwd):/myvim ubuntu-base \
+  /bin/bash -c '/myvim/install && bash <(curl -fL https://raw.githubusercontent.com/junegunn/myvim/master/myvim) && mv vim.root /myvim/vim.linux'
+
+exit
+FROM ubuntu:14.04
+MAINTAINER Junegunn Choi <junegunn.c@gmail.com>
+
+# apt-get
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -y --force-yes git curl vim
+
+# Volume
+VOLUME /myvim
+
+# Default CMD
+CMD cd /myvim && ls
