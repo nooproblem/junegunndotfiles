@@ -627,46 +627,48 @@ xnoremap R :<C-U>call <SID>replace()<cr>
 " <F5> / <F6> | Run script
 " ----------------------------------------------------------------------------
 function! s:run_this_script(output)
-  let head  = getline(1)
-  let pos   = stridx(head, '#!')
-  let file  = expand('%:p')
-  let ofile = tempname()
-  let rdr   = " 2>&1 | tee ".ofile
+  let head   = getline(1)
+  let pos    = stridx(head, '#!')
+  let file   = expand('%:p')
+  let ofile  = tempname()
+  let rdr    = " 2>&1 | tee ".ofile
+  let win    = winnr()
+  let prefix = a:output ? 'silent !' : '!'
   " Shebang found
   if pos != -1
-    execute '!'.strpart(head, pos + 2).' '.file.rdr
+    execute prefix.strpart(head, pos + 2).' '.file.rdr
   " Shebang not found but executable
   elseif executable(file)
-    execute '!'.file.rdr
+    execute prefix.file.rdr
   elseif &filetype == 'ruby'
-    execute '!/usr/bin/env ruby '.file.rdr
+    execute prefix.'/usr/bin/env ruby '.file.rdr
   elseif &filetype == 'tex'
-    execute '!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').rdr
+    execute prefix.'latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').rdr
   elseif &filetype == 'dot'
     let svg = expand('%:r') . '.svg'
     let png = expand('%:r') . '.png'
-    execute '!dot -Tsvg '.file.' -o '.svg.' && '
+    execute 'silent !dot -Tsvg '.file.' -o '.svg.' && '
           \ 'mogrify -density 300 -format png '.svg.' && open '.svg.rdr
   else
     return
   end
   if !a:output | return | endif
+  redraw!
 
   " Scratch buffer
-  execute get(s:, 'vim_exec_win', 0) . 'wincmd w'
-  if exists('b:vim_exec_win')
+  if exists('s:vim_exec_buf') && bufexists(s:vim_exec_buf)
+    execute bufwinnr(s:vim_exec_buf).'wincmd w'
     %d
   else
     silent!  bdelete [vim-exec-output]
     silent!  vertical botright split new
     silent!  file [vim-exec-output]
-    setlocal buftype=nofile bufhidden=hide noswapfile
-    let      b:vi_exec_win = 1
-    let      s:vim_exec_win = winnr()
+    setlocal buftype=nofile bufhidden=wipe noswapfile
+    let      s:vim_exec_buf = winnr()
   endif
-  execute  'silent! read' ofile
-  normal!  gg"_dd
-  execute  "normal! \<C-W>p"
+  execute 'silent! read' ofile
+  normal! gg"_dd
+  execute win.'wincmd w'
 endfunction
 inoremap <silent> <F5> <esc>:call <SID>run_this_script(0)<cr>
 nnoremap <silent> <F5> :call <SID>run_this_script(0)<cr>
@@ -900,18 +902,19 @@ call s:map_change_option('b', 'background',
 " ----------------------------------------------------------------------------
 " <Leader>? | Google it
 " ----------------------------------------------------------------------------
-function! s:goog()
+function! s:goog(pat)
   let url = 'https://www.google.co.kr/search?q='
-  " Excerpt from vim-unimpared
+  " Excerpt from vim-unimpaired
   let q = substitute(
-        \ '"'.@0.'"',
+        \ '"'.a:pat.'"',
         \ '[^A-Za-z0-9_.~-]',
         \ '\="%".printf("%02X", char2nr(submatch(0)))',
         \ 'g')
   call system('open ' . url . q)
 endfunction
 
-xnoremap <leader>? y:call <SID>goog()<cr>
+nnoremap <leader>? :call <SID>goog(expand("<cWORD>"))<cr>
+xnoremap <leader>? "gy:call <SID>goog(@g)<cr>gv
 
 
 " }}}
@@ -1339,10 +1342,8 @@ function! s:goyo_leave()
   Limelight!
 endfunction
 
-autocmd! User GoyoEnter
-autocmd! User GoyoLeave
-autocmd  User GoyoEnter nested call <SID>goyo_enter()
-autocmd  User GoyoLeave nested call <SID>goyo_leave()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
 
@@ -1544,7 +1545,7 @@ function! s:ag_handler(lines)
   let cmd = get({'ctrl-x': 'split', 'ctrl-v': 'vertical split', 'ctrl-t': 'tabe'}, key, 'e')
   execute cmd escape(file, ' %#\')
   execute line
-  execute 'normal!' col.'|'
+  execute 'normal!' col.'|zz'
 endfunction
 
 command! -nargs=1 Ag call fzf#run({
