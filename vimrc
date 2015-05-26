@@ -591,14 +591,12 @@ command! Chomp silent! normal! :%s/\s\+$//<cr>
 " :Root | Change directory to the root of the Git repository
 " ----------------------------------------------------------------------------
 function! s:root()
-  let me = expand('%:p:h')
-  let gitd = finddir('.git', me.';')
-  if empty(gitd)
-    echo "Not in git repo"
+  let root = systemlist('git rev-parse --show-toplevel')[0]
+  if v:shell_error
+    echo 'Not in git repo'
   else
-    let gitp = fnamemodify(gitd, ':h')
-    echo "Change directory to: ".gitp
-    execute 'lcd' gitp
+    execute 'lcd' root
+    echo 'Changed directory to: '.root
   endif
 endfunction
 command! Root call s:root()
@@ -1504,7 +1502,7 @@ inoremap <silent> <C-X><C-W> <C-o>:call <SID>fzf_words(expand('<cWORD>'))<CR>
 " ----------------------------------------------------------------------------
 function! s:line_handler(l)
   let keys = split(a:l, ':\t')
-  exec 'buf ' . keys[0]
+  exec 'buf' keys[0]
   exec keys[1]
   normal! ^zz
 endfunction
