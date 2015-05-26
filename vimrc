@@ -99,6 +99,7 @@ if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
   Plug 'rizzatti/dash.vim'
 endif
+Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
 call plug#end()
 endif
