@@ -97,7 +97,7 @@ Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
-  Plug 'rizzatti/dash.vim'
+  Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
