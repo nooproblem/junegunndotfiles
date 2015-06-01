@@ -843,6 +843,24 @@ endfunction
 command! Todo call s:todo()
 
 " ----------------------------------------------------------------------------
+" RefreshChrome
+" ----------------------------------------------------------------------------
+if s:darwin
+  function! s:refresh_chrome(bang)
+    augroup chrome-refresh
+      autocmd!
+      if !a:bang
+        autocmd BufWritePost <buffer> call system(
+        \ "osascript -e 'tell application \"Google Chrome\" to tell the active tab of its first window\n".
+        \ "  reload\n".
+        \ "end tell'")
+      endif
+    augroup END
+  endfunction
+  command! -bang RefreshChrome call s:refresh_chrome(<bang>0)
+endif
+
+" ----------------------------------------------------------------------------
 " EX | chmod +x
 " ----------------------------------------------------------------------------
 command! EX if !empty(expand('%')) && filereadable(expand('%'))
