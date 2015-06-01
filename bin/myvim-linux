@@ -1,10 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
-sed -n '1,/^exit/d; p' "$0" | docker build -t ubuntu-base -
+sed -n '1,/^exit$/d; p' "$0" | docker build -t ubuntu-base -
 
-docker run -it -v $(pwd):/myvim ubuntu-base \
-  /bin/bash -c '/myvim/install && bash <(curl -fL https://raw.githubusercontent.com/junegunn/myvim/master/myvim) && mv vim.root /myvim/vim.linux'
+TMP="$PWD/.myvim"
+cleanup() {
+  rm -rfv "$TMP"
+}
+trap cleanup EXIT SIGINT SIGTERM
+cleanup
+mkdir -p "$TMP" "$TMP/.vim/autoload"
+cp -fv ~/.vimrc "$TMP/"
+cp -fv ~/.vim/autoload/plug.vim "$TMP/.vim/autoload/"
+
+docker run -it -v "$TMP:/myvim" ubuntu-base \
+  /bin/bash -c '
+    mv /myvim/.vim* ~/ &&
+    vim +PlugInstall99 +qa &&
+    bash <(curl -fL https://raw.githubusercontent.com/junegunn/myvim/master/myvim) &&
+    mv vim.root /myvim/vim.linux'
+
+mv -v "$TMP/vim.linux" .
 
 exit
 FROM ubuntu:14.04
