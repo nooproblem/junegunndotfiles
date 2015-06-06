@@ -230,17 +230,12 @@ silent! if emoji#available()
     endif
   endfunction
 
-  let s:moons = map(
-  \ ['new_moon', 'waxing_crescent_moon', 'first_quarter_moon',
-  \  'waxing_gibbous_moon', 'full_moon', 'waning_gibbous_moon',
-  \  'last_quarter_moon', 'waning_crescent_moon', 'new_moon'], 'emoji#for(v:val)')
-
-  function! Moonbar()
-    let width = len(s:moons)
+  let s:braille = split('"⠉⠒⠤⣀', '\zs')
+  function! Braille()
+    let len = len(s:braille)
     let [cur, max] = [line('.'), line('$')]
-    let pos   = min([width * (cur - 1) / max([1, max - 1]), width - 1])
-    let icon  = s:moons[pos]
-    return repeat(' ', pos) . icon . repeat(' ', width - pos - 1)
+    let pos  = min([len * (cur - 1) / max([1, max - 1]), len - 1])
+    return s:braille[pos]
   endfunction
 
   hi def link User1 TablineFill
@@ -254,8 +249,7 @@ silent! if emoji#available()
     let pos = ' %l,%c%V '
     let pct = ' %P '
 
-    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.
-          \ '%1*%{Moonbar()}%*'.pct.s:cherry
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
   endfunction
 
   " Note that the "%!" expression is evaluated in the context of the
