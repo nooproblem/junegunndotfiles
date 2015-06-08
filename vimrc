@@ -1607,7 +1607,7 @@ augroup END
 " ----------------------------------------------------------------------------
 function! s:helptab()
   if &buftype == 'help'
-    execute "normal! \<C-W>T"
+    wincmd T
     nnoremap <buffer> q :q<cr>
   endif
 endfunction
