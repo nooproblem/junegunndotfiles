@@ -1600,6 +1600,12 @@ augroup vimrc
   else
     au InsertLeave * if !pumvisible() && (!exists('*getcmdwintype') || empty(getcmdwintype())) | pclose | endif
   endif
+
+  " Automatic rename of tmux window
+  if exists('$TMUX') && !exists('$NORENAME')
+    au BufEnter * call system('tmux rename-window '.expand('%:t:S'))
+    au VimLeave * call system('tmux set-window automatic-rename on')
+  endif
 augroup END
 
 " ----------------------------------------------------------------------------
