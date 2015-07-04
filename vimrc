@@ -1289,12 +1289,17 @@ function! s:tmux_send(dest) range
   call inputrestore()
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
 endfunction
-nnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>
-nnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
-nnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
-xnoremap <silent> <leader>tt :call <SID>tmux_send('')<cr>gv
-xnoremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>gv
-xnoremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>gv
+for m in ['n', 'x']
+  execute m."noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>"
+  execute m."noremap <silent> <leader>th :call <SID>tmux_send('.left')<cr>"
+  execute m."noremap <silent> <leader>tj :call <SID>tmux_send('.bottom')<cr>"
+  execute m."noremap <silent> <leader>tk :call <SID>tmux_send('.top')<cr>"
+  execute m."noremap <silent> <leader>tl :call <SID>tmux_send('.right')<cr>"
+  execute m."noremap <silent> <leader>ty :call <SID>tmux_send('.top-left')<cr>"
+  execute m."noremap <silent> <leader>to :call <SID>tmux_send('.top-right')<cr>"
+  execute m."noremap <silent> <leader>tn :call <SID>tmux_send('.bottom-left')<cr>"
+  execute m."noremap <silent> <leader>t. :call <SID>tmux_send('.bottom-right')<cr>"
+endfor
 
 " ----------------------------------------------------------------------------
 " indentLine
