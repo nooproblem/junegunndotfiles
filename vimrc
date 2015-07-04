@@ -52,6 +52,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
+Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'ConradIrwin/vim-bracketed-paste'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
@@ -594,27 +595,6 @@ function! s:root()
   endif
 endfunction
 command! Root call s:root()
-
-" ----------------------------------------------------------------------------
-" R | Replace
-" ----------------------------------------------------------------------------
-function! s:replace()
-  if visualmode() ==# 'V'
-    if line("'>") == line('$')
-      normal! gv"_dp
-    else
-      normal! gv"_dP
-    endif
-  else
-    if col("'>") == col('$') - 1
-      normal! gv"_dp
-    else
-      normal! gv"_dP
-    endif
-  endif
-endfunction
-" xnoremap R "_dP
-xnoremap R :<C-U>call <SID>replace()<cr>
 
 " ----------------------------------------------------------------------------
 " <F5> / <F6> | Run script
