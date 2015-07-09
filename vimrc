@@ -1129,21 +1129,21 @@ onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
 " vim-plug extension
 " ----------------------------------------------------------------------------
 function! s:plug_gx()
-  let sha = matchstr(getline('.'), '^  \zs[0-9a-f]\{7}\ze ')
-  if empty(sha)
-    return
-  endif
-  let name = getline(search('^- .*:$', 'bn'))[2:-2]
-  let uri = get(g:plugs[name], 'uri', '')
+  let line = getline('.')
+  let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
+  let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
+                      \ : getline(search('^- .*:$', 'bn'))[2:-2]
+  let uri  = get(get(g:plugs, name, {}), 'uri', '')
   if uri !~ 'github.com'
     return
   endif
-  execute printf('silent !open https://github.com/%s/commit/%s',
-          \ matchstr(uri, '[^:/]*/'.name), sha)
-  redraw!
+  let repo = matchstr(uri, '[^:/]*/'.name)
+  let url  = empty(sha) ? 'https://github.com/'.repo
+                      \ : printf('https://github.com/%s/commit/%s', repo, sha)
+  call netrw#NetrwBrowseX(url, 0)
 endfunction
 
-augroup PlugDiffGx
+augroup PlugGx
   autocmd!
   autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
 augroup END
@@ -1578,7 +1578,7 @@ command! -nargs=1 Ag call fzf#run({
 augroup vimrc
   autocmd!
 
-  au BufWritePost vimrc,.vimrc if expand('%') !~ 'fugitive' | source % | endif
+  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
   au FileType slim execute 'IndentLinesEnable' | doautocmd indentLine Syntax
