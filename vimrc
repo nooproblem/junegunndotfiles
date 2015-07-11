@@ -286,7 +286,7 @@ set t_kB=[Z
 set complete-=i
 
 " mouse
-set ttymouse=xterm2
+silent! set ttymouse=xterm2
 set mouse=a
 
 " 80 chars/line
