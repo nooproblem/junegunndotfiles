@@ -1584,8 +1584,9 @@ function! s:ag_handler(lines)
   endif
 endfunction
 
-command! -nargs=1 Ag call fzf#run({
-\ 'source':  'ag --nogroup --column --color "'.escape(<q-args>, '"\').'"',
+command! -nargs=* Ag call fzf#run({
+\ 'source':  printf('ag --nogroup --column --color "%s"',
+\                   escape(empty(<q-args>) ? '^' : <q-args>, '"\')),
 \ 'sink*':    function('<sid>ag_handler'),
 \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x '.
 \            '--multi --bind ctrl-a:select-all --color hl:68,hl+:110',
