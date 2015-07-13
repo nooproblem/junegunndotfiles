@@ -1017,7 +1017,7 @@ function! s:between_the_chars(incll, inclr, char, vis)
   endtry
 endfunction
 
-for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1})
+for [s:c, s:l] in items({'_': 0, '.': 0, ',': 0, '/': 1, '-': 0})
   execute printf("xmap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 1)<CR><Plug>(TOC)", s:c, s:c)
   execute printf("omap <silent> i%s :<C-U>call <SID>between_the_chars(0,  0, '%s', 0)<CR><Plug>(TOC)", s:c, s:c)
   execute printf("xmap <silent> a%s :<C-U>call <SID>between_the_chars(%s, 1, '%s', 1)<CR><Plug>(TOC)", s:c, s:l, s:c)
@@ -1230,7 +1230,7 @@ endif
 " vim-after-object
 " ----------------------------------------------------------------------------
 silent! if has_key(g:plugs, 'vim-after-object')
-  autocmd VimEnter * silent! call after_object#enable('=', '-', ':', '#', ' ', '|')
+  autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
 endif
 
 " ----------------------------------------------------------------------------
