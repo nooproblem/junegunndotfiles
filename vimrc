@@ -826,21 +826,22 @@ endfunction
 command! Todo call s:todo()
 
 " ----------------------------------------------------------------------------
-" RefreshChrome
+" ConnectChrome
 " ----------------------------------------------------------------------------
 if s:darwin
-  function! s:refresh_chrome(bang)
-    augroup chrome-refresh
+  function! s:connect_chrome(bang)
+    augroup connect-chrome
       autocmd!
       if !a:bang
-        autocmd BufWritePost <buffer> call system(
-        \ "osascript -e 'tell application \"Google Chrome\" to tell the active tab of its first window\n".
-        \ "  reload\n".
-        \ "end tell'")
+        autocmd BufWritePost <buffer> call system(join([
+        \ "osascript -e 'tell application \"Google Chrome\"".
+        \               "to tell the active tab of its first window\n",
+        \ "  reload",
+        \ "end tell'"], "\n"))
       endif
     augroup END
   endfunction
-  command! -bang RefreshChrome call s:refresh_chrome(<bang>0)
+  command! -bang ConnectChrome call s:connect_chrome(<bang>0)
 endif
 
 " ----------------------------------------------------------------------------
