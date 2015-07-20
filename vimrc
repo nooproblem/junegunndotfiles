@@ -844,6 +844,17 @@ if s:darwin
 endif
 
 " ----------------------------------------------------------------------------
+" AutoSave
+" ----------------------------------------------------------------------------
+command! -bang AutoSave
+\  augroup autosave
+\|   exec 'autocmd!'
+\|   if <bang>1
+\|     exec 'autocmd TextChanged,InsertLeave <buffer> silent update'
+\|   endif
+\| augroup END
+
+" ----------------------------------------------------------------------------
 " EX | chmod +x
 " ----------------------------------------------------------------------------
 command! EX if !empty(expand('%')) && filereadable(expand('%'))
