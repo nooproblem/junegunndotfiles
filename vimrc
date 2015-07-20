@@ -63,6 +63,8 @@ Plug 'tpope/vim-tbone'
 
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+autocmd! User indentLine doautocmd indentLine Syntax
+
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
@@ -1614,7 +1616,7 @@ augroup vimrc
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
-  au FileType slim execute 'IndentLinesEnable' | doautocmd indentLine Syntax
+  au FileType slim IndentLinesEnable
 
   " File types
   au BufNewFile,BufRead *.icc               set filetype=cpp
