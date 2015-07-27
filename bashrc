@@ -240,10 +240,7 @@ fi
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
-export FZF_DEFAULT_OPTS='
-  --extended
-  --bind ctrl-f:page-down,ctrl-b:page-up
-'
+export FZF_DEFAULT_OPTS='--extended'
 
 # fd - cd to selected directory
 fd() {

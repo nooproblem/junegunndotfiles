@@ -1043,7 +1043,7 @@ endfor
 " ?ie | entire object
 " ----------------------------------------------------------------------------
 xnoremap <silent> ie gg0oG$
-onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
+onoremap <silent> ie :<C-U>execute "normal! m`"<Bar>keepjumps normal! ggVG<CR>
 
 " ----------------------------------------------------------------------------
 " ?il | inner line
