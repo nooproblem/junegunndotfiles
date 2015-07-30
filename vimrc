@@ -1660,7 +1660,7 @@ function! s:btags()
   try
     call fzf#run({'source':  s:btags_source(),
                  \'down':    '40%',
-                 \'options': '+m -d "\t" --with-nth 1,4..',
+                 \'options': '+m -d "\t" --with-nth 1,4.. --tiebreak=begin',
                  \'sink':    function('s:btags_sink')})
   catch
     echohl WarningMsg
