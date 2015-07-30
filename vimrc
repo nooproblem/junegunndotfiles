@@ -1361,6 +1361,7 @@ command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 " goyo.vim + limelight.vim
 " ----------------------------------------------------------------------------
 let g:limelight_paragraph_span = 1
+let g:limelight_priority = -1
 
 function! s:goyo_enter()
   if has('gui_running')
