@@ -1645,7 +1645,7 @@ endfunction
 
 function! s:btags_source()
   let lines = map(split(system(printf(
-    \ 'ctags -f - --sort=no --excmd=pattern --language-force=%s %s',
+    \ 'ctags -f - --sort=no --excmd=number --language-force=%s %s',
     \ &filetype, expand('%:S'))), "\n"), 'split(v:val, "\t")')
   if v:shell_error
     throw 'failed to extract tags'
