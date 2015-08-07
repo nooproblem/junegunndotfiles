@@ -866,9 +866,9 @@ cnoremap !! TX<space>
 " ----------------------------------------------------------------------------
 " EX | chmod +x
 " ----------------------------------------------------------------------------
-command! EX if !empty(expand('%')) && filereadable(expand('%'))
-         \|   silent! execute '!chmod +x %'
-         \|   redraw!
+command! EX if !empty(expand('%'))
+         \|   write
+         \|   call system('chmod +x '.expand('%'))
          \| else
          \|   echohl WarningMsg
          \|   echo 'Save the file first'
