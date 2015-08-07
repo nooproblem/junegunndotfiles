@@ -54,6 +54,7 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'dyng/ctrlsf.vim'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
 endif
