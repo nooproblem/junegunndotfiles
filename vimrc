@@ -132,6 +132,7 @@ set incsearch
 set hidden
 set ignorecase smartcase
 set wildmenu
+set wildmode=full
 set tabstop=2
 set shiftwidth=2
 set expandtab smarttab
