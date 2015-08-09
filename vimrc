@@ -404,7 +404,7 @@ function! s:super_duper_tab(k, o)
 
   let line = getline('.')
   let col = col('.') - 2
-  if empty(line) || line[col] !~ '\k\|[/~.]'
+  if line[col] !~ '\k\|[/~.]'
     return a:o
   endif
 
