@@ -1575,11 +1575,6 @@ command! FZFLines call fzf#run({
 command! -nargs=1 Locate call fzf#run(
       \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
 
-command! -bar FZFTags if !empty(tagfiles()) | call fzf#run({
-\   'source': "sed '/^\\!/d;s/\t.*//' " . join(tagfiles()) . ' | uniq',
-\   'sink':   'tag',
-\ }) | else | echo 'Preparing tags' | call system('ctags -R') | FZFTag | endif
-
 " ----------------------------------------------------------------------------
 " Ag
 " ----------------------------------------------------------------------------
@@ -1673,6 +1668,35 @@ function! s:btags()
 endfunction
 
 command! BTags call s:btags()
+
+" ----------------------------------------------------------------------------
+" Tags
+" ----------------------------------------------------------------------------
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('ctags -R --excmd=number')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'down':    '40%',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
 
 " }}}
 " ============================================================================
