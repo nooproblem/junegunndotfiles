@@ -1690,7 +1690,8 @@ function! s:tags()
   endif
 
   call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')),
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v ^!',
   \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
   \ 'down':    '40%',
   \ 'sink':    function('s:tags_sink')})
