@@ -1656,10 +1656,11 @@ endfunction
 
 function! s:btags()
   try
-    call fzf#run({'source':  s:btags_source(),
-                 \'down':    '40%',
-                 \'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
-                 \'sink':    function('s:btags_sink')})
+    call fzf#run({
+    \ 'source':  s:btags_source(),
+    \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+    \ 'down':    '40%',
+    \ 'sink':    function('s:btags_sink')})
   catch
     echohl WarningMsg
     echom v:exception
