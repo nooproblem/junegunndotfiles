@@ -853,7 +853,7 @@ command! -bang AutoSave
 \  augroup autosave
 \|   exec 'autocmd!'
 \|   if <bang>1
-\|     exec 'autocmd TextChanged,InsertLeave <buffer> silent update'
+\|     exec 'autocmd TextChanged,InsertLeave <buffer> silent! update'
 \|   endif
 \| augroup END
 
