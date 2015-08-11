@@ -849,13 +849,19 @@ endif
 " ----------------------------------------------------------------------------
 " AutoSave
 " ----------------------------------------------------------------------------
-command! -bang AutoSave
-\  augroup autosave
-\|   exec 'autocmd!'
-\|   if <bang>1
-\|     exec 'autocmd TextChanged,InsertLeave <buffer> silent! update'
-\|   endif
-\| augroup END
+function! s:autosave(enable)
+  augroup autosave
+    autocmd!
+    if a:enable
+      autocmd TextChanged,InsertLeave <buffer>
+            \  if empty(&buftype) && !empty(bufname(''))
+            \|   silent! update
+            \| endif
+    endif
+  augroup END
+endfunction
+
+command! -bang AutoSave call s:auto_save(<bang>1)
 
 " ----------------------------------------------------------------------------
 " TX
@@ -1687,7 +1693,7 @@ function! s:tags()
     echohl WarningMsg
     echom 'Preparing tags'
     echohl None
-    call system('ctags -R --excmd=number')
+    call system('ctags -R')
   endif
 
   call fzf#run({
