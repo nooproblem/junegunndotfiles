@@ -861,7 +861,7 @@ function! s:autosave(enable)
   augroup END
 endfunction
 
-command! -bang AutoSave call s:auto_save(<bang>1)
+command! -bang AutoSave call s:autosave(<bang>1)
 
 " ----------------------------------------------------------------------------
 " TX
