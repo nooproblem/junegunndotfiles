@@ -60,6 +60,9 @@ if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
 endif
 
+" Plug 'SirVer/ultisnips', { 'on': '<Plug>(tab)' }
+" Plug 'honza/vim-snippets'
+
 " Tmux
 Plug 'tpope/vim-tbone'
 
@@ -423,8 +426,23 @@ function! s:super_duper_tab(k, o)
   return a:k
 endfunction
 
-inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
-inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
+if has_key(g:plugs, 'ultisnips')
+  " UltiSnips will be loaded only when tab is first pressed in insert mode
+  if !exists(':UltiSnipsEdit')
+    inoremap <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():"<tab>"<cr>
+    imap <tab> <Plug>(tab)
+  endif
+
+  let g:SuperTabMappingForward  = "<tab>"
+  let g:SuperTabMappingBackward = "<s-tab>"
+  function! SuperTab(m)
+    return s:super_duper_tab(a:m == 'n' ? "\<c-n>" : "\<c-p>",
+                           \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
+  endfunction
+else
+  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
+  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
+endif
 
 " ----------------------------------------------------------------------------
 " Markdown headings
