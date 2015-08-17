@@ -1499,8 +1499,8 @@ nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 
-inoremap <silent> <C-X><C-T> <C-O>:call fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')<CR>
-inoremap <silent> <C-X><C-K> <C-O>:call fzf#complete('cat /usr/share/dict/words')<CR>
+inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
+inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 
 " }}}
 " ============================================================================
