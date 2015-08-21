@@ -1502,6 +1502,34 @@ nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
 inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
 
+function! s:file_split_prefix(prefix)
+  let expanded = expand(a:prefix)
+  return isdirectory(expanded) ?
+    \ [expanded,
+    \  substitute(a:prefix, '/*$', '/', ''),
+    \  ''] :
+    \ [fnamemodify(expanded, ':h'),
+    \  substitute(fnamemodify(a:prefix, ':h'), '/*$', '/', ''),
+    \  fnamemodify(expanded, ':t')]
+endfunction
+
+function! s:file_source(prefix)
+  let [dir, head, _] = s:file_split_prefix(a:prefix)
+  return printf("cd %s && find . | sed '1d;s:^..:%s:'",
+    \ shellescape(dir), head == './' ? '' : head)
+endfunction
+
+function! s:file_options(prefix)
+  let [_, head, tail] = s:file_split_prefix(a:prefix)
+  return printf('--prompt %s --query %s', shellescape(head), shellescape(tail))
+endfunction
+
+inoremap <expr> <c-x><c-f> fzf#complete({
+  \ 'source':  function('<sid>file_source'),
+  \ 'options': function('<sid>file_options'),
+  \ 'down':    '40%',
+  \ 'prefix':  '\S*$'})
+
 " }}}
 " ============================================================================
 " AUTOCMD {{{
@@ -1575,3 +1603,4 @@ endif
 
 " }}}
 " ============================================================================
+
