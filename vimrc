@@ -429,7 +429,7 @@ endfunction
 if has_key(g:plugs, 'ultisnips')
   " UltiSnips will be loaded only when tab is first pressed in insert mode
   if !exists(':UltiSnipsEdit')
-    inoremap <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():"<tab>"<cr>
+    inoremap <silent> <Plug>(tab) <c-r>=plug#load('ultisnips')?UltiSnips#ExpandSnippet():''<cr>
     imap <tab> <Plug>(tab)
   endif
 
