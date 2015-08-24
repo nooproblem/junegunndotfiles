@@ -655,8 +655,8 @@ function! s:run_this_script(output)
   else
     return
   end
-  if !a:output | return | endif
   redraw!
+  if !a:output | return | endif
 
   " Scratch buffer
   if exists('s:vim_exec_buf') && bufexists(s:vim_exec_buf)
