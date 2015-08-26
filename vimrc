@@ -153,6 +153,7 @@ set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview,longest
 set nocursorline
+set nrformats=hex
 silent! set cryptmethod=blowfish2
 
 set formatoptions+=1
