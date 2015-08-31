@@ -1,11 +1,28 @@
+let mapleader = ' '
+
+set incsearch hlsearch
+set ignorecase smartcase
+set clipboard=unnamed
+set scrolloff=5
+set showmode
+
 inoremap jk <Esc>
 vnoremap jk <Esc>
 
-noremap <C-F> <C-D>
-noremap <C-B> <C-U>
+noremap  <c-f> <c-d>
+noremap  <c-b> <c-u>
+nnoremap <c-p> <c-i>
+nnoremap <tab> <c-w>w
 
 nnoremap Y y$
 nnoremap Q @q
 
-set incsearch hlsearch
-set ignorecase smartcase
+nnoremap [c :action VcsShowPrevChangeMarker<cr>
+nnoremap ]c :action VcsShowNextChangeMarker<cr>
+
+nnoremap gcc :action CommentByLineComment<cr>
+
+nnoremap <leader>fu :action FindUsages<cr>
+nnoremap <leader>cv :action ChangeView<cr>
+nnoremap <leader>br :action ViewBreakpoints<cr>
+nnoremap <leader>ic :action InspectCode<cr>
