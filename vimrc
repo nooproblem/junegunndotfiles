@@ -331,6 +331,7 @@ noremap <C-B> <C-U>
 inoremap <C-s>     <C-O>:update<cr>
 nnoremap <C-s>     :update<cr>
 nnoremap <leader>s :update<cr>
+nnoremap <leader>w :update<cr>
 
 " Disable CTRL-A on tmux or on screen
 if $TERM =~ 'screen'

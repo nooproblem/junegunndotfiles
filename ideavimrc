@@ -26,3 +26,6 @@ nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>cv :action ChangeView<cr>
 nnoremap <leader>br :action ViewBreakpoints<cr>
 nnoremap <leader>ic :action InspectCode<cr>
+nnoremap <leader>oi :action OptimizeImports<cr>
+nnoremap <leader>re :action RenameElement<cr>
+nnoremap <leader>rf :action RenameFile<cr>
