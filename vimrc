@@ -381,6 +381,9 @@ nnoremap Y y$
 " qq to record, Q to replay
 nmap Q @q
 
+" Zoom
+nnoremap <silent> <leader>z :exec winnr('$') > 1 ? 'tab split' : tabpagenr('$') > 1 ? 'tabclose' : ''<cr>
+
 " ----------------------------------------------------------------------------
 " Quickfix
 " ----------------------------------------------------------------------------
