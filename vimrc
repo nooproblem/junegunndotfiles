@@ -1440,6 +1440,8 @@ nnoremap U :UndotreeToggle<CR>
 augroup lisp
   autocmd!
   autocmd FileType lisp,clojure,scheme RainbowParentheses
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>al vi[<c-v>:EasyAlign\ g/^\S/<cr>gv=
 augroup END
 
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
