@@ -1442,6 +1442,7 @@ augroup lisp
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
 
 " ----------------------------------------------------------------------------
