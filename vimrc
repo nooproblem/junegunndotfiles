@@ -377,7 +377,7 @@ inoremap <C-^> <C-o><C-^>
 " Make Y behave like other capitals
 nnoremap Y y$
 
-" qq to record, Q to replay
+" qq to record, Q to replay (recursive map due to peekaboo)
 nmap Q @q
 
 " Zoom
@@ -1392,7 +1392,7 @@ function! s:replace_emojis() range
     endif
   endfor
 endfunction
-command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
+command! -range EmojiReplace <line1>,<line2>call s:replace_emojis()
 
 " ----------------------------------------------------------------------------
 " goyo.vim + limelight.vim
@@ -1442,9 +1442,11 @@ augroup lisp
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme
         \ nnoremap <buffer> <leader>al vi[<c-v>:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
 augroup END
 
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
 
 " ----------------------------------------------------------------------------
@@ -1511,8 +1513,8 @@ endif
 nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
-nnoremap <silent> q: :History:<CR>
-nnoremap <silent> q/ :History/<CR>
+" nnoremap <silent> q: :History:<CR>
+" nnoremap <silent> q/ :History/<CR>
 
 inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
 imap <c-x><c-k> <plug>(fzf-complete-word)
