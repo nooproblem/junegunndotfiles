@@ -150,7 +150,7 @@ set autoread
 set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-set completeopt=menuone,preview,longest
+set completeopt=menuone,preview
 set nocursorline
 set nrformats=hex
 silent! set cryptmethod=blowfish2
@@ -450,8 +450,8 @@ if has_key(g:plugs, 'ultisnips')
                            \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
   endfunction
 else
-  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
-  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
+  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-n>", "\<tab>")
+  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-p>", "\<s-tab>")
 endif
 
 " ----------------------------------------------------------------------------
