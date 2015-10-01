@@ -1368,6 +1368,7 @@ for m in ['n', 'x']
   execute m."noremap <silent> <leader>tn :call <SID>tmux_send('.bottom-left')<cr>".gv
   execute m."noremap <silent> <leader>t. :call <SID>tmux_send('.bottom-right')<cr>".gv
 endfor
+unlet m
 
 " ----------------------------------------------------------------------------
 " indentLine
