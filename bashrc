@@ -234,6 +234,14 @@ if [ "$PLATFORM" = 'Darwin' ]; then
     [ $(boot2docker status) = 'running' ] || boot2docker start
     $(boot2docker shellinit 2> /dev/null)
   }
+
+  resizes() {
+    mkdir -p out &&
+    for jpg in *.JPG; do
+      echo $jpg
+      [ -e out/$jpg ] || sips -Z 2048 --setProperty formatOptions 80 $jpg --out out/$jpg
+    done
+  }
 fi
 
 

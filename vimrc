@@ -1523,6 +1523,10 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
+nmap <space><tab> <plug>(fzf-maps-n)
+xmap <space><tab> <plug>(fzf-maps-x)
+omap <space><tab> <plug>(fzf-maps-o)
+
 " }}}
 " ============================================================================
 " AUTOCMD {{{
