@@ -660,8 +660,9 @@ function! s:run_this_script(output)
   elseif &filetype == 'dot'
     let svg = expand('%:r') . '.svg'
     let png = expand('%:r') . '.png'
+    " librsvg >> imagemagick + ghostscript
     execute 'silent !dot -Tsvg '.file.' -o '.svg.' && '
-          \ 'mogrify -density 300 -format png '.svg.' && open '.svg.rdr
+          \ 'rsvg-convert -z 2 '.svg.' > '.png.' && open '.png.rdr
   else
     return
   end
@@ -1317,14 +1318,14 @@ let g:easy_align_delimiters = {
 \     'right_margin': 0
 \   },
 \ 'd': {
-\     'pattern': ' \(\S\+\s*[;=]\)\@=',
+\     'pattern': ' \ze\S\+\s*[;=]',
 \     'left_margin': 0,
 \     'right_margin': 0
 \   }
 \ }
 
 " Start interactive EasyAlign in visual mode
-xmap <Enter> <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
 nmap ga <Plug>(EasyAlign)
