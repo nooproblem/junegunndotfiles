@@ -450,8 +450,8 @@ if has_key(g:plugs, 'ultisnips')
                            \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
   endfunction
 else
-  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-n>", "\<tab>")
-  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-p>", "\<s-tab>")
+  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
+  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
 endif
 
 " ----------------------------------------------------------------------------
