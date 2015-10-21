@@ -1339,14 +1339,7 @@ nmap gaa ga_
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
-let g:github_dashboard   = { 'username': 'junegunn' }
-let g:github_dashboard#d = {
-\ 'username':     'jg-choi',
-\ 'password':     $GHE_TOKEN,
-\ 'api_endpoint': 'https://'.$GHE.'/api/v3',
-\ 'web_endpoint': 'https://'.$GHE,
-\ 'emoji_map':    { 'user_dashboard': 'office' }
-\ }
+let g:github_dashboard = { 'username': 'junegunn' }
 
 " ----------------------------------------------------------------------------
 " <leader>t | vim-tbone
@@ -1446,6 +1439,8 @@ augroup lisp
         \ nnoremap <buffer> <leader>al vi[<c-v>:EasyAlign\ g/^\S/<cr>gv=
   autocmd FileType lisp,clojure,scheme
         \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
 augroup END
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
