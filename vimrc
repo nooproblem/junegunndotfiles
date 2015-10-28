@@ -1373,6 +1373,7 @@ let g:indentLine_enabled = 0
 " vim-signify
 " ----------------------------------------------------------------------------
 let g:signify_vcs_list = ['git']
+let g:signify_skip_filetype = { 'journal': 1 }
 
 " ----------------------------------------------------------------------------
 " vim-emoji :dog: :cat: :rabbit:!
