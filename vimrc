@@ -108,6 +108,9 @@ if s:darwin
 endif
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
+" Lint
+Plug 'scrooloose/syntastic', { 'on': 'SyntasticCheck' }
+
 call plug#end()
 endif
 
@@ -388,6 +391,8 @@ nnoremap <silent> <leader>z :exec winnr('$') > 1 ? 'tab split' : tabpagenr('$') 
 " ----------------------------------------------------------------------------
 nnoremap ]q :cnext<cr>zz
 nnoremap [q :cprev<cr>zz
+nnoremap ]l :lnext<cr>zz
+nnoremap [l :lprev<cr>zz
 
 " ----------------------------------------------------------------------------
 " Buffers
@@ -1365,6 +1370,7 @@ function! s:tmux_send(dest) range
   call inputrestore()
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
 endfunction
+unlet! m
 for m in ['n', 'x']
   let gv = m == 'x' ? 'gv' : ''
   execute m."noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>".gv
@@ -1466,6 +1472,14 @@ let g:paredit_smartjump = 1
 " vim-markdown
 " ----------------------------------------------------------------------------
 let g:vim_markdown_initial_foldlevel = &foldlevelstart
+
+
+" ----------------------------------------------------------------------------
+" syntastic
+" ----------------------------------------------------------------------------
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 
 " ----------------------------------------------------------------------------
 " vimawesome.com
