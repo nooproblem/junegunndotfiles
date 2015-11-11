@@ -102,6 +102,7 @@ Plug 'tpope/vim-rails',      { 'for': []      }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
+Plug 'dag/vim-fish'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
