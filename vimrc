@@ -55,6 +55,7 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'AndrewRadev/splitjoin.vim'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
 endif
@@ -1481,6 +1482,14 @@ let g:vim_markdown_initial_foldlevel = &foldlevelstart
 let g:syntastic_javascript_checkers = ['standard']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+
+" ----------------------------------------------------------------------------
+" splitjoin
+" ----------------------------------------------------------------------------
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping = ''
+nnoremap gss :SplitjoinSplit<cr>
+nnoremap gsj :SplitjoinJoin<cr>
 
 " ----------------------------------------------------------------------------
 " vimawesome.com
