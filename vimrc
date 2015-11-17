@@ -55,6 +55,7 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'AndrewRadev/splitjoin.vim'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
 endif
@@ -1459,7 +1460,11 @@ augroup lisp
   autocmd!
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>al vi[<c-v>:EasyAlign\ g/^\S/<cr>gv=
+        \ nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
   autocmd FileType lisp,clojure,scheme
         \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
   autocmd FileType lisp,clojure,scheme
@@ -1481,6 +1486,14 @@ let g:vim_markdown_initial_foldlevel = &foldlevelstart
 let g:syntastic_javascript_checkers = ['standard']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+
+" ----------------------------------------------------------------------------
+" splitjoin
+" ----------------------------------------------------------------------------
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping = ''
+nnoremap gss :SplitjoinSplit<cr>
+nnoremap gsj :SplitjoinJoin<cr>
 
 " ----------------------------------------------------------------------------
 " vimawesome.com
