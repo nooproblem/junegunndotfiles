@@ -38,7 +38,7 @@ if [ $(uname -s) = 'Darwin' ]; then
   brew install \
     ag ant cmus coreutils cscope ctags exif \
     fish git gnuplot graphviz imagemagick leiningen \
-    maven mysql redis \
+    maven mysql ranger redis \
     sl tmux tree unrar vim wget zsh jq macvim
 fi
 
