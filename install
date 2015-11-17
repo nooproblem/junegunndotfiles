@@ -15,7 +15,7 @@ done
 
 # git-prompt
 if [ ! -e ~/.git-prompt.sh ]; then
-  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -O ~/.git-prompt.sh
+  curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 fi
 
 # scripts
@@ -34,13 +34,12 @@ if [ $(uname -s) = 'Darwin' ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
-  brew update
+  # brew update
   brew install \
-    ag ant cmus coreutils cscope ctags \
+    ag ant cmus coreutils cscope ctags exif \
     fish git gnuplot graphviz imagemagick leiningen \
-    maven memcached mysql redis \
-    sl tmux tree unrar vim wget zsh jq
-  brew install macvim
+    maven mysql redis \
+    sl tmux tree unrar vim wget zsh jq macvim
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
