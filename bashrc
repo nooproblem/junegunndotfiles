@@ -231,8 +231,8 @@ EXTRA=$BASE/bashrc-extra
 # --------------------------------------------------------------------
 if [ "$PLATFORM" = 'Darwin' ]; then
   dockerinit() {
-    [ $(boot2docker status) = 'running' ] || boot2docker start
-    $(boot2docker shellinit 2> /dev/null)
+    [ $(docker-machine status default) = 'Running' ] || docker-machine start default
+    eval "$(docker-machine env default)"
   }
 
   resizes() {
