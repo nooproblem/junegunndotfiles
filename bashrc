@@ -242,6 +242,8 @@ if [ "$PLATFORM" = 'Darwin' ]; then
       [ -e out/$jpg ] || sips -Z 2048 --setProperty formatOptions 80 $jpg --out out/$jpg
     done
   }
+
+  j() { export JAVA_HOME=$(/usr/libexec/java_home -v1.$1); }
 fi
 
 
