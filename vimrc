@@ -32,7 +32,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
 Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
-Plug 'junegunn/fzf',        { 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 if v:version >= 703
