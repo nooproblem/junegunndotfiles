@@ -1323,15 +1323,15 @@ let g:easy_align_delimiters = {
 \ '\': { 'pattern': '\\' },
 \ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
 \ ']': {
-\     'pattern':       '[[\]]',
+\     'pattern':       '\]\zs',
 \     'left_margin':   0,
-\     'right_margin':  0,
+\     'right_margin':  1,
 \     'stick_to_left': 0
 \   },
 \ ')': {
-\     'pattern':       '[()]',
+\     'pattern':       ')\zs',
 \     'left_margin':   0,
-\     'right_margin':  0,
+\     'right_margin':  1,
 \     'stick_to_left': 0
 \   },
 \ 'f': {
@@ -1470,6 +1470,8 @@ augroup lisp
   autocmd FileType lisp,clojure,scheme
         \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
 augroup END
+
+let g:clojure_maxlines = 30
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
