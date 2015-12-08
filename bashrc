@@ -72,7 +72,9 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
-alias temp='vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile"'
+temp() {
+  vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
+}
 
 [ "$PLATFORM" = 'Darwin' ] && alias tac='tail -r'
 
