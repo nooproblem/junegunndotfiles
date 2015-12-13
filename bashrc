@@ -237,6 +237,10 @@ if [ "$PLATFORM" = 'Darwin' ]; then
     eval "$(docker-machine env default)"
   }
 
+  dockerstop() {
+    docker-machine stop default
+  }
+
   resizes() {
     mkdir -p out &&
     for jpg in *.JPG; do
