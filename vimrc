@@ -386,7 +386,15 @@ nnoremap Y y$
 nmap Q @q
 
 " Zoom
-nnoremap <silent> <leader>z :exec winnr('$') > 1 ? 'tab split' : tabpagenr('$') > 1 ? 'tabclose' : ''<cr>
+function! s:zoom()
+  if winnr('$') > 1
+    tab split
+  elseif len(filter(map(range(tabpagenr('$')), 'tabpagebuflist(v:val + 1)'),
+                  \ 'index(v:val, '.bufnr('').') >= 0')) > 1
+    tabclose
+  endif
+endfunction
+nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
 " ----------------------------------------------------------------------------
 " Quickfix
