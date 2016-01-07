@@ -76,7 +76,12 @@ temp() {
   vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
 }
 
-[ "$PLATFORM" = 'Darwin' ] && alias tac='tail -r'
+if [ "$PLATFORM" = 'Darwin' ]; then
+  alias tac='tail -r'
+  o() {
+    open --reveal "${1:-.}"
+  }
+fi
 
 ### Tmux
 alias tmux="tmux -2"
