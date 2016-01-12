@@ -552,10 +552,9 @@ if has("cscope")
 endif
 
 " ----------------------------------------------------------------------------
-" <Leader>c Counting occurrences of the pattern
+" <Leader>c Close quickfix/location window
 " ----------------------------------------------------------------------------
-xnoremap <Leader>c :s@\%V@@gn<Left><Left><Left><Left>
-nnoremap <Leader>c :%s@@@gn<Left><Left><Left><Left>
+nnoremap <leader>c :cclose<bar>lclose<cr>
 
 " ----------------------------------------------------------------------------
 " Readline-style key bindings in command-line (excerpt from rsi.vim)
