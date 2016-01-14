@@ -995,17 +995,20 @@ call s:map_change_option('b', 'background',
     \ 'let &background = &background == "dark" ? "light" : "dark"<bar>redraw')
 
 " ----------------------------------------------------------------------------
-" <Leader>? | Google it
+" <Leader>?/! | Google it / Feeling lucky
 " ----------------------------------------------------------------------------
-function! s:goog(pat)
+function! s:goog(pat, lucky)
   let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
   let q = substitute(q, '[[:punct:] ]',
        \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
-  call system('open https://www.google.co.kr/search?q='.q)
+  call system(printf('open "https://www.google.com/search?%sq=%s"',
+                   \ a:lucky ? 'btnI&' : '', q))
 endfunction
 
-nnoremap <leader>? :call <SID>goog(expand("<cWORD>"))<cr>
-xnoremap <leader>? "gy:call <SID>goog(@g)<cr>gv
+nnoremap <leader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
+nnoremap <leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
+xnoremap <leader>? "gy:call <SID>goog(@g, 0)<cr>gv
+xnoremap <leader>! "gy:call <SID>goog(@g, 1)<cr>gv
 
 
 " }}}
