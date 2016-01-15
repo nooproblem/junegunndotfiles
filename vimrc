@@ -79,7 +79,6 @@ Plug 'justinmk/vim-gtfo'
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
