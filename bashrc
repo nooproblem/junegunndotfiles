@@ -49,6 +49,7 @@ if [ -z "$PATH_EXPANDED" ]; then
 fi
 export EDITOR=vim
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 [ "$PLATFORM" = 'Darwin' ] ||
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 
