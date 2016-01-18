@@ -73,7 +73,7 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
-alias gv='vim +GV'
+alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 temp() {
   vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
 }
