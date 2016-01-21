@@ -226,9 +226,9 @@ miniprompt() {
 }
 
 repeat() {
-  while [ -n "$2" ]; do
+  local _
+  for _ in $(seq $1); do
     eval "$2"
-    sleep $1
   done
 }
 
