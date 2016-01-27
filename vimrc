@@ -400,6 +400,7 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 " nvim
 " ----------------------------------------------------------------------------
 if has('nvim')
+  tnoremap <a-a> <esc>a
   tnoremap <a-b> <esc>b
   tnoremap <a-d> <esc>d
   tnoremap <a-f> <esc>f
