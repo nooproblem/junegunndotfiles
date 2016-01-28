@@ -650,12 +650,12 @@ command! CSBuild call s:build_cscope_db(<f-args>)
 " ----------------------------------------------------------------------------
 " :Chomp
 " ----------------------------------------------------------------------------
-command! Chomp %s/\s\+$//
+command! Chomp %s/\s\+$// | normal! ``
 
 " ----------------------------------------------------------------------------
 " :Count
 " ----------------------------------------------------------------------------
-command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/'))
+command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
 
 " ----------------------------------------------------------------------------
 " :Root | Change directory to the root of the Git repository
