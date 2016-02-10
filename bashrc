@@ -459,6 +459,10 @@ c() {
   sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
+acdul() {
+  acdcli ul -x 8 -r 4 -o "$@"
+}
+
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
 # unset _fzf_completion_loaded
