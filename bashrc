@@ -463,6 +463,10 @@ acdul() {
   acdcli ul -x 8 -r 4 -o "$@"
 }
 
+make-patch() {
+  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
+}
+
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
 # unset _fzf_completion_loaded
