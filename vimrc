@@ -1259,7 +1259,7 @@ onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
 " ----------------------------------------------------------------------------
 function! s:plug_gx()
   let line = getline('.')
-  let sha  = matchstr(line, '^  \zs[0-9a-f]\{7}\ze ')
+  let sha  = matchstr(line, '^  \X*\zs\x\{7}\ze ')
   let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
                       \ : getline(search('^- .*:$', 'bn'))[2:-2]
   let uri  = get(get(g:plugs, name, {}), 'uri', '')
@@ -1269,7 +1269,7 @@ function! s:plug_gx()
   let repo = matchstr(uri, '[^:/]*/'.name)
   let url  = empty(sha) ? 'https://github.com/'.repo
                       \ : printf('https://github.com/%s/commit/%s', repo, sha)
-  call netrw#NetrwBrowseX(url, 0)
+  call netrw#BrowseX(url, 0)
 endfunction
 
 augroup PlugGx
@@ -1288,8 +1288,8 @@ endfunction
 function! s:setup_extra_keys()
   nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
   nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
-  nnoremap <silent> <buffer> <c-n> :call search('^  \zs[0-9a-f]')<cr>
-  nnoremap <silent> <buffer> <c-p> :call search('^  \zs[0-9a-f]', 'b')<cr>
+  nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
+  nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
   nmap <silent> <buffer> <c-j> <c-n>o
   nmap <silent> <buffer> <c-k> <c-p>o
 endfunction
