@@ -12,4 +12,6 @@
                   [jonase/eastwood "0.2.1"]]
         :dependencies [[slamhound "1.5.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
+        :repl-options {:init (load-file (str (System/getProperty "user.home")
+                                             "/.lein/repl.clj"))}
         :signing {:gpg-key "FEF9C627"}}}

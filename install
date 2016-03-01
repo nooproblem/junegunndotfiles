@@ -27,6 +27,7 @@ done
 # leiningen
 mkdir -p ~/.lein
 ln -sfv $BASE/profiles.clj ~/.lein/
+ln -sfv $BASE/repl.clj ~/.lein/
 
 if [ $(uname -s) = 'Darwin' ]; then
   # Homebrew
