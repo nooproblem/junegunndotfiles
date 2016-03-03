@@ -1001,8 +1001,7 @@ endfunction
 function! s:map_change_option(...)
   let [key, opt] = a:000[0:1]
   let op = get(a:, 3, 'set '.opt.'!')
-  execute printf("nnoremap co%s :%s<bar>echo '%s: '. &%s<cr>",
-        \ key, op, opt, opt)
+  execute printf("nnoremap co%s :%s<bar>set %s?<cr>", key, op, opt)
 endfunction
 
 call s:map_change_option('p', 'paste')
