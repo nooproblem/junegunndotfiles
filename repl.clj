@@ -1,6 +1,6 @@
 (require '[clojure.java.io])
 (require '[clojure.reflect])
-(require '[clojure.pprint :refer [pprint print-table]])
+(require '[clojure.pprint :refer [pp pprint print-table]])
 
 (defmacro with-filter
   [command & forms]
@@ -40,3 +40,17 @@
                     (doseq [n (->> (all-ns) (map #(.getName %)) sort)]
                       (println n))))]
     (in-ns (symbol selected))))
+
+(defn pbcopy
+  [& [obj]]
+  (let [p (.. (Runtime/getRuntime) (exec "pbcopy"))
+        o (clojure.java.io/writer (.getOutputStream p))]
+    (binding [*out* o] (pprint (or obj *1)))
+    (.close o)
+    (.waitFor p)))
+
+(print-table [{:name 'with-filter   :desc "Filtering with fzf"}
+              {:name 'do-pprint     :desc "Executes each form and pretty-print the result"}
+              {:name 'print-members :desc "Prints the members"}
+              {:name 'fns           :desc "Selects namespace using fzf"}
+              {:name 'pbcopy        :desc "Copies pretty-printed string to clipboard"}])
