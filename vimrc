@@ -811,13 +811,6 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft =~ 'mkd\|markdown'
-    let map = { 'bash': 'sh' }
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash', 'python', 'java', 'c', 'clojure', 'sql', 'gnuplot']
-      call s:syntax_include(get(map, lang, lang), '```'.lang, '```', 0)
-    endfor
-
-    highlight def link Snip Folded
-
     setlocal textwidth=78
     setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
@@ -1270,11 +1263,6 @@ function! s:plug_gx()
   call netrw#BrowseX(url, 0)
 endfunction
 
-augroup PlugGx
-  autocmd!
-  autocmd FileType vim-plug nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
-augroup END
-
 function! s:scroll_preview(down)
   silent! wincmd P
   if &previewwindow
@@ -1283,16 +1271,32 @@ function! s:scroll_preview(down)
   endif
 endfunction
 
+function! s:plug_doc()
+  let name = matchstr(getline('.'), '^- \zs\S\+\ze:')
+  if has_key(g:plugs, name)
+    for doc in split(globpath(g:plugs[name].dir, 'doc/*.txt'), '\n')
+      execute 'tabe' doc
+    endfor
+  endif
+endfunction
+
 function! s:setup_extra_keys()
+  " PlugDiff
   nnoremap <silent> <buffer> J :call <sid>scroll_preview(1)<cr>
   nnoremap <silent> <buffer> K :call <sid>scroll_preview(0)<cr>
   nnoremap <silent> <buffer> <c-n> :call search('^  \X*\zs\x')<cr>
   nnoremap <silent> <buffer> <c-p> :call search('^  \X*\zs\x', 'b')<cr>
   nmap <silent> <buffer> <c-j> <c-n>o
   nmap <silent> <buffer> <c-k> <c-p>o
+
+  " gx
+  nnoremap <buffer> <silent> gx :call <sid>plug_gx()<cr>
+
+  " helpdoc
+  nnoremap <buffer> <silent> H  :call <sid>plug_doc()<cr>
 endfunction
 
-augroup PlugDiffExtra
+augroup PlugExtra
   autocmd!
   autocmd FileType vim-plug call s:setup_extra_keys()
 augroup END
