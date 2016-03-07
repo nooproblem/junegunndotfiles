@@ -9,9 +9,14 @@
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.0"]
                   [lein-try "0.4.3"]
+                  [venantius/ultra "0.4.1"]
                   [jonase/eastwood "0.2.1"]]
-        :dependencies [[slamhound "1.5.5"]]
+        :dependencies [[slamhound "1.5.5"]
+                       [spyscope "0.1.5"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
-        :repl-options {:init (load-file (str (System/getProperty "user.home")
-                                             "/.lein/repl.clj"))}
+        :source-paths [#=(str #=(java.lang.System/getProperty "user.home")
+                              "/.lein/src")]
+        :injections [(require 'jg)
+                     (require 'spyscope.core)
+                     (refer-clojure)]
         :signing {:gpg-key "FEF9C627"}}}
