@@ -74,7 +74,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 augroup nerd_loader
   autocmd!
   autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,VimEnter *
+  autocmd BufEnter,BufNew *
         \  if isdirectory(expand('<amatch>'))
         \|   call plug#load('nerdtree')
         \|   execute 'autocmd! nerd_loader'
