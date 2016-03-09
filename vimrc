@@ -104,7 +104,6 @@ Plug 'fatih/vim-go'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
-Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim'
@@ -366,7 +365,6 @@ nnoremap g[ :pop<cr>
 nnoremap <C-p> <C-i>
 
 " <F10> | NERD Tree
-inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap <F10> :NERDTreeToggle<cr>
 
 " <F11> | Tagbar
@@ -1534,8 +1532,7 @@ let g:paredit_smartjump = 1
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-let g:vim_markdown_initial_foldlevel = &foldlevelstart
-
+let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
 
 " ----------------------------------------------------------------------------
 " syntastic
