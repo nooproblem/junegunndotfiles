@@ -63,10 +63,11 @@
            result#  (do ~@forms)
            elapsed# (format "%.3f ms"
                             (double (/ (- (System/nanoTime) st#) 1000000)))]
-       (println {:env {~@(mapcat (fn [s] [`'~s `~s]) syms) ~@[]}
-                 :form '~(last &form)
-                 :result result#
-                 :elapsed elapsed#})
+       (pprint {:env {~@(mapcat (fn [s] [`'~s `~s]) syms) ~@[]}
+                :form '~(last &form)
+                :result result#
+                :class (class result#)
+                :elapsed elapsed#})
        result#)))
 
 ;;; "A macro is a function stored in a Var with :macro true"

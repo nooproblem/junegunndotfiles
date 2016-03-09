@@ -19,4 +19,7 @@
         :injections [(require 'jg)
                      (require 'spyscope.core)
                      (refer-clojure)]
+        :global-vars {*warn-on-reflection* true
+                      ;*unchecked-math* :warn-on-boxed
+                      }
         :signing {:gpg-key "FEF9C627"}}}
