@@ -321,7 +321,7 @@ endif
 set nostartofline
 
 if has('gui_running')
-  set guifont=Monaco:h14 columns=80 lines=40
+  set guifont=Menlo:h14 columns=80 lines=40
   silent! colo seoul256-light
 else
   silent! colo seoul256
