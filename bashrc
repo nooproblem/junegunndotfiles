@@ -423,11 +423,8 @@ frb() {
 source $BASE/z.sh
 unalias z 2> /dev/null
 z() {
-  if [[ -z "$*" ]]; then
-    cd "$(_z -l 2>&1 | fzf-tmux +s --tac | sed 's/^[0-9,.]* *//')"
-  else
-    _z "$@" || z
-  fi
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
 # v - open files in ~/.viminfo
