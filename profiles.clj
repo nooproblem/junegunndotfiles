@@ -9,7 +9,6 @@
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.0"]
                   [lein-try "0.4.3"]
-                  [venantius/ultra "0.4.1"]
                   [jonase/eastwood "0.2.1"]]
         :dependencies [[slamhound "1.5.5"]
                        [spyscope "0.1.5"]]
