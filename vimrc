@@ -108,7 +108,7 @@ Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim'
 Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala'] }
+Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala', 'markdown'] }
 Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
@@ -809,6 +809,12 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft =~ 'mkd\|markdown'
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
+          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
+      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+    endfor
+
+    highlight def link Snip Folded
     setlocal textwidth=78
     setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
@@ -1532,7 +1538,7 @@ let g:paredit_smartjump = 1
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
+" let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
 
 " ----------------------------------------------------------------------------
 " syntastic
