@@ -40,8 +40,7 @@
   []
   (if-let [selected
            (first (with-filter "fzf-tmux +m"
-                    (doseq [n (->> (all-ns) (map #(.getName %)) sort)]
-                      (println n))))]
+                    (->> (all-ns) (map #(.getName %)) sort)))]
     (in-ns (symbol selected))))
 
 (defn pbcopy

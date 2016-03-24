@@ -108,7 +108,7 @@ Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'wting/rust.vim'
 Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala'] }
+Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala', 'markdown'] }
 Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
@@ -734,23 +734,24 @@ nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
 " ----------------------------------------------------------------------------
+function! s:colors(...)
+  return filter(map(filter(split(globpath(&rtp, "colors/*.vim"), "\n"),
+        \                  'v:val !~ "^/usr/"'),
+        \           "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
+        \       '!a:0 || stridx(v:val, a:1) >= 0')
+endfunction
+
 function! s:rotate_colors()
-  if !exists('s:colors_list')
-    let s:colors_list =
-    \ sort(map(
-    \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
-    \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
+  if !exists('s:colors')
+    let s:colors = s:colors()
   endif
-  if !exists('s:colors_index')
-    let s:colors_index = index(s:colors_list, g:colors_name)
-  endif
-  let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
-  let name = s:colors_list[s:colors_index]
+  let name = remove(s:colors, 0)
+  call add(s:colors, name)
   execute 'colorscheme' name
   redraw
   echo name
 endfunction
-nnoremap <F8> :call <SID>rotate_colors()<cr>
+nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
@@ -809,6 +810,12 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft =~ 'mkd\|markdown'
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
+          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
+      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+    endfor
+
+    highlight def link Snip Folded
     setlocal textwidth=78
     setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
@@ -1346,7 +1353,18 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
 silent! if has_key(g:plugs, 'vim-copy-as-rtf')
-  xnoremap <Leader>C <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
+  function! s:copy_rtf(...)
+    let [cs, nu] = [g:colors_name, &nu]
+    execute 'colo' get(a:000, 0, 'seoul256-light')
+    hi Normal ctermbg=None
+    set nonu
+    '<,'>CopyRTF
+
+    let &nu = nu
+    execute 'colorscheme' cs
+  endfunction
+
+  command! -range -nargs=? -complete=customlist,s:colors Copy call s:copy_rtf(<f-args>)
 endif
 
 " ----------------------------------------------------------------------------
@@ -1532,7 +1550,7 @@ let g:paredit_smartjump = 1
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
+" let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
 
 " ----------------------------------------------------------------------------
 " syntastic

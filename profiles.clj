@@ -20,5 +20,5 @@
                      (refer-clojure)]
         :global-vars {*warn-on-reflection* true
                       ;*unchecked-math* :warn-on-boxed
-                      }
+                      *print-meta* false}
         :signing {:gpg-key "FEF9C627"}}}
