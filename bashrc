@@ -466,6 +466,16 @@ make-patch() {
   [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
 }
 
+gf() {
+  git status --porcelain | fzf-tmux -m | awk '{print $2}'
+}
+
+bind '"\C-g": "$(gf)\e\C-e"'
+
+pbc() {
+  perl -pe 'chomp if eof' | pbcopy
+}
+
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
 # unset _fzf_completion_loaded
