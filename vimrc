@@ -1524,7 +1524,7 @@ function! s:gl(buf)
   endif
   tab split
   silent! Gllog
-  call setloclist(0, insert(getloclist(0), {'bufnr': a:buf, 'text': 'HEAD'}, 0))
+  call setloclist(0, insert(getloclist(0), {'bufnr': a:buf}, 0))
   b #
   lopen
   xnoremap <buffer> D :call <sid>gld()<cr>
@@ -1532,8 +1532,7 @@ function! s:gl(buf)
   nnoremap <buffer> q :tabclose<cr>
   call matchadd('Conceal', '^fugitive:///.\{-}\.git//')
   call matchadd('Conceal', '^fugitive:///.\{-}\.git//\x\{7}\zs.\{-}||')
-  setlocal concealcursor=nv
-  setlocal conceallevel=3
+  setlocal concealcursor=nv conceallevel=3 nowrap
 endfunction
 
 function! s:gld() range
