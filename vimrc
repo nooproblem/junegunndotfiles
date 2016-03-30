@@ -1527,7 +1527,7 @@ function! s:gl(buf)
   call setloclist(0, insert(getloclist(0), {'bufnr': a:buf}, 0))
   b #
   lopen
-  xnoremap <buffer> D :call <sid>gld()<cr>
+  xnoremap <buffer> o :call <sid>gld()<cr>
   nnoremap <buffer> o <cr><c-w><c-w>
   nnoremap <buffer> q :tabclose<cr>
   call matchadd('Conceal', '^fugitive:///.\{-}\.git//')
