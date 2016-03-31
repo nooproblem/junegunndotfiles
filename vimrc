@@ -1518,12 +1518,12 @@ endfunction
 
 autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
 
-function! s:gl(buf)
+function! s:gl(buf, l1, l2)
   if !exists(':Gllog')
     return
   endif
   tab split
-  silent! Gllog
+  silent! execute a:l1 == 1 && a:l2 == line('$') ? '' : "'<,'>" 'Gllog'
   call setloclist(0, insert(getloclist(0), {'bufnr': a:buf}, 0))
   b #
   lopen
@@ -1542,7 +1542,7 @@ function! s:gld() range
   windo diffthis
 endfunction
 
-command! GL call s:gl(bufnr(''))
+command! -range=% GL call s:gl(bufnr(''), <line1>, <line2>)
 
 " ----------------------------------------------------------------------------
 " undotree
