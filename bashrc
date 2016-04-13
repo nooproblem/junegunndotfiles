@@ -462,6 +462,10 @@ acdul() {
   acdcli ul -x 8 -r 4 -o "$@"
 }
 
+acddu() {
+  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
+}
+
 make-patch() {
   [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
 }
