@@ -616,6 +616,13 @@ nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><ri
 " ----------------------------------------------------------------------------
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
+" ----------------------------------------------------------------------------
+" <leader>ij | Open in IntelliJ
+" ----------------------------------------------------------------------------
+if s:darwin
+  nnoremap <silent> <leader>ij
+  \ :call system('"/Applications/IntelliJ IDEA 15 CE.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
+endif
 
 " }}}
 " ============================================================================
