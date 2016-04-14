@@ -733,9 +733,7 @@ function! s:run_this_script(output)
   normal! gg"_dd
   execute win.'wincmd w'
 endfunction
-inoremap <silent> <F5> <esc>:call <SID>run_this_script(0)<cr>
 nnoremap <silent> <F5> :call <SID>run_this_script(0)<cr>
-inoremap <silent> <F6> <esc>:call <SID>run_this_script(1)<cr>
 nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 
 " ----------------------------------------------------------------------------
