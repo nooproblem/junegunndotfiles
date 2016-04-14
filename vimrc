@@ -1653,6 +1653,7 @@ augroup END
 
 if has('nvim')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
