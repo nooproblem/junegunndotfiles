@@ -56,9 +56,6 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
-if s:darwin
-  Plug 'zerowidth/vim-copy-as-rtf', { 'on': 'CopyRTF'          }
-endif
 
 " Plug 'SirVer/ultisnips', { 'on': '<Plug>(tab)' }
 " Plug 'honza/vim-snippets'
@@ -672,6 +669,47 @@ command! Chomp %s/\s\+$// | normal! ``
 command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
 
 " ----------------------------------------------------------------------------
+" :CopyRTF
+" ----------------------------------------------------------------------------
+function! s:colors(...)
+  return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+        \                  'v:val !~ "^/usr/"'),
+        \           'fnamemodify(v:val, ":t:r")'),
+        \       '!a:0 || stridx(v:val, a:1) >= 0')
+endfunction
+
+function! s:copy_rtf(line1, line2, ...)
+  let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
+  let lines = getline(1, '$')
+
+  tab new
+  setlocal buftype=nofile bufhidden=wipe nonumber
+  let &filetype = ft
+  call setline(1, lines)
+
+  execute 'colo' get(a:000, 0, 'seoul256-light')
+  hi Normal ctermbg=None guibg=None
+
+  let lines = getline(a:line1, a:line2)
+  let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
+  call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
+
+  call tohtml#Convert2HTML(a:line1, a:line2)
+  g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
+  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
+
+  bd!
+  tabclose
+
+  let &l:nu = nu
+  execute 'colorscheme' cs
+endfunction
+
+if s:darwin
+  command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
+endif
+
+" ----------------------------------------------------------------------------
 " :Root | Change directory to the root of the Git repository
 " ----------------------------------------------------------------------------
 function! s:root()
@@ -739,13 +777,6 @@ nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
 " ----------------------------------------------------------------------------
-function! s:colors(...)
-  return filter(map(filter(split(globpath(&rtp, "colors/*.vim"), "\n"),
-        \                  'v:val !~ "^/usr/"'),
-        \           "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-        \       '!a:0 || stridx(v:val, a:1) >= 0')
-endfunction
-
 function! s:rotate_colors()
   if !exists('s:colors')
     let s:colors = s:colors()
@@ -1354,24 +1385,6 @@ else
   let &grepprg = 'grep -rn $* *'
 endif
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
-
-" ----------------------------------------------------------------------------
-" vim-copy-as-rtf
-" ----------------------------------------------------------------------------
-silent! if has_key(g:plugs, 'vim-copy-as-rtf')
-  function! s:copy_rtf(...)
-    let [cs, nu] = [g:colors_name, &nu]
-    execute 'colo' get(a:000, 0, 'seoul256-light')
-    hi Normal ctermbg=None
-    set nonu
-    '<,'>CopyRTF
-
-    let &nu = nu
-    execute 'colorscheme' cs
-  endfunction
-
-  command! -range -nargs=? -complete=customlist,s:colors Copy call s:copy_rtf(<f-args>)
-endif
 
 " ----------------------------------------------------------------------------
 " vim-after-object
