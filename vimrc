@@ -1720,6 +1720,9 @@ augroup vimrc
   " Clojure
   au FileType clojure xnoremap <Leader><Leader> :Eval<CR>
 
+  " Fugitive
+  au FileType gitcommit nnoremap <buffer> <silent> CA :<C-U>Gcommit --amend --date="$(date)"<CR>
+
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
