@@ -103,7 +103,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'wting/rust.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-rails',      { 'for': []      }
 Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala', 'markdown'] }
 Plug 'honza/dockerfile.vim'
