@@ -471,7 +471,7 @@ make-patch() {
 }
 
 gf() {
-  git status --porcelain | fzf-tmux -m | awk '{print $2}'
+  git -c color.status=always status --short | fzf-tmux -m --ansi --nth 2..,.. | awk '{print $2}'
 }
 
 bind '"\C-g": "$(gf)\e\C-e"'
