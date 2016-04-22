@@ -1,5 +1,6 @@
 let mapleader = ' '
 
+set number
 set hlsearch
 set ignorecase smartcase
 set clipboard=unnamed
