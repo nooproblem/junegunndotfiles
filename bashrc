@@ -241,6 +241,22 @@ repeat() {
   done
 }
 
+acdul() {
+  acdcli ul -x 8 -r 4 -o "$@"
+}
+
+acddu() {
+  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
+}
+
+make-patch() {
+  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
+}
+
+pbc() {
+  perl -pe 'chomp if eof' | pbcopy
+}
+
 EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
@@ -465,18 +481,7 @@ c() {
     }.join + " " * (2 + cols - len) + "\x1b[m" + url' |
   fzf --ansi --multi --no-hscroll --tiebreak=index |
   sed 's#.*\(https*://\)#\1#' | xargs open
-}
 
-acdul() {
-  acdcli ul -x 8 -r 4 -o "$@"
-}
-
-acddu() {
-  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
-}
-
-make-patch() {
-  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
 }
 
 gf() {
@@ -484,10 +489,6 @@ gf() {
 }
 
 bind '"\C-g": "$(gf)\e\C-e"'
-
-pbc() {
-  perl -pe 'chomp if eof' | pbcopy
-}
 
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
