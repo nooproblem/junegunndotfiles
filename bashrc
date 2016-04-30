@@ -484,11 +484,36 @@ c() {
 
 }
 
+# GIT heart FZF
+# -------------
+
 gf() {
-  git -c color.status=always status --short | fzf-tmux -m --ansi --nth 2..,.. | awk '{print $2}'
+  git -c color.status=always status --short | fzf-tmux -d 40% -m --ansi --nth 2..,.. | awk '{print $2}'
 }
 
-bind '"\C-g": "$(gf)\e\C-e"'
+gb() {
+  git branch -vv --color=always | fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}'
+}
+
+gt() {
+  git tag --sort -version:refname | fzf-tmux -d 40% --multi
+}
+
+gh() {
+  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph |
+    fzf-tmux --ansi --no-sort --reverse --multi | grep -o '[a-f0-9]\{7,\}'
+}
+
+gr() {
+  git remote -v | awk '{print $1 " " $2}' | uniq | fzf-tmux -d 40% --tac | awk '{print $1}'
+}
+
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
