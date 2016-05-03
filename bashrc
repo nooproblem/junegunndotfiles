@@ -487,25 +487,38 @@ c() {
 # GIT heart FZF
 # -------------
 
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
 gf() {
-  git -c color.status=always status --short | fzf-tmux -d 40% -m --ansi --nth 2..,.. | awk '{print $2}'
+  is_in_git_repo &&
+    git -c color.status=always status --short |
+    fzf-tmux -d 40% -m --ansi --nth 2..,.. | awk '{print $2}'
 }
 
 gb() {
-  git branch -vv --color=always | fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}'
+  is_in_git_repo &&
+    git branch -vv --color=always |
+    fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}'
 }
 
 gt() {
-  git tag --sort -version:refname | fzf-tmux -d 40% --multi
+  is_in_git_repo &&
+    git tag --sort -version:refname |
+    fzf-tmux -d 40% --multi
 }
 
 gh() {
-  git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph |
+  is_in_git_repo &&
+    git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph |
     fzf-tmux --ansi --no-sort --reverse --multi | grep -o '[a-f0-9]\{7,\}'
 }
 
 gr() {
-  git remote -v | awk '{print $1 " " $2}' | uniq | fzf-tmux -d 40% --tac | awk '{print $1}'
+  is_in_git_repo &&
+    git remote -v | awk '{print $1 " " $2}' | uniq |
+    fzf-tmux -d 40% --tac | awk '{print $1}'
 }
 
 bind '"\er": redraw-current-line'
