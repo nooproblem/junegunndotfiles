@@ -499,8 +499,9 @@ gf() {
 
 gb() {
   is_in_git_repo &&
-    git branch -vv --color=always |
-    fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}'
+    git branch -a -vv --color=always | grep -v '/HEAD\s' |
+    fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |
+    sed 's#^remotes/[^/]*/##'
 }
 
 gt() {
