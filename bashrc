@@ -241,6 +241,22 @@ repeat() {
   done
 }
 
+acdul() {
+  acdcli ul -x 8 -r 4 -o "$@"
+}
+
+acddu() {
+  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
+}
+
+make-patch() {
+  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
+}
+
+pbc() {
+  perl -pe 'chomp if eof' | pbcopy
+}
+
 EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
@@ -466,29 +482,53 @@ c() {
     }.join + " " * (2 + cols - len) + "\x1b[m" + url' |
   fzf --ansi --multi --no-hscroll --tiebreak=index |
   sed 's#.*\(https*://\)#\1#' | xargs open
+
 }
 
-acdul() {
-  acdcli ul -x 8 -r 4 -o "$@"
-}
+# GIT heart FZF
+# -------------
 
-acddu() {
-  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
-}
-
-make-patch() {
-  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
 }
 
 gf() {
-  git -c color.status=always status --short | fzf-tmux -m --ansi --nth 2..,.. | awk '{print $2}'
+  is_in_git_repo &&
+    git -c color.status=always status --short |
+    fzf-tmux -d 40% -m --ansi --nth 2..,.. | awk '{print $2}'
 }
 
-bind '"\C-g": "$(gf)\e\C-e"'
-
-pbc() {
-  perl -pe 'chomp if eof' | pbcopy
+gb() {
+  is_in_git_repo &&
+    git branch -a -vv --color=always | grep -v '/HEAD\s' |
+    fzf-tmux -d 40% --ansi --multi --tac | sed 's/^..//' | awk '{print $1}' |
+    sed 's#^remotes/[^/]*/##'
 }
+
+gt() {
+  is_in_git_repo &&
+    git tag --sort -version:refname |
+    fzf-tmux -d 40% --multi
+}
+
+gh() {
+  is_in_git_repo &&
+    git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph |
+    fzf-tmux --ansi --no-sort --reverse --multi | grep -o '[a-f0-9]\{7,\}'
+}
+
+gr() {
+  is_in_git_repo &&
+    git remote -v | awk '{print $1 " " $2}' | uniq |
+    fzf-tmux -d 40% --tac | awk '{print $1}'
+}
+
+bind '"\er": redraw-current-line'
+bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
