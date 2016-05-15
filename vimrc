@@ -129,6 +129,10 @@ endif
 let mapleader      = ' '
 let maplocalleader = ' '
 
+augroup vimrc
+  autocmd!
+augroup END
+
 set nu
 set autoindent
 set smartindent
@@ -1338,10 +1342,7 @@ function! s:setup_extra_keys()
   nnoremap <buffer> <silent> H  :call <sid>plug_doc()<cr>
 endfunction
 
-augroup PlugExtra
-  autocmd!
-  autocmd FileType vim-plug call s:setup_extra_keys()
-augroup END
+autocmd vimrc FileType vim-plug call s:setup_extra_keys()
 
 " ----------------------------------------------------------------------------
 " MatchParen delay
@@ -1572,8 +1573,7 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 " clojure
 " ----------------------------------------------------------------------------
-augroup lisp
-  autocmd!
+augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme
         \ nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
@@ -1654,10 +1654,7 @@ EOF
   return ''
 endfunction
 
-augroup VimAwesomeComplete
-  autocmd!
-  autocmd FileType vim inoremap <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
-augroup END
+autocmd vimrc FileType vim inoremap <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
 " }}}
 " ============================================================================
@@ -1701,8 +1698,6 @@ command! Plugs call fzf#run({
 " ============================================================================
 
 augroup vimrc
-  autocmd!
-
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
   " IndentLines
@@ -1721,9 +1716,7 @@ augroup vimrc
   au FileType clojure xnoremap <Leader><Leader> :Eval<CR>
 
   " Fugitive
-  au FileType gitcommit nnoremap <buffer> <silent> cA :<C-U>Gcommit --amend --date="$(date)" -S<CR>
-  au FileType gitcommit nnoremap <buffer> <silent> ca :<C-U>Gcommit --amend --date="$(date)"<CR>
-  au FileType gitcommit nnoremap <buffer> <silent> cs :<C-U>Gcommit -S<CR>
+  au FileType gitcommit nnoremap <buffer> <silent> cA :<C-U>Gcommit --amend --date="$(date)"<CR>
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
@@ -1755,11 +1748,7 @@ function! s:helptab()
     nnoremap <buffer> q :q<cr>
   endif
 endfunction
-
-augroup vimrc_help
-  autocmd!
-  autocmd BufEnter *.txt call s:helptab()
-augroup END
+autocmd vimrc BufEnter *.txt call s:helptab()
 
 
 " }}}
