@@ -1,9 +1,11 @@
 (ns jg
   (:require [clojure.java.io]
             [clojure.reflect]
+            [clojure.string :refer [starts-with?]]
             [clojure.pprint :refer [pp pprint print-table]]))
 
 (defn with-filter
+  "Filtering with fzf"
   [command coll]
   (let [sh  (or (System/getenv "SHELL") "sh")
         pb  (doto (ProcessBuilder. [sh "-c" command])
@@ -19,6 +21,7 @@
     (take-while identity (repeatedly #(.readLine in)))))
 
 (defmacro do-pprint
+  "Executes each form and pretty-print the result"
   [& body]
   `(do
      ~@(map (fn [form]
@@ -28,6 +31,7 @@
             body)))
 
 (defn print-members
+  "Prints the members"
   [obj]
   (print-table (->> obj
                     clojure.reflect/reflect
@@ -37,6 +41,7 @@
                     (map #(select-keys % [:name :parameter-types :return-type])))))
 
 (defn fns
+  "Selects namespace using fzf"
   []
   (if-let [selected
            (first (with-filter "fzf-tmux +m"
@@ -44,6 +49,7 @@
     (in-ns (symbol selected))))
 
 (defn pbcopy
+  "Copies pretty-printed string to clipboard"
   [& [obj]]
   (let [p (.. (Runtime/getRuntime) (exec "pbcopy"))
         o (clojure.java.io/writer (.getOutputStream p))]
@@ -69,15 +75,10 @@
                 :elapsed elapsed#})
        result#)))
 
-;;; "A macro is a function stored in a Var with :macro true"
-(intern 'clojure.core (with-meta 'do-pprint {:macro true}) @#'do-pprint)
-(intern 'clojure.core 'with-filter   with-filter)
-(intern 'clojure.core 'print-members print-members)
-(intern 'clojure.core 'fns           fns)
-(intern 'clojure.core 'pbcopy        pbcopy)
-
-(print-table [{:name 'with-filter   :desc "Filtering with fzf"}
-              {:name 'do-pprint     :desc "Executes each form and pretty-print the result"}
-              {:name 'print-members :desc "Prints the members"}
-              {:name 'fns           :desc "Selects namespace using fzf"}
-              {:name 'pbcopy        :desc "Copies pretty-printed string to clipboard"}])
+(let [include? #(not (starts-with? (str %) "debug"))]
+  (doseq [[k v] (ns-publics 'jg) :when (include? k)]
+    (if (:macro (meta v))
+      (intern 'clojure.core (with-meta k {:macro true}) v)
+      (intern 'clojure.core k v)))
+  (print-table (for [[sym var] (ns-publics 'jg) :when (include? sym)]
+                 {:name sym :desc (-> var meta :doc)})))
