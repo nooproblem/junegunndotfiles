@@ -27,6 +27,7 @@ done
 # leiningen
 mkdir -p ~/.lein
 ln -sfv $BASE/profiles.clj ~/.lein/
+rm -f ~/.lein/src
 ln -sfv $BASE/lein-user ~/.lein/src
 
 if [ $(uname -s) = 'Darwin' ]; then
