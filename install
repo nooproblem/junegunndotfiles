@@ -37,11 +37,9 @@ if [ $(uname -s) = 'Darwin' ]; then
   echo "Updating homebrew"
   # brew update
   brew install \
-    ag ant cmus coreutils cscope ctags exif \
+    ag ant cmus coreutils cscope ctags exiftool \
     fish git gnuplot graphviz imagemagick leiningen \
-    maven mysql ranger redis \
-    sl tmux tree unrar vim wget zsh jq
-  brew install macvim
+    maven ranger tmux tree vim wget zsh jq macvim
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
