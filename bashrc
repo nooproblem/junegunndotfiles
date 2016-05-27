@@ -250,7 +250,8 @@ acddu() {
 }
 
 make-patch() {
-  [ $# -eq 1 ] && git format-patch HEAD^..HEAD --stdout > "$1"
+  local name="$(git log --oneline HEAD^.. | awk '{print $2}')"
+  git format-patch HEAD^.. --stdout > "$name.patch"
 }
 
 pbc() {
