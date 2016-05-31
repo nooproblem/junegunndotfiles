@@ -321,6 +321,9 @@ endif
 " Keep the cursor on the same column
 set nostartofline
 
+" FOOBAR=~/<CTRL-><CTRL-F>
+set isfname-==
+
 if has('gui_running')
   set guifont=Menlo:h14 columns=80 lines=40
   silent! colo seoul256-light
