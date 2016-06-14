@@ -41,6 +41,7 @@ if [ $(uname -s) = 'Darwin' ]; then
     ag ant cmus coreutils cscope ctags exiftool \
     fish git gnuplot graphviz imagemagick leiningen \
     maven ranger tmux tree vim wget zsh jq macvim
+  pip install pygments
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
