@@ -296,6 +296,7 @@ fi
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
 export FZF_CTRL_T_OPTS="--preview 'pygmentize {} | head -$LINES'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:2"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -$LINES'"
 
 # fd - cd to selected directory
