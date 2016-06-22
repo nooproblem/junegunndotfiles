@@ -1545,32 +1545,6 @@ endfunction
 
 autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
 
-function! s:gl(buf, l1, l2)
-  if !exists(':Gllog')
-    return
-  endif
-  tab split
-  silent! execute a:l1 == 1 && a:l2 == line('$') ? '' : "'<,'>" 'Gllog'
-  call setloclist(0, insert(getloclist(0), {'bufnr': a:buf}, 0))
-  b #
-  lopen
-  xnoremap <buffer> o :call <sid>gld()<cr>
-  nnoremap <buffer> o <cr><c-w><c-w>
-  nnoremap <buffer> q :tabclose<cr>
-  call matchadd('Conceal', '^fugitive:///.\{-}\.git//')
-  call matchadd('Conceal', '^fugitive:///.\{-}\.git//\x\{7}\zs.\{-}||')
-  setlocal concealcursor=nv conceallevel=3 nowrap
-endfunction
-
-function! s:gld() range
-  let [to, from] = map([a:firstline, a:lastline], 'split(getline(v:val), "|")[0]')
-  execute 'tabedit' to
-  execute 'vsplit' from
-  windo diffthis
-endfunction
-
-command! -range=% GL call s:gl(bufnr(''), <line1>, <line2>)
-
 " ----------------------------------------------------------------------------
 " undotree
 " ----------------------------------------------------------------------------
@@ -1673,6 +1647,7 @@ if has('nvim')
   " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
+let g:fzf_files_options = '--preview "(coderay {} || cat {}) 2> /dev/null || tree -C {}"'
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
