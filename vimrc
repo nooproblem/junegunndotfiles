@@ -1647,7 +1647,10 @@ if has('nvim')
   " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
-let g:fzf_files_options = '--preview "(coderay {} || cat {}) 2> /dev/null || tree -C {}"'
+" File preview using CodeRay (http://coderay.rubychan.de/)
+let g:fzf_files_options =
+  \ '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
