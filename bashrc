@@ -514,17 +514,17 @@ gf() {
 
 gb() {
   is_in_git_repo &&
-    git branch -a --color=always | grep -v '/HEAD\s' |
+    git branch -a --color=always | grep -v '/HEAD\s' | sort |
     fzf-tmux -d 40% --ansi --multi --tac --preview-window right:70% \
-      --preview 'git log --oneline --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | awk "{print \$1}") | head -'$LINES |
-    sed 's/^..//' | awk '{print $1}' |
+      --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+    sed 's/^..//' | cut -d' ' -f1 |
     sed 's#^remotes/[^/]*/##'
 }
 
 gt() {
   is_in_git_repo &&
     git tag --sort -version:refname |
-    fzf-tmux -d 40% --multi
+    fzf-tmux -d 40% --multi --preview 'git show --color=always {} | head -'$LINES
 }
 
 gh() {
@@ -538,7 +538,9 @@ gh() {
 gr() {
   is_in_git_repo &&
     git remote -v | awk '{print $1 " " $2}' | uniq |
-    fzf-tmux -d 40% --tac | awk '{print $1}'
+    fzf-tmux -d 40% --tac \
+      --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(cut -d" " -f1 <<< {}) | head -'$LINES |
+    cut -d' ' -f1
 }
 
 bind '"\er": redraw-current-line'
