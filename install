@@ -40,8 +40,9 @@ if [ $(uname -s) = 'Darwin' ]; then
   brew install \
     ag ant cmus coreutils cscope ctags exiftool \
     fish git gnuplot graphviz imagemagick leiningen \
-    maven ranger tmux tree vim wget zsh jq macvim ruby
+    maven ranger tmux tree vim wget zsh jq macvim ruby go
   gem install coderay
+  go get -u github.com/junegunn/blsd
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
