@@ -56,6 +56,7 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'rhysd/vim-grammarous'
 
 " Plug 'SirVer/ultisnips', { 'on': '<Plug>(tab)' }
 " Plug 'honza/vim-snippets'
