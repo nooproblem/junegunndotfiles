@@ -98,7 +98,7 @@ if v:version >= 703
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
 endif
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
