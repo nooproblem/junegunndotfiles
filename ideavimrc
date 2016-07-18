@@ -26,7 +26,6 @@ nnoremap gcc :action CommentByLineComment<cr>
 
 nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>su :action ShowUsages<cr>
-nnoremap <leader>im :action GotoImplementation<cr>
 nnoremap <leader>cv :action ChangeView<cr>
 nnoremap <leader>bb :action ToggleLineBreakpoint<cr>
 nnoremap <leader>br :action ViewBreakpoints<cr>
@@ -36,5 +35,10 @@ nnoremap <leader>re :action RenameElement<cr>
 nnoremap <leader>rf :action RenameFile<cr>
 nnoremap <leader>mv :action ActivateMavenProjectsToolWindow<cr>
 nnoremap <leader>dc :action ChooseDebugConfiguration<cr>
-nnoremap <leader>rc :action ChooseDebugConfiguration<cr>
+nnoremap <leader>rc :action ChooseRunConfiguration<cr>
 nnoremap <leader>q  :action CloseActiveTab<cr>
+nnoremap <leader>gi :action GotoImplementation<cr>
+nnoremap <leader>gs :action GotoSuperMethod<cr>
+nnoremap <leader>gd :action GotoDeclaration<cr>
+nnoremap ]e :action GotoNextError<cr>
+nnoremap [e :action GotoPreviousError<cr>
