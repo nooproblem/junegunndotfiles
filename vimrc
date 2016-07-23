@@ -1352,6 +1352,9 @@ endfunction
 
 autocmd vimrc FileType vim-plug call s:setup_extra_keys()
 
+let g:plug_window = '-tabnew'
+let g:plug_pwindow = 'vertical rightbelow new'
+
 " ----------------------------------------------------------------------------
 " MatchParen delay
 " ----------------------------------------------------------------------------
@@ -1748,4 +1751,3 @@ endif
 
 " }}}
 " ============================================================================
-
