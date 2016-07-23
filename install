@@ -42,7 +42,8 @@ if [ $(uname -s) = 'Darwin' ]; then
     fish git gnuplot graphviz imagemagick leiningen \
     maven ranger tmux tree vim wget zsh jq macvim ruby go
   gem install coderay
-  go get -u github.com/junegunn/blsd
+  command -v blsd > /dev/null ||
+    (bash <(curl -fL https://raw.githubusercontent.com/junegunn/blsd/master/install) && mv blsd ~/bin)
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
