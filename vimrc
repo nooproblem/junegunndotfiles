@@ -1702,8 +1702,8 @@ augroup vimrc
   au FileType,ColorScheme * call <SID>file_type_handler()
 
   " Clojure
-  au FileType clojure xnoremap <Enter> :Eval<CR>
-  au FileType clojure nmap <Enter> cpp
+  au FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
+  au FileType clojure nmap <buffer> <Enter> cpp
 
   " Fugitive
   au FileType gitcommit nnoremap <buffer> <silent> cA :<C-U>Gcommit --amend --date="$(date)"<CR>
