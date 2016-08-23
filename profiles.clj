@@ -5,6 +5,7 @@
                   [lein-marginalia "0.8.0"]                    ; lein marg
                   [codox "0.8.13"]                             ; lein doc
                   [com.jakemccrary/lein-test-refresh "0.10.0"] ; lein test-refresh
+                  [lein-ancient "0.6.10"]
                   [lein-pprint "1.1.2"]
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.0"]
