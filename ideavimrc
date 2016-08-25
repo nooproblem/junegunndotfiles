@@ -42,3 +42,11 @@ nnoremap <leader>gs :action GotoSuperMethod<cr>
 nnoremap <leader>gd :action GotoDeclaration<cr>
 nnoremap ]e :action GotoNextError<cr>
 nnoremap [e :action GotoPreviousError<cr>
+
+" Cursive
+nnoremap <leader>W :action :cursive.actions.paredit/wrap-paren<cr>
+nnoremap <leader>w[ :action :cursive.actions.paredit/wrap-square<cr>
+nnoremap <leader>w{ :action :cursive.actions.paredit/wrap-curly<cr>
+nnoremap <leader>w" :action :cursive.actions.paredit/wrap-quotes<cr>
+nnoremap <leader>< :action :cursive.actions.paredit/barf-forwards<cr>
+nnoremap <leader>> :action :cursive.actions.paredit/slurp-forwards<cr>
