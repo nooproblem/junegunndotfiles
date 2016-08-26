@@ -75,6 +75,13 @@ alias which='type -p'
 alias k5='kill -9 %%'
 alias gs='git status'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+ext() {
+  local name=$(basename $(pwd))
+  cd ..
+  tar -cvzf "$name.tgz" --exclude .git --exclude target --exclude "*.log" "$name"
+  cd -
+  mv ../"$name".tgz .
+}
 temp() {
   vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
 }
