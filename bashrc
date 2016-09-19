@@ -320,11 +320,10 @@ fda() {
 }
 
 # Figlet font selector
-fgl() {
+fgl() (
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
-  BASE=`pwd`
-  figlet -f `ls *.flf | sort | fzf` $*
-}
+  ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} Hello World!"
+)
 
 # fbr - checkout git branch
 fbr() {
