@@ -98,6 +98,7 @@ if v:version >= 703
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
+  Plug 'guns/vim-slamhound'
 endif
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
