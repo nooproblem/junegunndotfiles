@@ -1574,7 +1574,9 @@ augroup vimrc
         \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
 augroup END
 
-let g:clojure_maxlines = 30
+let g:clojure_maxlines = 60
+
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^match$']
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
