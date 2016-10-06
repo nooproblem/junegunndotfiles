@@ -632,7 +632,7 @@ inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype
 " ----------------------------------------------------------------------------
 if s:darwin
   nnoremap <silent> <leader>ij
-  \ :call system('"/Applications/IntelliJ IDEA 15 CE.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
+  \ :call system('"/Applications/IntelliJ IDEA CE.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
 endif
 
 " }}}
