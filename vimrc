@@ -702,7 +702,7 @@ function! s:copy_rtf(line1, line2, ...)
   call setline(1, lines)
 
   execute 'colo' get(a:000, 0, 'seoul256-light')
-  hi Normal ctermbg=None guibg=None
+  hi Normal ctermbg=NONE guibg=NONE
 
   let lines = getline(a:line1, a:line2)
   let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
