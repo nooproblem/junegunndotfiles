@@ -547,7 +547,7 @@ gr() {
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
   fzf-tmux --tac \
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
-  cut -d' ' -f1
+  cut -d$'\t' -f1
 }
 
 bind '"\er": redraw-current-line'
