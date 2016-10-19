@@ -23,7 +23,7 @@ Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign']
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-pseudocl'
-Plug 'junegunn/vim-oblique'
+Plug 'junegunn/vim-slash'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
