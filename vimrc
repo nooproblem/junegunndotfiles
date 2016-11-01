@@ -24,6 +24,7 @@ Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']     
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-slash'
+Plug 'junegunn/vim-halo' " upstream: mhinz/vim-halo
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
@@ -59,7 +60,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'junegunn/vim-online-thesaurus'
 
-" Plug 'SirVer/ultisnips', { 'on': '<Plug>(tab)' }
+" Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
 
 " Tmux
@@ -1489,6 +1490,11 @@ let g:indentLine_enabled = 0
 " ----------------------------------------------------------------------------
 let g:signify_vcs_list = ['git']
 let g:signify_skip_filetype = { 'journal': 1 }
+
+" ----------------------------------------------------------------------------
+" vim-slash
+" ----------------------------------------------------------------------------
+noremap <expr> <plug>(slash-after) halo#run()
 
 " ----------------------------------------------------------------------------
 " vim-emoji :dog: :cat: :rabbit:!
