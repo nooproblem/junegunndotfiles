@@ -24,7 +24,6 @@ Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']     
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-slash'
-Plug 'junegunn/vim-halo' " upstream: mhinz/vim-halo
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
@@ -1494,7 +1493,29 @@ let g:signify_skip_filetype = { 'journal': 1 }
 " ----------------------------------------------------------------------------
 " vim-slash
 " ----------------------------------------------------------------------------
-noremap <expr> <plug>(slash-after) halo#run()
+function! Blink(ticks, delay)
+  let s:blink = { 'ticks': a:ticks, 'delay': a:delay }
+  function! s:blink.tick(_)
+    let self.ticks -= 1
+    let active = self == s:blink && self.ticks > 0
+    if has_key(self, 'id')
+      call matchdelete(remove(self, 'id'))
+    elseif active && &hlsearch
+      let [line, col] = [line('.'), col('.')]
+      let self.id = matchadd('IncSearch',
+            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
+    endif
+    if active
+      call timer_start(self.delay, self.tick)
+    endif
+  endfunction
+  call s:blink.tick(0)
+  return ''
+endfunction
+
+if has('timers')
+  noremap <expr> <plug>(slash-after) Blink(4, 50)
+endif
 
 " ----------------------------------------------------------------------------
 " vim-emoji :dog: :cat: :rabbit:!
