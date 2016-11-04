@@ -1493,7 +1493,7 @@ let g:signify_skip_filetype = { 'journal': 1 }
 " ----------------------------------------------------------------------------
 " vim-slash
 " ----------------------------------------------------------------------------
-function! Blink(ticks, delay)
+function! s:blink(ticks, delay)
   let s:blink = { 'ticks': a:ticks, 'delay': a:delay }
   function! s:blink.tick(_)
     let self.ticks -= 1
@@ -1514,7 +1514,12 @@ function! Blink(ticks, delay)
 endfunction
 
 if has('timers')
-  noremap <expr> <plug>(slash-after) Blink(4, 50)
+  if has_key(g:plugs, 'vim-slash')
+    noremap <expr> <plug>(slash-after) <sid>blink(4, 50)
+  else
+    noremap <expr> n 'n'.<sid>blink(4, 50)
+    noremap <expr> N 'N'.<sid>blink(4, 50)
+  endif
 endif
 
 " ----------------------------------------------------------------------------
