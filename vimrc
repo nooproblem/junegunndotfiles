@@ -108,14 +108,11 @@ Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala', { 'for': ['scala', 'sbt.scala', 'markdown'] }
+Plug 'derekwyatt/vim-scala'
+Plug 'ensime/ensime-vim',    { 'for': 'scala' } " sbt/ensimeConfig
 Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
-if s:darwin
-  Plug 'Keithbsmiley/investigate.vim'
-  Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
-endif
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
 " Lint
@@ -1524,6 +1521,7 @@ if has('timers')
   else
     noremap <expr> n 'n'.<sid>blink(4, 50)
     noremap <expr> N 'N'.<sid>blink(4, 50)
+    cnoremap <expr> <cr> (stridx('/?', getcmdtype()) < 0 ? '' : <sid>blink(4, 50))."\<cr>"
   endif
 endif
 
