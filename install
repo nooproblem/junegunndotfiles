@@ -36,7 +36,6 @@ if [ $(uname -s) = 'Darwin' ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
-  # brew update
   brew install \
     ag ant cmus coreutils cscope ctags exiftool \
     fish git gnuplot graphviz imagemagick leiningen sbt \
@@ -45,17 +44,7 @@ if [ $(uname -s) = 'Darwin' ]; then
     (bash <(curl -fL https://raw.githubusercontent.com/junegunn/blsd/master/install) && mv blsd ~/bin)
 
   brew cask install iterm2 spectacle vagrant visualvm spotifree flux flycut
-
-  # ensime: https://ensime.github.io/editors/vim/install/
-  pip install websocket-client sexpdata
-  # - http://ensime.github.io/build_tools/sbt/
-  mkdir -p ~/.sbt/0.13/plugins
-  sed 's/^ * # //' > ~/.sbt/0.13/plugins/plugins.sbt <<-EOF
-    # if (sys.props("java.version").startsWith("1.6"))
-    #   addSbtPlugin("org.ensime" % "sbt-ensime" % "1.0.0")
-    # else
-    #   addSbtPlugin("org.ensime" % "sbt-ensime" % "1.11.2")
-EOF
+fi
 
 git config --global user.email "junegunn.c@gmail.com"
 git config --global user.name "Junegunn Choi"
