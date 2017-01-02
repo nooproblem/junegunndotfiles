@@ -1564,8 +1564,9 @@ function! s:goyo_enter()
   elseif exists('$TMUX')
     silent !tmux set status off
   endif
-  " hi NonText ctermfg=101
   Limelight
+  let &l:statusline = '%M'
+  hi StatusLine ctermfg=red guifg=red cterm=NONE gui=NONE
 endfunction
 
 function! s:goyo_leave()
