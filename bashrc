@@ -301,6 +301,10 @@ fi
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
+fzf-down() {
+  fzf --height 50% "$@"
+}
+
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
@@ -308,44 +312,23 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden --bin
 command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
-# fd - cd to selected directory
-fd() {
-  DIR=`find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf-tmux` \
-    && cd "$DIR"
-}
-
-# fda - including hidden directories
-fda() {
-  DIR=`find ${1:-.} -type d 2> /dev/null | fzf-tmux` && cd "$DIR"
-}
-
 # Figlet font selector
 fgl() (
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
   ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} Hello World!"
 )
 
-# fbr - checkout git branch
-fbr() {
-  local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-}
-
 # fco - checkout git branch/tag
 fco() {
   local tags branches target
-  tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
   branches=$(
     git branch --all | grep -v HEAD             |
     sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
     sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
-    (echo "$tags"; echo "$branches") |
-    fzf-tmux -l40 -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
+    (echo "$tags"; echo "$branches") | sed '/^$/d' |
+    fzf-down --no-hscroll --reverse --ansi +m -d "\t" -n 2 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -512,7 +495,7 @@ is_in_git_repo() {
 gf() {
   is_in_git_repo || return
   git -c color.status=always status --short |
-  fzf-tmux -m --ansi --nth 2..,.. \
+  fzf-down -m --ansi --nth 2..,.. \
     --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
   cut -c4- | sed 's/.* -> //'
 }
@@ -520,7 +503,7 @@ gf() {
 gb() {
   is_in_git_repo || return
   git branch -a --color=always | grep -v '/HEAD\s' | sort |
-  fzf-tmux --ansi --multi --tac --preview-window right:70% \
+  fzf-down --ansi --multi --tac --preview-window right:70% \
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
   sed 's/^..//' | cut -d' ' -f1 |
   sed 's#^remotes/##'
@@ -529,14 +512,14 @@ gb() {
 gt() {
   is_in_git_repo || return
   git tag --sort -version:refname |
-  fzf-tmux --multi --preview-window right:70% \
+  fzf-down --multi --preview-window right:70% \
     --preview 'git show --color=always {} | head -200'
 }
 
 gh() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
-  fzf-tmux --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+  fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
     --header 'Press CTRL-S to toggle sort' \
     --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -200' |
   grep -o "[a-f0-9]\{7,\}"
@@ -545,7 +528,7 @@ gh() {
 gr() {
   is_in_git_repo || return
   git remote -v | awk '{print $1 "\t" $2}' | uniq |
-  fzf-tmux --tac \
+  fzf-down --tac \
     --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
   cut -d$'\t' -f1
 }
@@ -560,4 +543,11 @@ bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
 # unset _fzf_completion_loaded
+# export FZF_TMUX=0
+# export FZF_DEFAULT_OPTS='--height 40% --reverse'
+# FZF_CTRL_T_OPTS='--height 40% --reverse'
+# FZF_CTRL_R_OPTS='--height 40%'
+# FZF_ALT_C_OPTS='--height 40% --reverse'
+# FZF_COMPLETION_OPTS='--height 40% --reverse'
+source /usr/local/opt/git/etc/bash_completion.d/git-completion.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
