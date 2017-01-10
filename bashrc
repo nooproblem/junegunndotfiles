@@ -301,6 +301,10 @@ fi
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
+csi() {
+  echo -en "\x1b[$@"
+}
+
 fzf-down() {
   fzf --height 50% "$@"
 }
