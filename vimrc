@@ -459,9 +459,16 @@ nnoremap <S-tab> <c-w>W
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
 " ----------------------------------------------------------------------------
 function! s:can_complete(func, prefix)
-  if empty(a:func) || call(a:func, [1, '']) < 0
+  if empty(a:func)
     return 0
   endif
+  let start = call(a:func, [1, ''])
+  if start < 0
+    return 0
+  endif
+  let pos = getpos('.')
+  let pos[2] = start
+  call setpos('.', pos)
   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
   return !empty(type(result) == type([]) ? result : result.words)
 endfunction
