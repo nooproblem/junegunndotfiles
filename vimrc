@@ -416,6 +416,9 @@ function! s:zoom()
 endfunction
 nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 
+" Last inserted text
+nnoremap g. :normal! `[v`]<cr><left>
+
 " ----------------------------------------------------------------------------
 " nvim
 " ----------------------------------------------------------------------------
