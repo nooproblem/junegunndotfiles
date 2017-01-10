@@ -165,6 +165,17 @@ tt() {
 # Shortcut functions
 # --------------------------------------------------------------------
 
+..cd() {
+  cd ..
+  cd "$@"
+}
+
+_parent_dirs() {
+  COMPREPLY=( $(cd ..; find . -mindepth 1 -maxdepth 1 -type d -print | cut -c3- | grep "^${COMP_WORDS[COMP_CWORD]}") )
+}
+
+complete -F _parent_dirs -o default -o bashdefault ..cd
+
 viw() {
   vim `which "$1"`
 }
