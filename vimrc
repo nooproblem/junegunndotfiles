@@ -1616,18 +1616,18 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 " clojure
 " ----------------------------------------------------------------------------
+function! s:lisp_maps()
+  nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
+  nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+  imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
+endfunction
 augroup vimrc
+
   autocmd FileType lisp,clojure,scheme RainbowParentheses
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+  autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
 augroup END
 
 let g:clojure_maxlines = 60
