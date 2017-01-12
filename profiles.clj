@@ -17,8 +17,14 @@
         :source-paths [#=(str #=(java.lang.System/getProperty "user.home")
                               "/.lein/src")]
         :injections [(require 'jg)
-                     (require 'spyscope.core)
-                     (refer-clojure)]
+                     (require 'spyscope.core)]
+        :repl-options {:init
+                       (do (require 'clojure.java.javadoc)
+                           (doseq [[prefix javadoc-url]
+                                   {"java" "https://docs.oracle.com/javase/8/docs/api/"
+                                    "org.apache.kafka" "https://kafka.apache.org/0100/javadoc/"}]
+                             (clojure.java.javadoc/add-remote-javadoc
+                               prefix javadoc-url)))}
         :global-vars {*warn-on-reflection* true
                       ;*unchecked-math* :warn-on-boxed
                       *print-meta* false}

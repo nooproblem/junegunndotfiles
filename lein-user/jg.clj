@@ -72,13 +72,13 @@
                 :form '~(last &form)
                 :result result#
                 :class (class result#)
+                :caller (-> ^Throwable (ex-info "" {}) .getStackTrace (nth 3) str)
                 :elapsed elapsed#})
        result#)))
 
-(let [include? #(not (starts-with? (str %) "debug"))]
-  (doseq [[k v] (ns-publics 'jg) :when (include? k)]
-    (if (:macro (meta v))
-      (intern 'clojure.core (with-meta k {:macro true}) v)
-      (intern 'clojure.core k v)))
-  (print-table (for [[sym var] (ns-publics 'jg) :when (include? sym)]
-                 {:name sym :desc (-> var meta :doc)})))
+(defn help
+  []
+  (print-table
+    (for [[sym var] (ns-publics 'jg)
+          :when (not (starts-with? (str sym) "debug"))]
+      {:name sym :desc (-> var meta :doc)})))
