@@ -467,7 +467,7 @@ function! s:can_complete(func, prefix)
     return 0
   endif
   let pos = getpos('.')
-  let pos[2] = start + 1
+  let pos[2] = start
   call setpos('.', pos)
   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
   return !empty(type(result) == type([]) ? result : result.words)
