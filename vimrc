@@ -466,35 +466,51 @@ function! s:can_complete(func, prefix)
   if start < 0
     return 0
   endif
-  let pos = getpos('.')
+
+  let oline  = getline('.')
+  let line   = oline[0:start-1] . oline[col('.')-1:]
+
+  let opos   = getpos('.')
+  let pos    = copy(opos)
   let pos[2] = start + 1
+
+  call setline('.', line)
   call setpos('.', pos)
   let result = call(a:func, [0, matchstr(a:prefix, '\k\+$')])
+  call setline('.', oline)
+  call setpos('.', opos)
+
   return !empty(type(result) == type([]) ? result : result.words)
 endfunction
 
-function! s:super_duper_tab(k, o)
-  if pumvisible()
-    return a:k
+function! s:feedkeys(k)
+  call feedkeys(a:k, 'n')
+  return ''
+endfunction
+
+function! s:super_duper_tab(pumvisible, next)
+  let [k, o] = a:next ? ["\<c-n>", "\<tab>"] : ["\<c-p>", "\<s-tab>"]
+  if a:pumvisible
+    return s:feedkeys(k)
   endif
 
   let line = getline('.')
   let col = col('.') - 2
   if line[col] !~ '\k\|[/~.]'
-    return a:o
+    return s:feedkeys(o)
   endif
 
   let prefix = expand(matchstr(line[0:col], '\S*$'))
   if prefix =~ '^[~/.]'
-    return "\<c-x>\<c-f>"
+    return s:feedkeys("\<c-x>\<c-f>")
   endif
   if s:can_complete(&omnifunc, prefix)
-    return "\<c-x>\<c-o>"
+    return s:feedkeys("\<c-x>\<c-o>")
   endif
   if s:can_complete(&completefunc, prefix)
-    return "\<c-x>\<c-u>"
+    return s:feedkeys("\<c-x>\<c-u>")
   endif
-  return a:k
+  return s:feedkeys(k)
 endfunction
 
 if has_key(g:plugs, 'ultisnips')
@@ -511,8 +527,8 @@ if has_key(g:plugs, 'ultisnips')
                            \ a:m == 'n' ? "\<tab>" : "\<s-tab>")
   endfunction
 else
-  inoremap <expr> <tab>   <SID>super_duper_tab("\<c-n>", "\<tab>")
-  inoremap <expr> <s-tab> <SID>super_duper_tab("\<c-p>", "\<s-tab>")
+  inoremap <silent> <tab>   <c-r>=<SID>super_duper_tab(pumvisible(), 1)<cr>
+  inoremap <silent> <s-tab> <c-r>=<SID>super_duper_tab(pumvisible(), 0)<cr>
 endif
 
 " ----------------------------------------------------------------------------
