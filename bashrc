@@ -322,7 +322,7 @@ fzf-down() {
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
-preview-file() {
+preview_file() {
   local mime="$(file --mime "$1")"
   if [[ "$mime" =~ directory ]]; then
     tree -C "$1"
@@ -332,8 +332,8 @@ preview-file() {
     echo "$1 is a binary file"
   fi
 }
-export -f preview-file
-export FZF_CTRL_T_OPTS="--preview 'preview-file {} | head -200'"
+export -f preview_file
+export FZF_CTRL_T_OPTS="--preview 'preview_file {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | pbcopy)' --header 'Press CTRL-Y to copy command into clipboard'"
 command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
