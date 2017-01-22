@@ -321,6 +321,7 @@ fzf-down() {
 }
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+[ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
 preview_file() {
   local mime="$(file --mime "$1")"
@@ -334,7 +335,7 @@ preview_file() {
 }
 export -f preview_file
 export FZF_CTRL_T_OPTS="--preview 'preview_file {} | head -200'"
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | pbcopy)' --header 'Press CTRL-Y to copy command into clipboard'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard'"
 command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
