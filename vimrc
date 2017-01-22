@@ -47,6 +47,7 @@ unlet! g:plug_url_format
 " Colors
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'AlessandroYorba/Monrovia'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -57,7 +58,7 @@ Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
-Plug 'junegunn/vim-online-thesaurus'
+Plug 'beloglazov/vim-online-thesaurus'
 
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
