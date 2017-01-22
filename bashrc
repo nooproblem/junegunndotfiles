@@ -196,36 +196,10 @@ csbuild() {
   cscope -b -q && rm cscope.files
 }
 
-gems() {
-  for v in 2.0.0 1.8.7 jruby 1.9.3; do
-    rvm use $v
-    gem $@
-  done
-}
-
-rakes() {
-  for v in 2.0.0 1.8.7 jruby 1.9.3; do
-    rvm use $v
-    rake $@
-  done
-}
-
 tx() {
   tmux splitw "$*; echo -n Press enter to finish.; read"
   tmux select-layout tiled
   tmux last-pane
-}
-
-rvm() {
-  # Load RVM into a shell session *as a function*
-  if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-    unset -f rvm
-
-    source "$HOME/.rvm/scripts/rvm"
-    # Add RVM to PATH for scripting
-    PATH=$PATH:$HOME/.rvm/bin
-    rvm $@
-  fi
 }
 
 gitzip() {
@@ -461,15 +435,6 @@ fs() {
   session=$(tmux list-sessions -F "#{session_name}" | \
     fzf-tmux --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
-}
-
-# RVM integration
-frb() {
-  local rb
-  rb=$(
-    (echo system; rvm list | grep ruby | cut -c 4-) |
-       awk '{print $1}' |
-       fzf-tmux -l 30 +m --reverse) && rvm use $rb
 }
 
 # Z integration
