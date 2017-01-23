@@ -322,20 +322,14 @@ fzf-down() {
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 [ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
+
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
-preview_file() {
-  local mime="$(file --mime "$1")"
-  if [[ "$mime" =~ directory ]]; then
-    tree -C "$1"
-  elif [[ ! "$mime" =~ binary ]]; then
-    highlight -O ansi -l "$1" 2> /dev/null || cat "$1"
-  else
-    echo "$1 is a binary file"
-  fi
-}
-export -f preview_file
-export FZF_CTRL_T_OPTS="--preview 'preview_file {} | head -200'"
+if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
+  export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
+fi
+
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard'"
+
 command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
