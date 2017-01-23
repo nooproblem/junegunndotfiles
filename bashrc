@@ -427,7 +427,7 @@ fi
 fs() {
   local session
   session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf-tmux --query="$1" --select-1 --exit-0) &&
+    fzf --height 40% --reverse --query="$1" --select-1 --exit-0) &&
   tmux switch-client -t "$session"
 }
 
@@ -436,7 +436,7 @@ source $BASE/z.sh
 unalias z 2> /dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+  cd "$(_z -l 2>&1 | fzf --height 40% --reverse +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
 # v - open files in ~/.viminfo
@@ -445,7 +445,7 @@ v() {
   files=$(grep '^>' ~/.viminfo | cut -c3- |
           while read line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
-          done | fzf-tmux -d -m -q "$*" -1) && vim ${files//\~/$HOME}
+          done | fzf -d -m -q "$*" -1) && vim ${files//\~/$HOME}
 }
 
 # c - browse chrome history
