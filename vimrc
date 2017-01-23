@@ -1729,8 +1729,8 @@ if has('nvim')
 endif
 
 " File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
-let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+let g:fzf_files_options = printf('--preview "%s {} | head -'.&lines.'"',
+      \ g:plugs['fzf.vim'].dir.'/bin/preview.rb')
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
