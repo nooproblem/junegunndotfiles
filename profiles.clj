@@ -10,9 +10,11 @@
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.0"]
                   [lein-try "0.4.3"]
-                  [jonase/eastwood "0.2.1"]]
+                  [jonase/eastwood "0.2.1"]
+                  [lein-cljfmt "0.5.6"]]
         :dependencies [[slamhound "1.5.5"]
-                       [spyscope "0.1.5"]]
+                       [spyscope "0.1.5"]
+                       [cljfmt "0.5.1"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
         :source-paths [#=(str #=(java.lang.System/getProperty "user.home")
                               "/.lein/src")]

@@ -100,6 +100,7 @@ if v:version >= 703
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
   Plug 'guns/vim-slamhound'
+  Plug 'venantius/vim-cljfmt'
 endif
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
@@ -1649,7 +1650,8 @@ augroup END
 
 let g:clojure_maxlines = 60
 
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^match$']
+set lispwords+=match
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
