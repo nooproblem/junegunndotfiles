@@ -59,6 +59,8 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'beloglazov/vim-online-thesaurus'
+Plug 'Valloric/YouCompleteMe',
+  \ { 'for': ['c', 'cpp', 'go'], 'do': './install.py --clang-completer --gocode-completer' }
 
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
@@ -1719,6 +1721,12 @@ EOF
 endfunction
 
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
+
+" ----------------------------------------------------------------------------
+" YCM
+" ----------------------------------------------------------------------------
+autocmd vimrc FileType c,cpp,go nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
+autocmd vimrc FileType c,cpp    nnoremap <buffer> K  :YcmCompleter GetType<CR>
 
 " }}}
 " ============================================================================
