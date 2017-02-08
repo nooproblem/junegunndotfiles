@@ -1642,8 +1642,8 @@ function! s:lisp_maps()
   nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
-augroup vimrc
 
+augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
 augroup END
@@ -1718,7 +1718,7 @@ EOF
   return ''
 endfunction
 
-autocmd vimrc FileType vim inoremap <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
+autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
 " }}}
 " ============================================================================
