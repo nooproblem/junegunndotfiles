@@ -118,6 +118,7 @@ Plug 'honza/dockerfile.vim'
 Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lint
 Plug 'scrooloose/syntastic', { 'on': 'SyntasticCheck' }
