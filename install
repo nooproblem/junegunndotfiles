@@ -46,7 +46,7 @@ if [ $(uname -s) = 'Darwin' ]; then
   brew tap universal-ctags/universal-ctags
   brew install --HEAD universal-ctags
 
-  brew cask install iterm2 spectacle vagrant visualvm spotifree flux flycut
+  brew cask install iterm2 spectacle virtualbox vagrant visualvm spotifree flux flycut
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
