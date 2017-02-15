@@ -1561,6 +1561,7 @@ function! s:lisp_maps()
   nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
   nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+  nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
