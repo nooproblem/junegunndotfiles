@@ -560,56 +560,6 @@ xnoremap < <gv
 xnoremap > >gv
 
 " ----------------------------------------------------------------------------
-" Cscope mappings
-" ----------------------------------------------------------------------------
-function! s:add_cscope_db()
-  " add any database in current directory
-  let db = findfile('cscope.out', '.;')
-  if !empty(db)
-    silent cs reset
-    silent! execute 'cs add' db
-  " else add database pointed to by environment
-  elseif !empty($CSCOPE_DB)
-    silent cs reset
-    silent! execute 'cs add' $CSCOPE_DB
-  endif
-endfunction
-
-if has("cscope")
-  set csprg=/usr/local/bin/cscope
-  set csto=0
-  set cst
-  set nocsverb
-  set csverb
-  call s:add_cscope_db()
-
-  "   's'   symbol: find all references to the token under cursor
-  "   'g'   global: find global definition(s) of the token under cursor
-  "   'c'   calls:  find all calls to the function name under cursor
-  "   't'   text:   find all instances of the text under cursor
-  "   'e'   egrep:  egrep search for the word under cursor
-  "   'f'   file:   open the filename under cursor
-  "   'i'   includes: find files that include the filename under cursor
-  "   'd'   called: find functions that function under cursor calls
-  nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  xnoremap <C-\>t y:cs find t <C-R>"<CR>
-  " nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  " nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-  nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-  " extends
-  nnoremap <C-\>e :cs find t extends <C-R>=expand("<cword>")<CR><CR>
-  " implements
-  nnoremap <C-\>i :cs find t implements <C-R>=expand("<cword>")<CR><CR>
-  " new
-  nnoremap <C-\>n :cs find t new <C-R>=expand("<cword>")<CR><CR>
-endif
-
-" ----------------------------------------------------------------------------
 " <Leader>c Close quickfix/location window
 " ----------------------------------------------------------------------------
 nnoremap <leader>c :cclose<bar>lclose<cr>
@@ -672,38 +622,6 @@ endif
 " ============================================================================
 " FUNCTIONS & COMMANDS {{{
 " ============================================================================
-
-" ----------------------------------------------------------------------------
-" :CSBuild
-" ----------------------------------------------------------------------------
-function! s:build_cscope_db(...)
-  let git_dir = system('git rev-parse --git-dir')
-  let chdired = 0
-  if !v:shell_error
-    let chdired = 1
-    execute 'cd' substitute(fnamemodify(git_dir, ':p:h'), ' ', '\\ ', 'g')
-  endif
-
-  let exts = empty(a:000) ?
-    \ ['java', 'c', 'h', 'cc', 'hh', 'cpp', 'hpp'] : a:000
-
-  let cmd = "find . " . join(map(exts, "\"-name '*.\" . v:val . \"'\""), ' -o ')
-  let tmp = tempname()
-  try
-    echon 'Building cscope.files'
-    call system(cmd.' | grep -v /test/ > '.tmp)
-    echon ' - cscoped db'
-    call system('cscope -b -q -i'.tmp)
-    echon ' - complete!'
-    call s:add_cscope_db()
-  finally
-    silent! call delete(tmp)
-    if chdired
-      cd -
-    endif
-  endtry
-endfunction
-command! CSBuild call s:build_cscope_db(<f-args>)
 
 " ----------------------------------------------------------------------------
 " :Chomp
