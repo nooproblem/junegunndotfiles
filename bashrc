@@ -291,7 +291,7 @@ csi() {
 }
 
 fzf-down() {
-  fzf --height 50% "$@"
+  fzf --height 50% "$@" --border
 }
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
@@ -377,18 +377,9 @@ fo() {
 }
 
 if [ -n "$TMUX_PANE" ]; then
-  fzf_tmux_helper() {
-    local sz=$1;  shift
-    local cmd=$1; shift
-    tmux split-window $sz \
-      "bash -c \"\$(tmux send-keys -t $TMUX_PANE \"\$(source ~/.fzf.bash; $cmd)\" $*)\""
-  }
-
   # https://github.com/wellle/tmux-complete.vim
   fzf_tmux_words() {
-    fzf_tmux_helper \
-      '-p 40' \
-      'tmuxwords.rb --all --scroll 500 --min 5 | fzf --multi | paste -sd" " -'
+    tmuxwords.rb --all --scroll 500 --min 5 | fzf-down --multi | paste -sd" " -
   }
 
   # ftpane - switch pane (@george-b)
@@ -412,7 +403,7 @@ if [ -n "$TMUX_PANE" ]; then
   }
 
   # Bind CTRL-X-CTRL-T to tmuxwords.sh
-  bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e"'
+  bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e\er"'
 
 elif [ -d ~/github/iTerm2-Color-Schemes/ ]; then
   ftheme() {
