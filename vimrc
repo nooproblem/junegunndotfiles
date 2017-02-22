@@ -995,6 +995,28 @@ function! LSD()
   endfor
 endfunction
 
+
+" ----------------------------------------------------------------------------
+" Open FILENAME:LINE:COL
+" ----------------------------------------------------------------------------
+function! s:goto_line()
+  let tokens = split(expand('%'), ':')
+  if len(tokens) == 1 || !filereadable(tokens[0])
+    return
+  endif
+
+  let file = tokens[0]
+  let rest = map(tokens[1:], 'str2nr(v:val)')
+  let line = get(rest, 0, 1)
+  let col  = get(rest, 1, 1)
+  bd!
+  silent execute 'e' file
+  execute printf('normal! %dG%d|', line, col)
+endfunction
+
+autocmd vimrc BufNewFile * nested call s:goto_line()
+
+
 " ----------------------------------------------------------------------------
 " co? : Toggle options (inspired by unimpaired.vim)
 " ----------------------------------------------------------------------------
@@ -1565,9 +1587,34 @@ function! s:lisp_maps()
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
+function! s:countdown(message, seconds)
+  for t in range(a:seconds)
+    let left = a:seconds - t
+    echom printf('%s in %d second%s', a:message, left, left > 1 ? 's' : '')
+    redraw
+    sleep 1
+  endfor
+  echo
+endfunction
+
+function! s:figwheel()
+  silent !tmux send-keys -t right C-u "(start-figwheel\!)" Enter
+  silent !open-chrome localhost:3449
+  redraw!
+  call s:countdown('Piggieback', 5)
+  Piggieback (figwheel-sidecar.repl-api/repl-env)
+endfunction
+
 augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
+
+  " Clojure
+  autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
+  autocmd FileType clojure nmap <buffer> <Enter> cpp
+
+  " Figwheel
+  autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
 augroup END
 
 let g:clojure_maxlines = 60
@@ -1577,6 +1624,11 @@ let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
+
+" vim-cljfmt
+let g:clj_fmt_autosave = 0
+autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
+autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -1708,10 +1760,6 @@ augroup vimrc
 
   " Included syntax
   au FileType,ColorScheme * call <SID>file_type_handler()
-
-  " Clojure
-  au FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
-  au FileType clojure nmap <buffer> <Enter> cpp
 
   " Fugitive
   au FileType gitcommit nnoremap <buffer> <silent> cd :<C-U>Gcommit --amend --date="$(date)"<CR>
