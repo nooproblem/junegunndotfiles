@@ -1587,9 +1587,34 @@ function! s:lisp_maps()
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
+function! s:countdown(message, seconds)
+  for t in range(a:seconds)
+    let left = a:seconds - t
+    echom printf('%s in %d second%s', a:message, left, left > 1 ? 's' : '')
+    redraw
+    sleep 1
+  endfor
+  echo
+endfunction
+
+function! s:figwheel()
+  silent !tmux send-keys -t right C-u "(start-figwheel\!)" Enter
+  silent !open-chrome localhost:3449
+  redraw!
+  call s:countdown('Piggieback', 5)
+  Piggieback (figwheel-sidecar.repl-api/repl-env)
+endfunction
+
 augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
+
+  " Clojure
+  autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
+  autocmd FileType clojure nmap <buffer> <Enter> cpp
+
+  " Figwheel
+  autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
 augroup END
 
 let g:clojure_maxlines = 60
@@ -1735,10 +1760,6 @@ augroup vimrc
 
   " Included syntax
   au FileType,ColorScheme * call <SID>file_type_handler()
-
-  " Clojure
-  au FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
-  au FileType clojure nmap <buffer> <Enter> cpp
 
   " Fugitive
   au FileType gitcommit nnoremap <buffer> <silent> cd :<C-U>Gcommit --amend --date="$(date)"<CR>
