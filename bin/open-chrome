@@ -28,7 +28,9 @@ end tell
 using terms from application "<%= app %>"
   tell application app_path
     set u to "<%= url %>"
+    set has_window to 0
     repeat with w in every window
+      set has_window to 1
       set tab_index to 0
       repeat with t in tabs of w
         set tab_index to tab_index + 1
@@ -40,6 +42,13 @@ using terms from application "<%= app %>"
         end if
       end repeat
     end repeat
+    if has_window is 1
+      tell window 1
+        make new tab
+        set URL of active tab of it to u
+      end tell
+      return
+    end if
     tell (make new window)
       repeat while visible of it is false
         delay 0.5
