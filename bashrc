@@ -251,6 +251,13 @@ pbc() {
   perl -pe 'chomp if eof' | pbcopy
 }
 
+cheap-bin() {
+  local PID=$(jps -lv |
+      fzf --height 30% --reverse --inline-info \
+          --preview 'echo {}' --preview-window bottom:wrap | awk '{print $1}')
+  [ -n "$PID" ] && jmap -dump:format=b,file=cheap.bin $PID
+}
+
 EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
