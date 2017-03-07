@@ -466,8 +466,20 @@ c() {
     }.join + " " * (2 + cols - len) + "\x1b[m" + url' |
   fzf --ansi --multi --no-hscroll --tiebreak=index |
   sed 's#.*\(https*://\)#\1#' | xargs open
-
 }
+
+gemtags() (
+  which ripper-tags || gem install ripper-tags
+  for dir in $(gem env gempath | tr ':' ' '); do
+    if [ -d $dir/gems ]; then
+      cd $dir/gems
+      for d in *; do
+        (cd $d && pwd && ctags -R) &
+      done
+    fi
+  done
+  wait
+)
 
 # GIT heart FZF
 # -------------

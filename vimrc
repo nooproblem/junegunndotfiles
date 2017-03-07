@@ -104,6 +104,7 @@ if v:version >= 703
   Plug 'guns/vim-slamhound'
   Plug 'venantius/vim-cljfmt'
 endif
+Plug 'tpope/vim-bundler'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
@@ -1735,11 +1736,22 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
-command! Plugs call fzf#run({
-  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-  \ 'options': '--delimiter / --nth -1',
-  \ 'down':    '~40%',
-  \ 'sink':    'Explore'})
+function! s:plugs_sink(line)
+  let dir = g:plugs[a:line].dir
+  for pat in ['doc/*.txt', 'README.md']
+    let match = get(split(globpath(dir, pat), "\n"), 0, '')
+    if len(match)
+      execute 'tabedit' match
+      return
+    endif
+  endfor
+  tabnew
+  execute 'Explore' dir
+endfunction
+
+command! PlugHelp call fzf#run(fzf#wrap({
+  \ 'source':  sort(keys(g:plugs)),
+  \ 'sink':    function('s:plugs_sink')}))
 
 " }}}
 " ============================================================================
