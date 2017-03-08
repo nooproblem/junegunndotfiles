@@ -1,25 +1,24 @@
 ;; https://github.com/technomancy/leiningen/blob/master/doc/PROFILES.md
 {:user {:plugins [[cider/cider-nrepl "0.14.0"]
-                  [lein-kibit "0.0.8"]
-                  [lein-licenses "0.1.1"]
-                  [lein-marginalia "0.8.0"]                    ; lein marg
+                  [lein-auto "0.1.3"] [lein-kibit "0.1.3"]     ; lein auto kibit
+                  [lein-marginalia "0.9.0"]                    ; lein marg
                   [codox "0.8.13"]                             ; lein doc
-                  [com.jakemccrary/lein-test-refresh "0.10.0"] ; lein test-refresh
+                  [com.jakemccrary/lein-test-refresh "0.18.1"] ; lein test-refresh
                   [lein-ancient "0.6.10"]
                   [lein-pprint "1.1.2"]
                   [lein-exec "0.3.5"]
-                  [lein-licenses "0.2.0"]
+                  [lein-licenses "0.2.1"]
                   [lein-try "0.4.3"]
                   [jonase/eastwood "0.2.1"]
                   [lein-cljfmt "0.5.6"]]
         :dependencies [[slamhound "1.5.5"]
-                       [spyscope "0.1.5"]
-                       [cljfmt "0.5.1"]]
+                       [cljfmt "0.5.6"]
+                       [com.cemerick/pomegranate "0.3.1"]
+                       [org.clojure/java.classpath "0.2.3"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
         :source-paths [#=(str #=(java.lang.System/getProperty "user.home")
                               "/.lein/src")]
-        :injections [(require 'jg)
-                     (require 'spyscope.core)]
+        :injections [(require 'jg)]
         :repl-options {:init
                        (do (require 'clojure.java.javadoc)
                            (doseq [[prefix javadoc-url]
