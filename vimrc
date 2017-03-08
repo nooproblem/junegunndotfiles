@@ -377,7 +377,8 @@ vnoremap <C-Q>     <esc>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
 
-" Tag stack
+" Tags
+nnoremap <C-]> g<C-]>
 nnoremap g[ :pop<cr>
 
 " Jump list (to newer position)
