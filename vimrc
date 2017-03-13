@@ -1718,9 +1718,8 @@ if has('nvim')
   " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
-" File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
-let g:fzf_files_options = printf('--preview "%s {} | head -'.&lines.'"',
-      \ g:plugs['fzf.vim'].dir.'/bin/preview.rb')
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
