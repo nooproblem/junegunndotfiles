@@ -414,8 +414,8 @@ inoremap <C-^> <C-o><C-^>
 " Make Y behave like other capitals
 nnoremap Y y$
 
-" qq to record, Q to replay (recursive map due to peekaboo)
-nmap Q @q
+" qq to record, Q to replay
+nnoremap Q @q
 
 " Zoom
 function! s:zoom()
