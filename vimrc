@@ -1286,7 +1286,7 @@ onoremap <silent> a~ :<C-U>execute "normal va`"<cr>
 " ----------------------------------------------------------------------------
 function! s:plug_gx()
   let line = getline('.')
-  let sha  = matchstr(line, '^  \X*\zs\x\{7}\ze ')
+  let sha  = matchstr(line, '^  \X*\zs\x\{7,9}\ze ')
   let name = empty(sha) ? matchstr(line, '^[-x+] \zs[^:]\+\ze:')
                       \ : getline(search('^- .*:$', 'bn'))[2:-2]
   let uri  = get(get(g:plugs, name, {}), 'uri', '')
