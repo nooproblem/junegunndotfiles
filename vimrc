@@ -1620,6 +1620,7 @@ endfunction
 augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
+  autocmd FileType lisp,clojure,scheme set isk-=.
 
   " Clojure
   autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
