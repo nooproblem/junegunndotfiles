@@ -314,10 +314,12 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
-# Figlet font selector
+# Figlet font selector => copy to clipboard
 fgl() (
+  [ $# -eq 0 ] && return
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
-  ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} Hello World!"
+  local font=$(ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} $@") &&
+  figlet -f "$font" "$@" | pbcopy
 )
 
 # fco - checkout git branch/tag
