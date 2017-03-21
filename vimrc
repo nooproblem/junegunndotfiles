@@ -3,6 +3,10 @@
 " .vimrc of Junegunn Choi {{{
 " ============================================================================
 
+" Vim 8 defaults
+unlet! skip_defaults_vim
+silent! source $VIMRUNTIME/defaults.vim
+
 let s:darwin = has('mac')
 
 " }}}
