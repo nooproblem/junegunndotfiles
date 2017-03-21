@@ -1359,15 +1359,19 @@ nmap     <Leader>g :Gstatus<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
 
 " ----------------------------------------------------------------------------
-" vim-ruby (https://github.com/vim-ruby/vim-ruby/issues/33)
+" vim-ruby
 " ----------------------------------------------------------------------------
-if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
-  let g:ruby_path = join(split(
-    \ glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".
-    \ glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"), ',')
-endif
-let g:ruby_fold = 1
-let g:ruby_no_expensive = 1
+" ft-ruby-syntax
+let ruby_operators = 1
+let ruby_space_errors = 1
+let ruby_fold = 1
+let ruby_no_expensive = 1
+let ruby_spellcheck_strings = 1
+
+" ft-ruby-omni
+" let rubycomplete_buffer_loading = 1
+" let rubycomplete_classes_in_global = 1
+" let rubycomplete_load_gemfile = 1
 
 " ----------------------------------------------------------------------------
 " matchit.vim
