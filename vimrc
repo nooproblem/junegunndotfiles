@@ -131,6 +131,7 @@ Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lint
+Plug 'metakirby5/codi.vim'
 Plug 'scrooloose/syntastic', { 'on': 'SyntasticCheck' }
 
 call plug#end()
