@@ -1013,7 +1013,7 @@ endfunction
 " ----------------------------------------------------------------------------
 function! s:goto_line()
   let tokens = split(expand('%'), ':')
-  if len(tokens) == 1 || !filereadable(tokens[0])
+  if len(tokens) <= 1 || !filereadable(tokens[0])
     return
   endif
 
