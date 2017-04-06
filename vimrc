@@ -132,7 +132,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lint
 Plug 'metakirby5/codi.vim'
-Plug 'scrooloose/syntastic', { 'on': 'SyntasticCheck' }
+Plug 'w0rp/ale', { 'on': 'ALEEnable' }
 
 call plug#end()
 endif
@@ -1651,13 +1651,6 @@ autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 " vim-markdown
 " ----------------------------------------------------------------------------
 " let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
-
-" ----------------------------------------------------------------------------
-" syntastic
-" ----------------------------------------------------------------------------
-let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 
 " ----------------------------------------------------------------------------
 " splitjoin
