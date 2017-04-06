@@ -1782,6 +1782,7 @@ augroup vimrc
   au FileType,ColorScheme * call <SID>file_type_handler()
 
   " Fugitive
+  au FileType gitcommit setlocal completefunc=emoji#complete
   au FileType gitcommit nnoremap <buffer> <silent> cd :<C-U>Gcommit --amend --date="$(date)"<CR>
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
