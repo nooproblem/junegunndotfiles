@@ -69,7 +69,7 @@ function! BuildYCM(info)
     !./install.py --clang-completer --gocode-completer
   endif
 endfunction
-" Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'go'], 'do': function('BuildYCM') }
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM') }
 
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
@@ -627,7 +627,7 @@ inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype
 " ----------------------------------------------------------------------------
 if s:darwin
   nnoremap <silent> <leader>ij
-  \ :call system('"/Applications/IntelliJ IDEA CE.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
+  \ :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
 endif
 
 " }}}
@@ -1600,6 +1600,7 @@ function! s:lisp_maps()
   nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
   nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
   nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+  nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
   nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
