@@ -867,7 +867,7 @@ command! HL call <SID>hl()
 " ----------------------------------------------------------------------------
 " :A
 " ----------------------------------------------------------------------------
-function! s:a()
+function! s:a(cmd)
   let name = expand('%:r')
   let ext = tolower(expand('%:e'))
   let sources = ['c', 'cc', 'cpp', 'cxx']
@@ -879,7 +879,7 @@ function! s:a()
         let aname = name.'.'.h
         for a in [aname, toupper(aname)]
           if filereadable(a)
-            execute 'e' a
+            execute a:cmd a
             return
           end
         endfor
@@ -887,7 +887,8 @@ function! s:a()
     endif
   endfor
 endfunction
-command! A call s:a()
+command! A call s:a('e')
+command! AV call s:a('botright vertical split')
 
 " ----------------------------------------------------------------------------
 " Todo
