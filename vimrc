@@ -132,7 +132,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lint
 Plug 'metakirby5/codi.vim'
-Plug 'w0rp/ale', { 'on': 'ALEEnable' }
+Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
 
 call plug#end()
 endif
@@ -1369,6 +1369,7 @@ let ruby_fold = 1
 let ruby_no_expensive = 1
 let ruby_spellcheck_strings = 1
 
+autocmd vimrc FileType ruby command! Rubocop :call system('rubocop -a '.expand('%')) | e
 " ft-ruby-omni
 " let rubycomplete_buffer_loading = 1
 " let rubycomplete_classes_in_global = 1
