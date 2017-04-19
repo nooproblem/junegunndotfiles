@@ -74,9 +74,6 @@ Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM')
 " Plug 'SirVer/ultisnips', { 'on': '#InsertEnter' }
 " Plug 'honza/vim-snippets'
 
-" Tmux
-Plug 'tpope/vim-tbone'
-
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 autocmd! User indentLine doautocmd indentLine Syntax
@@ -471,6 +468,33 @@ nnoremap [t :tabp<cr>
 " ----------------------------------------------------------------------------
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
+
+" ----------------------------------------------------------------------------
+" tmux
+" ----------------------------------------------------------------------------
+function! s:tmux_send(content, dest) range
+  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
+  let tempfile = tempname()
+  call writefile(split(a:content, "\n", 1), tempfile, 'b')
+  call system(printf('tmux load-buffer -b vim-tmux %s \; paste-buffer -d -b vim-tmux -t %s',
+        \ shellescape(tempfile), shellescape(dest)))
+  call delete(tempfile)
+endfunction
+
+function! s:tmux_map(key, dest)
+  execute printf('nnoremap <silent> %s "tyy:call <SID>tmux_send(@t, "%s")<cr>', a:key, a:dest)
+  execute printf('xnoremap <silent> %s "ty:call <SID>tmux_send(@t, "%s")<cr>gv', a:key, a:dest)
+endfunction
+
+call s:tmux_map('<leader>tt', '')
+call s:tmux_map('<leader>th', '.left')
+call s:tmux_map('<leader>tj', '.bottom')
+call s:tmux_map('<leader>tk', '.top')
+call s:tmux_map('<leader>tl', '.right')
+call s:tmux_map('<leader>ty', '.top-left')
+call s:tmux_map('<leader>to', '.top-right')
+call s:tmux_map('<leader>tn', '.bottom-left')
+call s:tmux_map('<leader>t.', '.bottom-right')
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> / <c-v><tab> | super-duper-tab
@@ -1445,30 +1469,6 @@ nmap gaa ga_
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
 let g:github_dashboard = { 'username': 'junegunn' }
-
-" ----------------------------------------------------------------------------
-" <leader>t | vim-tbone
-" ----------------------------------------------------------------------------
-function! s:tmux_send(dest) range
-  call inputsave()
-  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
-  call inputrestore()
-  silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
-endfunction
-unlet! m
-for m in ['n', 'x']
-  let gv = m == 'x' ? 'gv' : ''
-  execute m."noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>".gv
-  execute m."noremap <silent> <leader>th :call <SID>tmux_send('.left')<cr>".gv
-  execute m."noremap <silent> <leader>tj :call <SID>tmux_send('.bottom')<cr>".gv
-  execute m."noremap <silent> <leader>tk :call <SID>tmux_send('.top')<cr>".gv
-  execute m."noremap <silent> <leader>tl :call <SID>tmux_send('.right')<cr>".gv
-  execute m."noremap <silent> <leader>ty :call <SID>tmux_send('.top-left')<cr>".gv
-  execute m."noremap <silent> <leader>to :call <SID>tmux_send('.top-right')<cr>".gv
-  execute m."noremap <silent> <leader>tn :call <SID>tmux_send('.bottom-left')<cr>".gv
-  execute m."noremap <silent> <leader>t. :call <SID>tmux_send('.bottom-right')<cr>".gv
-endfor
-unlet m
 
 " ----------------------------------------------------------------------------
 " indentLine
