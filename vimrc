@@ -521,7 +521,11 @@ function! s:can_complete(func, prefix)
   call setline('.', oline)
   call setpos('.', opos)
 
-  return !empty(type(result) == type([]) ? result : result.words)
+  if !empty(type(result) == type([]) ? result : result.words)
+    call complete(start + 1, result)
+    return 1
+  endif
+  return 0
 endfunction
 
 function! s:feedkeys(k)
@@ -545,11 +549,8 @@ function! s:super_duper_tab(pumvisible, next)
   if prefix =~ '^[~/.]'
     return s:feedkeys("\<c-x>\<c-f>")
   endif
-  if s:can_complete(&omnifunc, prefix)
-    return s:feedkeys("\<c-x>\<c-o>")
-  endif
-  if s:can_complete(&completefunc, prefix)
-    return s:feedkeys("\<c-x>\<c-u>")
+  if s:can_complete(&omnifunc, prefix) || s:can_complete(&completefunc, prefix)
+    return ''
   endif
   return s:feedkeys(k)
 endfunction
