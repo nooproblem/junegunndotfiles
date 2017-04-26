@@ -3,3 +3,6 @@ AllCops:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
