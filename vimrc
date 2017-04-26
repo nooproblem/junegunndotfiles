@@ -126,6 +126,7 @@ Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 
 " Lint
 Plug 'metakirby5/codi.vim'
