@@ -37,9 +37,10 @@ if [ $(uname -s) = 'Darwin' ]; then
 
   echo "Updating homebrew"
   brew install \
-    ag ant cmus coreutils cscope exiftool \
-    fish git gnuplot graphviz imagemagick leiningen sbt \
+    ag ant cmus coreutils cscope exiftool doxygen liboauth \
+    fish git graphviz imagemagick leiningen sbt \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight reattach-to-user-namespace
+  brew install gnuplot --with-qt@5.7
 
   # Patched version of tmux
   brew tap waltarix/homebrew-customs
