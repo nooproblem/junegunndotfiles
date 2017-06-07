@@ -654,7 +654,8 @@ inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype
 " ----------------------------------------------------------------------------
 if s:darwin
   nnoremap <silent> <leader>ij
-  \ :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p'))<cr>
+  \ :call job_start(['/Applications/IntelliJ IDEA.app/Contents/MacOS/idea', expand('%:p')],
+  \ {'in_io': 'null', 'out_io': 'null', 'err_io': 'null'})<cr>
 endif
 
 " }}}
