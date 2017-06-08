@@ -1,4 +1,4 @@
-" vim: set foldmethod=marker foldlevel=0:
+" vim: set foldmethod=marker foldlevel=0 nomodeline:
 " ============================================================================
 " .vimrc of Junegunn Choi {{{
 " ============================================================================
