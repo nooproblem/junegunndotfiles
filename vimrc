@@ -131,7 +131,7 @@ Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 
 " Lint
 Plug 'metakirby5/codi.vim'
-Plug 'w0rp/ale', { 'on': 'ALEEnable', 'for': ['ruby', 'sh'] }
+Plug 'w0rp/ale'
 
 call plug#end()
 endif
@@ -1532,6 +1532,12 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
+
+
+" ----------------------------------------------------------------------------
+" ALE
+" ----------------------------------------------------------------------------
+let g:ale_linters = {'java': []}
 
 " ----------------------------------------------------------------------------
 " gv.vim / gl.vim
