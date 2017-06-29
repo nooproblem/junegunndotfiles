@@ -63,6 +63,7 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'beloglazov/vim-online-thesaurus'
+Plug 'sgur/vim-editorconfig'
 
 function! BuildYCM(info)
   if a:info.status == 'installed' || a:info.force
