@@ -76,9 +76,12 @@ alias k5='kill -9 %%'
 alias gs='git status'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 ext() {
+  ext-all --exclude .git --exclude target --exclude "*.log"
+}
+ext-all() {
   local name=$(basename $(pwd))
   cd ..
-  tar -cvzf "$name.tgz" --exclude .git --exclude target --exclude "*.log" "$name"
+  tar -cvzf "$name.tgz" $* "$name"
   cd -
   mv ../"$name".tgz .
 }
