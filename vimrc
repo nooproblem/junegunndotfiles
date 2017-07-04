@@ -40,9 +40,8 @@ Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
-if v:version >= 703
-  Plug 'junegunn/vim-after-object'
-endif
+Plug 'junegunn/heytmux'
+Plug 'junegunn/vim-after-object'
 if s:darwin
   Plug 'junegunn/vim-xmark'
 endif
@@ -658,6 +657,12 @@ if s:darwin
   \ :call job_start(['/Applications/IntelliJ IDEA.app/Contents/MacOS/idea', expand('%:p')],
   \ {'in_io': 'null', 'out_io': 'null', 'err_io': 'null'})<cr>
 endif
+
+" ----------------------------------------------------------------------------
+" Heytmux
+" ----------------------------------------------------------------------------
+
+xnoremap <leader>ht :Heytmux<cr>
 
 " }}}
 " ============================================================================
@@ -1533,7 +1538,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
-
 
 " ----------------------------------------------------------------------------
 " ALE
