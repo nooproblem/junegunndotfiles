@@ -1404,7 +1404,6 @@ let ruby_fold = 1
 let ruby_no_expensive = 1
 let ruby_spellcheck_strings = 1
 
-autocmd vimrc FileType ruby command! Rubocop :call system('rubocop -a '.expand('%')) | e
 " ft-ruby-omni
 " let rubycomplete_buffer_loading = 1
 " let rubycomplete_classes_in_global = 1
@@ -1543,6 +1542,7 @@ nnoremap <Leader>G :Goyo<CR>
 " ALE
 " ----------------------------------------------------------------------------
 let g:ale_linters = {'java': [], 'yaml': []}
+let g:ale_fixers = {'ruby': ['rubocop']}
 
 " ----------------------------------------------------------------------------
 " gv.vim / gl.vim
