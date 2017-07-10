@@ -1543,6 +1543,8 @@ nnoremap <Leader>G :Goyo<CR>
 " ----------------------------------------------------------------------------
 let g:ale_linters = {'java': [], 'yaml': []}
 let g:ale_fixers = {'ruby': ['rubocop']}
+nmap ]a <Plug>(ale_next_wrap)
+nmap [a <Plug>(ale_previous_wrap)
 
 " ----------------------------------------------------------------------------
 " gv.vim / gl.vim
