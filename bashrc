@@ -265,18 +265,7 @@ EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
 
-# boot2docker
-# --------------------------------------------------------------------
 if [ "$PLATFORM" = 'Darwin' ]; then
-  dockerinit() {
-    [ $(docker-machine status default) = 'Running' ] || docker-machine start default
-    eval "$(docker-machine env default)"
-  }
-
-  dockerstop() {
-    docker-machine stop default
-  }
-
   resizes() {
     mkdir -p out &&
     for jpg in *.JPG; do
@@ -292,6 +281,40 @@ if [ "$PLATFORM" = 'Darwin' ]; then
   alias quitvpn="osascript -e 'tell application \"PulseTray.app\" to quit';sudo launchctl unload -w /Library/LaunchDaemons/net.juniper.AccessService.plist"
 fi
 
+jfr() {
+  if [ $# -ne 1 ]; then
+    echo 'usage: jfr DURATION'
+    return 1
+  fi
+  local pid path
+  pid=$(jcmd | grep -v jcmd | fzf --height 30% --reverse | cut -d' ' -f1)
+  path="/tmp/jfr-$(date +'%Y%m%d-%H%M%S').jfr"
+  date
+  jcmd "$pid" JFR.start duration="${1:-60}s" filename="$path" || return
+  while jcmd "$pid" JFR.check | grep running > /dev/null; do
+    echo -n .
+    sleep 1
+  done
+  echo
+  open "$path"
+}
+
+jfr-remote() {
+  if [ $# -ne 3 ]; then
+    echo 'usage: jfr-remote HOST SUDOUSER DURATION'
+    return 1
+  fi
+  local pid path dur
+  pid=$(ssh -t "$1" "sudo -i sudo -u $2 jcmd" 2> /dev/null | grep -v jcmd |
+        fzf --height 30% --reverse | cut -d' ' -f1)
+  path="/tmp/jfr-$(date +'%Y%m%d-%H%M%S').jfr"
+  dur="${3:-60}s"
+  date
+  ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start duration=$dur filename=$path || return"
+  sleep $dur
+  sleep 3
+  scp "$1:$path" /tmp && open "$path"
+}
 
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
