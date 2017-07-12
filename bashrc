@@ -573,6 +573,5 @@ bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 # FZF_CTRL_R_OPTS='--height 40%'
 # FZF_ALT_C_OPTS='--height 40% --reverse'
 # FZF_COMPLETION_OPTS='--height 40% --reverse'
-source /usr/local/opt/git/etc/bash_completion.d/git-completion.bash
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
