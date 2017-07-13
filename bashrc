@@ -557,12 +557,14 @@ gr() {
   cut -d$'\t' -f1
 }
 
-bind '"\er": redraw-current-line'
-bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
-bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
-bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
-bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+if [[ $- =~ i ]]; then
+  bind '"\er": redraw-current-line'
+  bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
+  bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+  bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
+  bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
+  bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+fi
 
 # source $(brew --prefix)/etc/bash_completion
 # source ~/git-completion.bash
