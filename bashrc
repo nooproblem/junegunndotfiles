@@ -81,7 +81,7 @@ ext() {
 ext-all() {
   local name=$(basename $(pwd))
   cd ..
-  tar -cvzf "$name.tgz" $* "$name"
+  tar -cvzf "$name.tgz" $* --exclude "$name.tgz" "$name"
   cd -
   mv ../"$name".tgz .
 }
