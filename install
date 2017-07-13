@@ -4,13 +4,15 @@
 # 2011/05/25-
 
 # RC files
-cd $(dirname $BASH_SOURCE)
+
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
+
 BASE=$(pwd)
 touch bashrc-extra
 for rc in *rc *profile tmux.conf agignore rubocop.yml; do
   mkdir -pv bak
-  [ -e ~/.$rc ] && mv -v ~/.$rc bak/.$rc
-  ln -sfv $BASE/$rc ~/.$rc
+  [ -e ~/."$rc" ] && mv -v ~/."$rc" bak/."$rc"
+  ln -sfv "$BASE/$rc" ~/."$rc"
 done
 
 # git-prompt
@@ -21,16 +23,16 @@ fi
 # scripts
 mkdir -p ~/bin
 for bin in $BASE/bin/*; do
-  ln -svf $bin ~/bin
+  ln -svf "$bin" ~/bin
 done
 
 # leiningen
 mkdir -p ~/.lein
-ln -sfv $BASE/profiles.clj ~/.lein/
+ln -sfv "$BASE/profiles.clj" ~/.lein/
 rm -f ~/.lein/src
-ln -sfv $BASE/lein-user ~/.lein/src
+ln -sfv "$BASE/lein-user" ~/.lein/src
 
-if [ $(uname -s) = 'Darwin' ]; then
+if [ "$(uname -s)" = 'Darwin' ]; then
   # Homebrew
   [ -z "$(which brew)" ] &&
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -56,7 +58,11 @@ if [ $(uname -s) = 'Darwin' ]; then
   brew tap universal-ctags/universal-ctags
   brew install --HEAD universal-ctags
 
-  brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack vagrant mat visualvm spotifree flux flycut keycastr
+  brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack \
+    vagrant mat visualvm spotifree flux flycut keycastr
+else
+  rm -f ~/.tmux.conf
+  grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
 fi
 
 git config --global user.email "junegunn.c@gmail.com"
