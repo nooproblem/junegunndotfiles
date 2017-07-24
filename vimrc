@@ -50,7 +50,6 @@ unlet! g:plug_url_format
 " Colors
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'AlessandroYorba/Monrovia'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -1543,6 +1542,7 @@ nnoremap <Leader>G :Goyo<CR>
 " ----------------------------------------------------------------------------
 let g:ale_linters = {'java': [], 'yaml': []}
 let g:ale_fixers = {'ruby': ['rubocop']}
+let g:ale_lint_delay = 1000
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 
