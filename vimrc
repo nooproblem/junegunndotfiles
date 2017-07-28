@@ -102,7 +102,6 @@ endif
 
 " Lang
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby'
   Plug 'kovisoft/paredit', { 'for': 'clojure' }
   Plug 'junegunn/vim-fireplace', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'

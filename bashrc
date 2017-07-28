@@ -310,7 +310,7 @@ jfr-remote() {
   path="/tmp/jfr-$(date +'%Y%m%d-%H%M%S').jfr"
   dur="${3:-60}s"
   date
-  ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start duration=$dur filename=$path || return"
+  ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start settings=/tmp/obj.jfc duration=$dur filename=$path || return"
   sleep $dur
   sleep 3
   scp "$1:$path" /tmp && open "$path"
@@ -327,7 +327,7 @@ fzf-down() {
   fzf --height 50% "$@" --border
 }
 
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_COMMAND='rg --files'
 [ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
 
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
@@ -496,19 +496,6 @@ c() {
   sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
-gemtags() (
-  which ripper-tags || gem install ripper-tags
-  for dir in $(gem env gempath | tr ':' ' '); do
-    if [ -d $dir/gems ]; then
-      cd $dir/gems
-      for d in *; do
-        (cd $d && pwd && ctags -R) &
-      done
-    fi
-  done
-  wait
-)
-
 # GIT heart FZF
 # -------------
 
@@ -565,15 +552,5 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
   bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
 fi
-
-# source $(brew --prefix)/etc/bash_completion
-# source ~/git-completion.bash
-# unset _fzf_completion_loaded
-# export FZF_TMUX=0
-# export FZF_DEFAULT_OPTS='--height 40% --reverse'
-# FZF_CTRL_T_OPTS='--height 40% --reverse'
-# FZF_CTRL_R_OPTS='--height 40%'
-# FZF_ALT_C_OPTS='--height 40% --reverse'
-# FZF_COMPLETION_OPTS='--height 40% --reverse'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
