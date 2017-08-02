@@ -136,10 +136,7 @@ else
   if [ -e ~/.git-prompt.sh ]; then
     source ~/.git-prompt.sh
   fi
-  # PROMPT_COMMAND='history -a; history -c; history -r; printf "\[\e[38;5;59m\]%$(($COLUMNS - 4))s\r" "$(__git_ps1) ($(date +%m/%d\ %H:%M:%S))"'
-  PROMPT_COMMAND='history -a; printf "\[\e[38;5;59m\]%$(($COLUMNS - 4))s\r" "$(__git_ps1) ($(date +%m/%d\ %H:%M:%S))"'
-  PS1="\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:"
-  PS1="$PS1\[\e[m\]\w\[\e[1;31m\]> \[\e[0m\]"
+  PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;30m$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]'
 fi
 
 # Tmux tile
@@ -180,11 +177,7 @@ _parent_dirs() {
 complete -F _parent_dirs -o default -o bashdefault ..cd
 
 viw() {
-  vim `which "$1"`
-}
-
-gd() {
-  [ "$1" ] && cd *$1*
+  vim "$(which "$1")"
 }
 
 csbuild() {
@@ -319,6 +312,12 @@ jfr-remote() {
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
+fd() {
+  local dir
+  dir=$(find . -maxdepth 1 -path './.*' -prune -o -type d -print | sed '1d;s#^./##' |
+        fzf --height 20 --reverse --query "$1" --select-1 --exit-0) && cd "$dir"
+}
+
 csi() {
   echo -en "\x1b[$@"
 }
@@ -330,7 +329,6 @@ fzf-down() {
 export FZF_DEFAULT_COMMAND='rg --files'
 [ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
 
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND | with-dir"
 if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
   export FZF_CTRL_T_OPTS="--preview '~/.vim/plugged/fzf.vim/bin/preview.rb {} | head -200'"
 fi
@@ -360,18 +358,6 @@ fco() {
     (echo "$tags"; echo "$branches") | sed '/^$/d' |
     fzf-down --no-hscroll --reverse --ansi +m -d "\t" -n 2 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
-}
-
-# fshow - git commit browser
-fshow() {
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --header "Press CTRL-S to toggle sort" \
-      --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 |
-                 xargs -I % sh -c 'git show --color=always % | head -200 '" \
-      --bind "enter:execute:echo {} | grep -o '[a-f0-9]\{7\}' | head -1 |
-              xargs -I % sh -c 'vim fugitive://\$(git rev-parse --show-toplevel)/.git//% < /dev/tty'"
 }
 
 # ftags - search ctags
@@ -458,7 +444,7 @@ fs() {
 }
 
 # Z integration
-source $BASE/z.sh
+source "$BASE/z.sh"
 unalias z 2> /dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
@@ -494,6 +480,15 @@ c() {
     }.join + " " * (2 + cols - len) + "\x1b[m" + url' |
   fzf --ansi --multi --no-hscroll --tiebreak=index |
   sed 's#.*\(https*://\)#\1#' | xargs open
+}
+
+# so - my stackoverflow favorites
+so() {
+  $BASE/bin/stackoverflow-favorites |
+    fzf --ansi --reverse --with-nth ..-2 --tac --tiebreak index |
+    awk '{print $NF}' | while read -r line; do
+      open "$line"
+    done
 }
 
 # GIT heart FZF
