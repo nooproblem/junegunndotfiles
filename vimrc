@@ -103,7 +103,7 @@ endif
 " Lang
 if v:version >= 703
   Plug 'kovisoft/paredit', { 'for': 'clojure' }
-  Plug 'junegunn/vim-fireplace', { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
   Plug 'guns/vim-slamhound'
