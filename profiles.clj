@@ -5,6 +5,7 @@
                   [codox "0.8.13"]                             ; lein doc
                   [com.jakemccrary/lein-test-refresh "0.18.1"] ; lein test-refresh
                   [lein-ancient "0.6.10"]
+                  [lein-cloverage "1.0.9"]
                   [lein-pprint "1.1.2"]
                   [lein-exec "0.3.5"]
                   [lein-licenses "0.2.1"]
