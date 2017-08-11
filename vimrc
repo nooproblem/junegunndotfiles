@@ -50,6 +50,7 @@ unlet! g:plug_url_format
 " Colors
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -1682,6 +1683,12 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 " ----------------------------------------------------------------------------
 autocmd vimrc FileType c,cpp,go nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
 autocmd vimrc FileType c,cpp    nnoremap <buffer> K  :YcmCompleter GetType<CR>
+
+" ----------------------------------------------------------------------------
+" gruvbox
+" ----------------------------------------------------------------------------
+let g:gruvbox_contrast_dark = 'soft'
+
 
 " }}}
 " ============================================================================
