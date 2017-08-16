@@ -26,6 +26,7 @@ nnoremap ]c :action VcsShowNextChangeMarker<cr>
 
 nnoremap gcc :action CommentByLineComment<cr>
 
+nnoremap <leader>ff :action FindInPath<cr>
 nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>su :action ShowUsages<cr>
 nnoremap <leader>cv :action ChangeView<cr>
