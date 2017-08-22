@@ -127,7 +127,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 
 " Lint
-Plug 'metakirby5/codi.vim'
 Plug 'w0rp/ale'
 
 call plug#end()
@@ -665,6 +664,12 @@ xnoremap <leader>ht :Heytmux<cr>
 " ============================================================================
 " FUNCTIONS & COMMANDS {{{
 " ============================================================================
+
+" ----------------------------------------------------------------------------
+" :NL
+" ----------------------------------------------------------------------------
+command! -range=% -nargs=1 NL
+  \ <line1>,<line2>!nl -w <args> -s '. ' | perl -pe 's/^.{<args>}..$//'
 
 " ----------------------------------------------------------------------------
 " :Chomp
@@ -1466,7 +1471,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
-" xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
