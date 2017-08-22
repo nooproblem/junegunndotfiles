@@ -59,8 +59,7 @@ Plug 'tpope/vim-commentary'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'rhysd/vim-grammarous'
-Plug 'beloglazov/vim-online-thesaurus'
+Plug 'junegunn/vim-online-thesaurus'
 Plug 'sgur/vim-editorconfig'
 
 function! BuildYCM(info)
@@ -109,7 +108,7 @@ if v:version >= 703
   Plug 'guns/vim-slamhound'
   Plug 'venantius/vim-cljfmt'
 endif
-Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
