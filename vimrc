@@ -1496,7 +1496,7 @@ let g:signify_skip_filetype = { 'journal': 1 }
 " ----------------------------------------------------------------------------
 " vim-slash
 " ----------------------------------------------------------------------------
-if has('timers')
+if has('timers') && !has('nvim')
   noremap <expr> <plug>(slash-after) slash#blink(2, 50)
 endif
 
