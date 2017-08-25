@@ -1593,9 +1593,9 @@ function! s:countdown(message, seconds)
 endfunction
 
 function! s:figwheel()
-  call system('tmux send-keys -t right C-u "(start-figwheel!)" Enter')
+  call system('tmux send-keys -t right C-u "(figwheel-sidecar.repl-api/start-figwheel!)" Enter')
   call system('open-chrome localhost:3449')
-  call s:countdown('Piggieback', 5)
+  call s:countdown('Piggieback', 7)
   Piggieback (figwheel-sidecar.repl-api/repl-env)
 endfunction
 
