@@ -303,7 +303,7 @@ jfr-remote() {
   path="/tmp/jfr-$(date +'%Y%m%d-%H%M%S').jfr"
   dur="${3:-60}s"
   date
-  ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start settings=/tmp/obj.jfc duration=$dur filename=$path || return"
+  ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start duration=$dur filename=$path || return"
   sleep $dur
   sleep 3
   scp "$1:$path" /tmp && open "$path"
