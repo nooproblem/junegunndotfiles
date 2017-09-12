@@ -69,8 +69,8 @@ function! BuildYCM(info)
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM') }
 
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
@@ -1493,20 +1493,10 @@ function! s:lisp_maps()
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
-function! s:countdown(message, seconds)
-  for t in range(a:seconds)
-    let left = a:seconds - t
-    echom printf('%s in %d second%s', a:message, left, left > 1 ? 's' : '')
-    redraw
-    sleep 1
-  endfor
-  echo
-endfunction
-
 function! s:figwheel()
   call system('tmux send-keys -t right C-u "(figwheel-sidecar.repl-api/start-figwheel!)" Enter')
-  call system('open-chrome localhost:3449')
-  call s:countdown('Piggieback', 7)
+  call input('Press enter when ready.')
+  redraw!
   Piggieback (figwheel-sidecar.repl-api/repl-env)
 endfunction
 
@@ -1515,7 +1505,7 @@ augroup vimrc
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
 
   " Clojure
-  autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
+  autocmd FileType clojure xnoremap <buffer> <Enter> "cy:Eval <c-r>c<CR>
   autocmd FileType clojure nmap <buffer> <Enter> cpp
 
   " Figwheel
