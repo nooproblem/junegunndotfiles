@@ -123,6 +123,8 @@ elif [ "$PLATFORM" = Darwin ]; then
   alias ls='ls -G'
 fi
 
+alias bert='bundle exec rake test'
+
 
 # Prompt
 # --------------------------------------------------------------------
