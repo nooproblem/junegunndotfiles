@@ -1459,7 +1459,7 @@ nnoremap <Leader>G :Goyo<CR>
 " ----------------------------------------------------------------------------
 " ALE
 " ----------------------------------------------------------------------------
-let g:ale_linters = {'java': [], 'yaml': []}
+let g:ale_linters = {'java': [], 'yaml': [], 'scala': []}
 let g:ale_fixers = {'ruby': ['rubocop']}
 let g:ale_lint_delay = 1000
 nmap ]a <Plug>(ale_next_wrap)
