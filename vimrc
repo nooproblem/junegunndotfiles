@@ -15,7 +15,7 @@ let s:darwin = has('mac')
 " ============================================================================
 
 silent! if plug#begin('~/.vim/plugged')
-
+Plug 'https://github.com/altercation/vim-colors-solarized.git'
 if s:darwin
   let g:plug_url_format = 'git@github.com:%s.git'
 else
@@ -1641,6 +1641,7 @@ nnoremap <silent> <Leader>`        :Marks<CR>
 inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
+inoremap <expr> <c-x><c-d> fzf#vim#complete#path('blsd')
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
