@@ -315,21 +315,15 @@ jfr-remote() (
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
-fd() {
-  local dir
-  dir=$(find . -maxdepth 1 -path './.*' -prune -o -type d -print | sed '1d;s#^./##' |
-        fzf --height 20 --reverse --query "$1" --select-1 --exit-0) && cd "$dir"
-}
-
 csi() {
-  echo -en "\x1b[$@"
+  echo -en "\x1b[$*"
 }
 
 fzf-down() {
   fzf --height 50% "$@" --border
 }
 
-export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 [ -n "$NVIM_LISTEN_ADDRESS" ] && export FZF_DEFAULT_OPTS='--no-height'
 
 if [ -x ~/.vim/plugged/fzf.vim/bin/preview.rb ]; then
