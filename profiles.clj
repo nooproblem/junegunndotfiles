@@ -16,11 +16,10 @@
         :dependencies [[slamhound "1.5.5"]
                        [cljfmt "0.5.6"]
                        [com.cemerick/pomegranate "0.3.1"]
-                       [org.clojure/java.classpath "0.2.3"]]
+                       [org.clojure/java.classpath "0.2.3"]
+                       [junegunn/inspector "0.1.1-SNAPSHOT"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
-        :source-paths [#=(str #=(java.lang.System/getProperty "user.home")
-                              "/.lein/src")]
-        :injections [(require 'jg)]
+        :injections [(require 'inspector.core)]
         :repl-options {:init
                        (do (require 'clojure.java.javadoc)
                            (doseq [[prefix javadoc-url]
