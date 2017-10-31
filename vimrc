@@ -1387,7 +1387,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
-xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+xmap <Leader>ga   <Plug>(LiveEasyAlign)
 " nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
@@ -1518,8 +1518,12 @@ augroup vimrc
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
 
   " Clojure
-  autocmd FileType clojure xnoremap <buffer> <Enter> "cy:Eval <c-r>c<CR>
-  autocmd FileType clojure nmap <buffer> <Enter> cpp
+  autocmd FileType clojure xnoremap <buffer> <silent> <cr>         "cy:Eval <c-r>c<cr>
+  autocmd FileType clojure xnoremap <buffer> <silent> <leader><cr> "cy:Eval (require 'clojure.pprint)(clojure.pprint/pprint <c-r>c)<cr>
+  autocmd FileType clojure nmap     <buffer> <Enter>      cpp
+
+  " Ruby
+  autocmd FileType ruby set iskeyword+=!
 
   " Figwheel
   autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
