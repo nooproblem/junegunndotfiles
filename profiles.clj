@@ -17,7 +17,7 @@
                        [cljfmt "0.5.6"]
                        [com.cemerick/pomegranate "0.3.1"]
                        [org.clojure/java.classpath "0.2.3"]
-                       [junegunn/inspector "0.1.1-SNAPSHOT"]]
+                       [junegunn/inspector "0.2.0"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
         :injections [(require 'inspector.core)]
         :repl-options {:init
