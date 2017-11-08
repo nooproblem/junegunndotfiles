@@ -15,7 +15,7 @@ let s:darwin = has('mac')
 " ============================================================================
 
 silent! if plug#begin('~/.vim/plugged')
-Plug 'https://github.com/altercation/vim-colors-solarized.git'
+
 if s:darwin
   let g:plug_url_format = 'git@github.com:%s.git'
 else
@@ -595,7 +595,7 @@ command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | no
 " ----------------------------------------------------------------------------
 " :M
 " ----------------------------------------------------------------------------
-command! M execute printf('!m %s:%d', expand('%'), line('.'))
+command! M execute printf('!bundle exec m %s:%d', expand('%'), line('.'))
 
 " ----------------------------------------------------------------------------
 " :CopyRTF
