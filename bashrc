@@ -124,6 +124,8 @@ elif [ "$PLATFORM" = Darwin ]; then
 fi
 
 alias bert='bundle exec rake test'
+alias ber='bundle exec rake'
+alias be='bundle exec'
 
 
 # Prompt
