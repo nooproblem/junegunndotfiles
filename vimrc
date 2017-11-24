@@ -1459,19 +1459,11 @@ nnoremap <Leader>G :Goyo<CR>
 " ----------------------------------------------------------------------------
 " ALE
 " ----------------------------------------------------------------------------
-let g:ale_linters = {'java': [], 'yaml': [], 'scala': []}
+let g:ale_linters = {'java': [], 'yaml': [], 'scala': [], 'clojure': []}
 let g:ale_fixers = {'ruby': ['rubocop']}
 let g:ale_lint_delay = 1000
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
-
-" brew install candid82/brew/joker
-command! Joker call ale#linter#Define('clojure', {
-\   'name': 'joker',
-\   'executable': 'joker',
-\   'command': 'joker --lint %t 2>&1',
-\   'callback': 'ale#handlers#unix#HandleAsWarning',
-\}) | ALEDisable | ALEEnable
 
 " ----------------------------------------------------------------------------
 " gv.vim / gl.vim
