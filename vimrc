@@ -1610,8 +1610,12 @@ let g:gruvbox_contrast_dark = 'soft'
 
 if has('nvim') || has('gui_running')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
+
+" Hide statusline of terminal buffer
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
