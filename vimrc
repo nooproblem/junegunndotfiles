@@ -1683,9 +1683,6 @@ command! PlugHelp call fzf#run(fzf#wrap({
 augroup vimrc
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
-  " IndentLines
-  au FileType slim IndentLinesEnable
-
   " File types
   au BufNewFile,BufRead *.icc               set filetype=cpp
   au BufNewFile,BufRead *.pde               set filetype=java
