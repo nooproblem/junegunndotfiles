@@ -297,7 +297,7 @@ jfr() {
 }
 
 jfr-remote() (
-  set -o pipefail
+  set -x -o pipefail
   if [ $# -ne 3 ]; then
     echo 'usage: jfr-remote HOST SUDOUSER DURATION'
     return 1
@@ -311,7 +311,14 @@ jfr-remote() (
   ssh -t "$1" "sudo -i sudo -u $2 jcmd $pid JFR.start duration=$dur filename=$path || return"
   sleep $dur
   sleep 3
+  ssh -t "$1" "sudo -i sudo -u $2 chmod o+r $path"
   scp "$1:$path" /tmp && open "$path"
+)
+
+tail-until() (
+  pattern=$1
+  shift
+  grep -m 1 "$pattern" <(exec tail -F "$@"); kill $!
 )
 
 # fzf (https://github.com/junegunn/fzf)
