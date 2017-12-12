@@ -24,7 +24,7 @@
                        (do (require 'clojure.java.javadoc)
                            (doseq [[prefix javadoc-url]
                                    {"java" "https://docs.oracle.com/javase/8/docs/api/"
-                                    "org.apache.kafka" "https://kafka.apache.org/0101/javadoc/"}]
+                                    "org.apache.kafka" "https://kafka.apache.org/10/javadoc/"}]
                              (clojure.java.javadoc/add-remote-javadoc
                                prefix javadoc-url)))}
         :global-vars {*warn-on-reflection* true
