@@ -50,6 +50,7 @@ unlet! g:plug_url_format
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
+Plug 'yuttie/hydrangea-vim'
 
 " Edit
 Plug 'tpope/vim-repeat'
