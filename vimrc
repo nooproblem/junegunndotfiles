@@ -51,6 +51,10 @@ Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 Plug 'yuttie/hydrangea-vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'AlessandroYorba/Despacio'
+Plug 'cocopon/iceberg.vim'
+Plug 'w0ng/vim-hybrid'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -274,6 +278,10 @@ endif
 
 noremap <C-F> <C-D>
 noremap <C-B> <C-U>
+
+" Open new line below and above current line
+nnoremap <leader>o o<esc>
+nnoremap <leader>O O<esc>
 
 " Save
 inoremap <C-s>     <C-O>:update<cr>
