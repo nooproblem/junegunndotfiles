@@ -26,6 +26,9 @@ nnoremap <c-w><c-c> :action VimWindowClose<cr>
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
 
+nnoremap [d :action QuickImplementations<cr>
+nnoremap ]d :action QuickImplementations<cr>
+
 nnoremap gcc :action CommentByLineComment<cr>
 
 nnoremap <leader>ff :action FindInPath<cr>
