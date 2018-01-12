@@ -41,7 +41,7 @@ nnoremap <leader>ic :action InspectCode<cr>
 nnoremap <leader>oi :action OptimizeImports<cr>
 nnoremap <leader>re :action RenameElement<cr>
 nnoremap <leader>rf :action RenameFile<cr>
-nnoremap <leader>rc :action ReformatCode<cr>
+nnoremap <leader>gq :action ReformatCode<cr>
 nnoremap <leader>mv :action ActivateMavenProjectsToolWindow<cr>
 nnoremap <leader>dd :action Debug<cr>
 nnoremap <leader>dc :action ChooseDebugConfiguration<cr>
