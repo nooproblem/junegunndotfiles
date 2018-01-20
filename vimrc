@@ -64,6 +64,7 @@ Plug 'tpope/vim-commentary'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/switch.vim'
 Plug 'junegunn/vim-online-thesaurus'
 Plug 'sgur/vim-editorconfig'
 
@@ -1491,6 +1492,14 @@ autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
 " ----------------------------------------------------------------------------
 let g:undotree_WindowLayout = 2
 nnoremap U :UndotreeToggle<CR>
+
+" ----------------------------------------------------------------------------
+" switch.vim
+" ----------------------------------------------------------------------------
+let g:switch_mapping = '-'
+let g:switch_custom_definitions = [
+\   ['MON', 'TUE', 'WED', 'THU', 'FRI']
+\ ]
 
 " ----------------------------------------------------------------------------
 " clojure
