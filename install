@@ -57,7 +57,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   brew install --HEAD universal-ctags
 
   brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack \
-    vagrant mat visualvm spotifree flux flycut keycastr
+    vagrant mat visualvm spotifree flux flycut keycastr fluid
 else
   rm -f ~/.tmux.conf
   grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf
