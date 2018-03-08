@@ -625,6 +625,7 @@ function! s:copy_rtf(line1, line2, ...)
   setlocal buftype=nofile bufhidden=wipe nonumber
   let &filetype = ft
   call setline(1, lines)
+  doautocmd BufNewFile filetypedetect
 
   execute 'colo' get(a:000, 0, 'seoul256-light')
   hi Normal ctermbg=NONE guibg=NONE
@@ -635,7 +636,7 @@ function! s:copy_rtf(line1, line2, ...)
 
   call tohtml#Convert2HTML(a:line1, a:line2)
   g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
-  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
+  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | ruby -e 'puts STDIN.read.sub(/\\\n}$/m, "\n}")' | pbcopy
 
   bd!
   tabclose
