@@ -1420,6 +1420,10 @@ let g:indentLine_color_gui = '#616161'
 " ----------------------------------------------------------------------------
 let g:signify_vcs_list = ['git']
 let g:signify_skip_filetype = { 'journal': 1 }
+let g:signify_sign_add          = '┃'
+let g:signify_sign_change       = '┃'
+let g:signify_sign_changedelete = '┃'
+let g:signify_sign_delete       = '┃'
 
 " ----------------------------------------------------------------------------
 " vim-slash
