@@ -1,21 +1,20 @@
 ;; https://github.com/technomancy/leiningen/blob/master/doc/PROFILES.md
-{:user {:plugins [[cider/cider-nrepl "0.15.0"]
-                  [lein-auto "0.1.3"] [lein-kibit "0.1.3"]     ; lein auto kibit
-                  [lein-marginalia "0.9.0"]                    ; lein marg
-                  [codox "0.8.13"]                             ; lein doc
-                  [com.jakemccrary/lein-test-refresh "0.18.1"] ; lein test-refresh
-                  [lein-ancient "0.6.10"]
-                  [lein-cloverage "1.0.9"]
-                  [lein-pprint "1.1.2"]
-                  [lein-exec "0.3.5"]
-                  [lein-licenses "0.2.1"]
+{:user {:plugins [[cider/cider-nrepl "0.16.0"]
+                  [lein-auto "0.1.3"] [lein-kibit "0.1.6"]     ; lein auto kibit
+                  [lein-marginalia "0.9.1"]                    ; lein marg
+                  [codox "0.10.3"]                             ; lein doc
+                  [com.jakemccrary/lein-test-refresh "0.22.0"] ; lein test-refresh
+                  [lein-ancient "0.6.15"]
+                  [lein-cloverage "1.0.10"]
+                  [lein-pprint "1.2.0"]
+                  [lein-exec "0.3.7"]
+                  [lein-licenses "0.2.2"]
                   [lein-try "0.4.3"]
-                  [jonase/eastwood "0.2.1"]
-                  [lein-cljfmt "0.5.6"]
-                  [lein-cloverage "1.0.9"]]
+                  [jonase/eastwood "0.2.5"]
+                  [lein-cljfmt "0.5.7"]]
         :dependencies [[slamhound "1.5.5"]
-                       [cljfmt "0.5.6"]
-                       [com.cemerick/pomegranate "0.3.1"]
+                       [cljfmt "0.5.7"]
+                       [com.cemerick/pomegranate "1.0.0"]
                        [org.clojure/java.classpath "0.2.3"]
                        [junegunn/inspector "0.2.0"]]
         :aliases {"slamhound" ["run" "-m" "slam.hound"]}
