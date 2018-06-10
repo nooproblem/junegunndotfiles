@@ -1420,10 +1420,9 @@ let g:indentLine_color_gui = '#616161'
 " ----------------------------------------------------------------------------
 let g:signify_vcs_list = ['git']
 let g:signify_skip_filetype = { 'journal': 1 }
-let g:signify_sign_add          = '┃'
-let g:signify_sign_change       = '┃'
-let g:signify_sign_changedelete = '┃'
-let g:signify_sign_delete       = '┃'
+let g:signify_sign_add          = '│'
+let g:signify_sign_change       = '│'
+let g:signify_sign_changedelete = '│'
 
 " ----------------------------------------------------------------------------
 " vim-slash
@@ -1478,6 +1477,9 @@ nnoremap <Leader>G :Goyo<CR>
 let g:ale_linters = {'java': [], 'yaml': [], 'scala': [], 'clojure': []}
 let g:ale_fixers = {'ruby': ['rubocop']}
 let g:ale_lint_delay = 1000
+let g:ale_sign_warning = '──'
+let g:ale_sign_error = '══'
+
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 
