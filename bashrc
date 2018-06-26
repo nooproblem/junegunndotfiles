@@ -73,7 +73,6 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
-alias gs='git status'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 ext() {
   ext-all --exclude .git --exclude target --exclude "*.log"
@@ -547,6 +546,12 @@ gr() {
   cut -d$'\t' -f1
 }
 
+gs() {
+  is_in_git_repo || return
+  git stash list | fzf-down --reverse -d: --preview 'git show --color=always {1}' |
+  cut -d: -f1
+}
+
 if [[ $- =~ i ]]; then
   bind '"\er": redraw-current-line'
   bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
@@ -554,6 +559,7 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-t": "$(gt)\e\C-e\er"'
   bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
   bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
+  bind '"\C-g\C-s": "$(gs)\e\C-e\er"'
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
