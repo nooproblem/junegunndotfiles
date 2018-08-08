@@ -1534,6 +1534,18 @@ function! s:figwheel()
   Piggieback (figwheel-sidecar.repl-api/repl-env)
 endfunction
 
+function! s:chestnut()
+  " https://github.com/clojure/clojurescript-site/blob/master/content/tools/repls.adoc
+  " nashorn / browser / node
+  new | setlocal buftype=nofile bufhidden=hide noswapfile filetype=clojure
+  Eval (go)
+  bd
+  call system('open --background http://localhost:10555/')
+  Piggieback (fw-sys/repl-env (:figwheel-system system))
+  call system('osascript -e ''activate application "iTerm2"''')
+  redraw!
+endfunction
+
 augroup vimrc
   autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
@@ -1546,8 +1558,9 @@ augroup vimrc
   " Ruby
   autocmd FileType ruby set iskeyword+=!
 
-  " Figwheel
+  " Figwheel / Chestnut
   autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
+  autocmd BufReadPost *.cljs command! -buffer Chestnut call s:chestnut()
 augroup END
 
 let g:clojure_maxlines = 60
