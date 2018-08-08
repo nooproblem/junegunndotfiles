@@ -84,8 +84,9 @@ ext-all() {
   cd -
   mv ../"$name".tgz .
 }
+
 temp() {
-  vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
+  vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile filetype=$1"
 }
 
 if [ "$PLATFORM" = 'Darwin' ]; then
