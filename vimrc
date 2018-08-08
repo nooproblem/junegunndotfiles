@@ -55,6 +55,9 @@ Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'AlessandroYorba/Despacio'
 Plug 'cocopon/iceberg.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'nightsense/snow'
+Plug 'nightsense/stellarized'
+Plug 'arcticicestudio/nord-vim'
 
 " Edit
 Plug 'tpope/vim-repeat'
