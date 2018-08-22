@@ -36,11 +36,18 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
+  brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack \
+    vagrant mat visualvm flux flycut keycastr fluid java
+
   brew install \
     fd ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
     fish git graphviz imagemagick leiningen sbt \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight reattach-to-user-namespace
+
   brew install gnuplot --with-qt --with-cairo
+
+  brew tap universal-ctags/universal-ctags
+  brew install --HEAD universal-ctags
 
   # Patched version of tmux
   brew tap waltarix/homebrew-customs
@@ -52,12 +59,6 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   # Create
   gem install gem-ctags
   gem ctags
-
-  brew tap universal-ctags/universal-ctags
-  brew install --HEAD universal-ctags
-
-  brew cask install xquartz iterm2-nightly spectacle virtualbox virtualbox-extension-pack \
-    vagrant mat visualvm spotifree flux flycut keycastr fluid
 else
   rm -f ~/.tmux.conf
   grep -v reattach-to-user-namespace tmux.conf > ~/.tmux.conf

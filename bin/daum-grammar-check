@@ -1,9 +1,21 @@
 #!/usr/bin/env ruby
 
 # https://github.com/SeleniumHQ/selenium/wiki/Ruby-Bindings
-# gem install selenium-webdriver
-# brew upgrade chromedriver
-require 'selenium-webdriver'
+begin
+  require 'selenium-webdriver'
+rescue LoadError
+  require 'bundler/inline'
+
+  gemfile do
+    source 'https://rubygems.org'
+    gem 'chromedriver-helper'
+    gem 'selenium-webdriver'
+  end
+
+  puts "Restarting: #{__FILE__}"
+  ENV.delete 'BUNDLE_GEMFILE'
+  exec __FILE__
+end
 
 COPY = ARGV.include? '-y'
 WIDTH, HEIGHT = 1100, 800
