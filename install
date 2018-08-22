@@ -37,11 +37,11 @@ if [ "$(uname -s)" = 'Darwin' ]; then
 
   echo "Updating homebrew"
   brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack \
-    vagrant mat visualvm flux flycut keycastr fluid java
+    vagrant mat visualvm flux flycut keycastr fluid java google-backup-and-sync
 
   brew install \
     fd ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
-    fish git graphviz imagemagick leiningen sbt \
+    fish git graphviz imagemagick leiningen sbt gnupg \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight reattach-to-user-namespace
 
   brew install gnuplot --with-qt --with-cairo
@@ -66,6 +66,8 @@ fi
 
 git config --global user.email "junegunn.c@gmail.com"
 git config --global user.name "Junegunn Choi"
+git config --global user.signingKey FEF9C627
+git config --global commit.gpgsign true
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux source-file ~/.tmux.conf
