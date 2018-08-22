@@ -36,13 +36,15 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
-  brew cask install xquartz iterm2 spectacle virtualbox virtualbox-extension-pack \
+  brew cask install xquartz iterm2 caffeine spectacle \
+    virtualbox virtualbox-extension-pack \
     vagrant mat visualvm flux flycut keycastr fluid java google-backup-and-sync
 
   brew install \
     fd ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
     fish git graphviz imagemagick leiningen sbt gnupg \
-    maven ranger tree vim wget zsh jq macvim ruby python go highlight reattach-to-user-namespace
+    maven ranger tree vim wget zsh jq macvim ruby python go highlight \
+    reattach-to-user-namespace
 
   brew install gnuplot --with-qt --with-cairo
 
