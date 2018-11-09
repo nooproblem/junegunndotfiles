@@ -43,15 +43,15 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 ### Global
 export GOPATH=~/gosrc
 mkdir -p $GOPATH
-if [ -z "$PATH_EXPANDED" ]; then
-  export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
-  export PATH_EXPANDED=1
+if [ "$PLATFORM" = 'Darwin' ]; then
+  export PATH=~/bin:/usr/local/opt/ruby/bin:$GOPATH/bin:$PATH
+else
+  export PATH=~/bin
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 fi
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-[ "$PLATFORM" = 'Darwin' ] ||
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 
 ### OS X
 export COPYFILE_DISABLE=true
@@ -123,6 +123,7 @@ elif [ "$PLATFORM" = Darwin ]; then
   alias ls='ls -G'
 fi
 
+### Ruby
 alias bert='bundle exec rake test'
 alias ber='bundle exec rake'
 alias be='bundle exec'
@@ -234,14 +235,6 @@ repeat() {
   done
 }
 
-acdul() {
-  acdcli ul -x 8 -r 4 -o "$@"
-}
-
-acddu() {
-  acdcli ls -lbr "$1" | awk '{sum += $3} END { print sum / 1024 / 1024 / 1024 " GB" }'
-}
-
 make-patch() {
   local name="$(git log --oneline HEAD^.. | awk '{print $2}')"
   git format-patch HEAD^.. --stdout > "$name.patch"
@@ -272,10 +265,6 @@ if [ "$PLATFORM" = 'Darwin' ]; then
   }
 
   j() { export JAVA_HOME=$(/usr/libexec/java_home -v1.$1); }
-
-  # https://gist.github.com/Andrewpk/7558715
-  alias startvpn="sudo launchctl load -w /Library/LaunchDaemons/net.juniper.AccessService.plist; open -a '/Applications/Junos Pulse.app/Contents/Plugins/JamUI/PulseTray.app/Contents/MacOS/PulseTray'"
-  alias quitvpn="osascript -e 'tell application \"PulseTray.app\" to quit';sudo launchctl unload -w /Library/LaunchDaemons/net.juniper.AccessService.plist"
 fi
 
 jfr() {
@@ -433,7 +422,6 @@ if [ -n "$TMUX_PANE" ]; then
 
   # Bind CTRL-X-CTRL-T to tmuxwords.sh
   bind '"\C-x\C-t": "$(fzf_tmux_words)\e\C-e\er"'
-
 elif [ -d ~/github/iTerm2-Color-Schemes/ ]; then
   ftheme() {
     local base

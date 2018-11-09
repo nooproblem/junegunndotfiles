@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'set'
 require 'digest'
@@ -6,7 +7,7 @@ require 'digest'
 known = {}
 Dir['*'].sort.reverse.each do |file|
   digest = Digest::SHA256.file(file).hexdigest
-  if dupe = known[digest]
+  if (dupe = known[digest])
     puts "#{file}: Duplicate of #{dupe}"
     File.unlink file
   else

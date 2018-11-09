@@ -1,17 +1,15 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'open-uri'
 require 'json'
 require 'cgi'
 require 'pp'
 require 'English'
-
-begin
-  require 'ansi256'
-rescue LoadError
-  system 'gem install ansi256'
-  raise unless $CHILD_STATUS.exitstatus.zero?
-  exec "ruby #{$PROGRAM_NAME}"
+require 'bundler/inline'
+gemfile do
+  source 'https://rubygems.org'
+  gem 'ansi256'
 end
 
 results = 1.step.lazy.map do |page|
