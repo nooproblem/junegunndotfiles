@@ -218,7 +218,6 @@ function! s:statusline_expr()
 endfunction
 let &statusline = s:statusline_expr()
 
-set pastetoggle=<F9>
 set modelines=2
 set synmaxcol=1000
 
@@ -313,15 +312,8 @@ nnoremap g[ :pop<cr>
 " Jump list (to newer position)
 nnoremap <C-p> <C-i>
 
-" <F10> | NERD Tree
-nnoremap <F10> :NERDTreeToggle<cr>
-
-" <F11> | Tagbar
-if v:version >= 703
-  inoremap <F11> <esc>:TagbarToggle<cr>
-  nnoremap <F11> :TagbarToggle<cr>
-  let g:tagbar_sort = 0
-endif
+" <leader>n | NERD Tree
+nnoremap <leader>n :NERDTreeToggle<cr>
 
 " jk | Escaping!
 inoremap jk <Esc>
@@ -1643,6 +1635,11 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 " gruvbox
 " ----------------------------------------------------------------------------
 let g:gruvbox_contrast_dark = 'soft'
+
+" ----------------------------------------------------------------------------
+" Tagbar
+" ----------------------------------------------------------------------------
+let g:tagbar_sort = 0
 
 
 " }}}
