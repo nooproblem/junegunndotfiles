@@ -134,6 +134,7 @@ Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 " Lint
 Plug 'w0rp/ale'
