@@ -41,7 +41,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     vagrant mat visualvm fluid java google-backup-and-sync
 
   brew install \
-    fd ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
+    fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
     fish git graphviz imagemagick leiningen sbt gnupg \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight bat \
     reattach-to-user-namespace
