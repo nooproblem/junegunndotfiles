@@ -486,6 +486,12 @@ so() {
     done
 }
 
+# https://stackoverflow.com/a/18787544/755334
+rpmx() {
+  # brew install rpm2cpio
+  rpm2cpio.pl "$1" | cpio -idmv
+}
+
 # GIT heart FZF
 # -------------
 
