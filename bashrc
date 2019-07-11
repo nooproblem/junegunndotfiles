@@ -85,7 +85,7 @@ ext-all() {
 }
 
 temp() {
-  vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile filetype=$1"
+  vim +"set filetype=$1" +AutoSave /tmp/temp-$(date +'%Y%m%d-%H%M%S')
 }
 
 if [ "$PLATFORM" = 'Darwin' ]; then
