@@ -38,7 +38,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   echo "Updating homebrew"
   brew cask install xquartz iterm2 caffeine spectacle \
     virtualbox virtualbox-extension-pack \
-    vagrant mat visualvm fluid java google-backup-and-sync rstudio r mactex
+    vagrant mat visualvm fluid java google-backup-and-sync rstudio r mactex osxfuse
 
   brew install \
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
