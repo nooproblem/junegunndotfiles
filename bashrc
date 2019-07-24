@@ -44,7 +44,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 export GOPATH=~/gosrc
 mkdir -p $GOPATH
 if [ "$PLATFORM" = 'Darwin' ]; then
-  export PATH=~/bin:/usr/local/opt/ruby/bin:$GOPATH/bin:$PATH
+  export PATH=~/bin:/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.6.0/bin:$GOPATH/bin:$PATH
 else
   export PATH=~/bin
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
