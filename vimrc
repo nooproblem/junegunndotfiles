@@ -1705,6 +1705,13 @@ if has('nvim') || has('gui_running')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
 endif
 
+
+" All files
+command! -nargs=? -complete=dir AF
+  \ call fzf#run(fzf#wrap(fzf#vim#with_preview({
+  \   'source': 'fd --type f --hidden --follow --exclude .git --no-ignore . '.expand(<q-args>)
+  \ })))
+
 " Hide statusline of terminal buffer
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
