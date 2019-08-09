@@ -556,4 +556,7 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-s": "$(gs)\e\C-e\er"'
 fi
 
+[[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && . /usr/local/etc/profile.d/bash_completion.sh
+[[ -r /usr/local/etc/bash_completion.d/kubectl ]] && . /usr/local/etc/bash_completion.d/kubectl
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+_fzf_setup_completion path git kubectl
