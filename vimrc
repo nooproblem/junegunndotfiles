@@ -1551,6 +1551,7 @@ if s:darwin
   endfunction
   let g:mkdp_browserfunc = 'MKDPSplit'
   let g:mkdp_open_to_the_world = 1
+  let g:mkdp_auto_close = 0
 endif
 
 " ----------------------------------------------------------------------------
