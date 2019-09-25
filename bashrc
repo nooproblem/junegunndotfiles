@@ -338,7 +338,7 @@ command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {} | he
 fgl() (
   [ $# -eq 0 ] && return
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
-  local font=$(ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} $@") &&
+  local font=$(ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} $@" --preview-window up) &&
   figlet -f "$font" "$@" | pbcopy
 )
 
@@ -354,43 +354,6 @@ fco() {
     (echo "$tags"; echo "$branches") | sed '/^$/d' |
     fzf-down --no-hscroll --reverse --ansi +m -d "\t" -n 2 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
-}
-
-# ftags - search ctags
-ftags() {
-  local line
-  [ -e tags ] &&
-  line=$(
-    awk 'BEGIN { FS="\t" } !/^!/ {print toupper($4)"\t"$1"\t"$2"\t"$3}' tags |
-    cut -c1-$COLUMNS | fzf --nth=2 --tiebreak=begin
-  ) && $EDITOR $(cut -f3 <<< "$line") -c "set nocst" \
-                                      -c "silent tag $(cut -f2 <<< "$line")"
-}
-
-# fe [FUZZY PATTERN] - Open the selected file with the default editor
-#   - Bypass fuzzy finder if there's only one match (--select-1)
-#   - Exit if there's no match (--exit-0)
-fe() {
-  local file
-  file=$(fzf-tmux --query="$1" --select-1 --exit-0)
-  [ -n "$file" ] && ${EDITOR:-vim} "$file"
-}
-
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-fo() {
-  local out file key
-  IFS=$'\n' read -d '' -r -a out < <(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)
-  key=${out[0]}
-  file=${out[1]}
-  if [ -n "$file" ]; then
-    if [ "$key" = ctrl-o ]; then
-      open "$file"
-    else
-      ${EDITOR:-vim} "$file"
-    fi
-  fi
 }
 
 if [ -n "$TMUX_PANE" ]; then
