@@ -9,7 +9,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
 BASE=$(pwd)
 touch bashrc-extra
-for rc in *rc *profile tmux.conf agignore rubocop.yml; do
+for rc in *rc *profile tmux.conf agignore rubocop.yml Rprofile; do
   mkdir -pv bak
   [ -e ~/."$rc" ] && mv -v ~/."$rc" bak/."$rc"
   ln -sfv "$BASE/$rc" ~/."$rc"
@@ -38,15 +38,13 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   echo "Updating homebrew"
   brew cask install xquartz iterm2 caffeine spectacle \
     virtualbox virtualbox-extension-pack \
-    vagrant mat visualvm fluid java google-backup-and-sync rstudio r mactex osxfuse
+    vagrant mat visualvm fluid google-backup-and-sync rstudio r mactex osxfuse
 
   brew install \
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
     fish git graphviz imagemagick leiningen sbt gnupg \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight bat \
-    reattach-to-user-namespace pinentry-mac bash-completion tmux
-
-  brew install gnuplot --with-qt --with-cairo
+    reattach-to-user-namespace pinentry-mac bash-completion tmux gnuplot
 
   brew tap universal-ctags/universal-ctags
   brew install --HEAD universal-ctags
