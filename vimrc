@@ -536,7 +536,7 @@ inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype
 " <leader>ij | Open in IntelliJ
 " ----------------------------------------------------------------------------
 if s:darwin
-  nnoremap <silent> <leader>ij :call system('"/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p').'> /dev/null 2>&1 < /dev/null')<cr>
+  nnoremap <silent> <leader>ij :call system('nohup "/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" '.expand('%:p').'> /dev/null 2>&1 < /dev/null &')<cr>
 endif
 
 " ----------------------------------------------------------------------------
