@@ -49,7 +49,7 @@ else
   export PATH=~/bin
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 fi
-export EDITOR=vim
+export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
