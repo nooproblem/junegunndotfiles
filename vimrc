@@ -1667,11 +1667,11 @@ if has('nvim') && exists('&winblend') && &termguicolors
   endif
 
   if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-    let $FZF_DEFAULT_OPTS .= ' --border'
+    let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
   endif
 
   function! FloatingFZF()
-    let width = float2nr(&columns * 0.8)
+    let width = float2nr(&columns * 0.9)
     let height = float2nr(&lines * 0.6)
     let opts = { 'relative': 'editor',
                \ 'row': (&lines - height) / 2,
