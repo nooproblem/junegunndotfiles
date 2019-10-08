@@ -69,7 +69,6 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
-Plug 'junegunn/vim-online-thesaurus'
 Plug 'sgur/vim-editorconfig'
 if exists('##TextYankPost')
   Plug 'machakann/vim-highlightedyank'
@@ -445,20 +444,6 @@ call s:tmux_map('<leader>tn', '.bottom-left')
 call s:tmux_map('<leader>t.', '.bottom-right')
 
 " ----------------------------------------------------------------------------
-" Tab-complete
-" ----------------------------------------------------------------------------
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" ----------------------------------------------------------------------------
 " Markdown headings
 " ----------------------------------------------------------------------------
 nnoremap <leader>1 m`yypVr=``
@@ -750,9 +735,9 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft =~ 'mkd\|markdown'
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash:sh', 'python', 'java', 'c',
-          \ 'clojure', 'clj:clojure', 'scala', 'sql', 'gnuplot']
-      call s:syntax_include(split(lang, ':')[-1], '```'.split(lang, ':')[0], '```', 0)
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash=sh', 'python', 'java', 'c',
+          \ 'clojure', 'clj=clojure', 'scala', 'sql', 'gnuplot', 'json=javascript']
+      call s:syntax_include(split(lang, '=')[-1], '```'.split(lang, '=')[0], '```', 0)
     endfor
 
     highlight def link Snip Folded
@@ -1540,7 +1525,9 @@ autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-" let g:markdown_fenced_languages = ['sh', 'ruby', 'clojure', 'vim', 'java', 'gnuplot']
+" let g:markdown_fenced_languages = [
+"   \ 'coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html',
+"   \ 'sh', 'bash=sh', 'scala']
 
 " ----------------------------------------------------------------------------
 " markdown-preview
@@ -1621,6 +1608,39 @@ let g:gruvbox_contrast_dark = 'soft'
 " Tagbar
 " ----------------------------------------------------------------------------
 let g:tagbar_sort = 0
+
+" ----------------------------------------------------------------------------
+" coc.nvim
+" ----------------------------------------------------------------------------
+if has_key(g:plugs, 'coc.nvim')
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:show_documentation()
+    if (index(['vim', 'help'], &filetype) >= 0)
+      execute 'h' expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
+
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  let g:go_doc_keywordprg_enabled = 0
+
+  augroup coc-config
+    autocmd!
+    autocmd VimEnter * nmap <silent> gd <Plug>(coc-definition)
+  augroup END
+endif
 
 
 " }}}
