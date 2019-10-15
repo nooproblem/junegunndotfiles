@@ -1681,8 +1681,6 @@ autocmd  FileType fzf set noshowmode noruler nonu
 if has('nvim') && exists('&winblend') && &termguicolors
   set winblend=10
 
-  hi NormalFloat guibg=None
-
   if stridx($FZF_DEFAULT_OPTS, '--border') == -1
     let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
   endif
@@ -1696,7 +1694,8 @@ if has('nvim') && exists('&winblend') && &termguicolors
                \ 'width': width,
                \ 'height': height }
 
-    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
   endfunction
 
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
