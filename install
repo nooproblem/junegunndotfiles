@@ -44,7 +44,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
     fish git graphviz imagemagick leiningen sbt gnupg \
     maven ranger tree vim wget zsh jq macvim ruby python go highlight bat \
-    reattach-to-user-namespace pinentry-mac bash-completion tmux gnuplot
+    reattach-to-user-namespace pinentry-mac bash-completion tmux gnuplot w3m
 
   brew tap universal-ctags/universal-ctags
   brew install --HEAD universal-ctags

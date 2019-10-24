@@ -309,6 +309,10 @@ tail-until() (
   grep -m 1 "$pattern" <(exec tail -F "$@"); kill $!
 )
 
+w3mdump() {
+  curl -s "$@" | w3m -dump -T text/html
+}
+
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
