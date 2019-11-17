@@ -513,6 +513,11 @@ gs() {
   cut -d: -f1
 }
 
+gp() {
+  ps -ef | fzf-down --header-lines 1 --info inline --layout reverse --multi |
+    awk '{print $2}'
+}
+
 if [[ $- =~ i ]]; then
   bind '"\er": redraw-current-line'
   bind '"\C-g\C-f": "$(gf)\e\C-e\er"'
@@ -521,6 +526,7 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
   bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
   bind '"\C-g\C-s": "$(gs)\e\C-e\er"'
+  bind '"\C-g\C-p": "$(gp)\e\C-e\er"'
 fi
 
 [[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && . /usr/local/etc/profile.d/bash_completion.sh
