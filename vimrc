@@ -1681,10 +1681,6 @@ autocmd  FileType fzf set noshowmode noruler nonu
 if has('nvim') && exists('&winblend') && &termguicolors
   set winblend=10
 
-  if exists('g:fzf_colors.bg')
-    call remove(g:fzf_colors, 'bg')
-  endif
-
   if stridx($FZF_DEFAULT_OPTS, '--border') == -1
     let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
   endif
