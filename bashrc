@@ -235,8 +235,15 @@ repeat() {
 }
 
 make-patch() {
-  local name="$(git log --oneline HEAD^.. | awk '{print $2}')"
-  git format-patch HEAD^.. --stdout > "$name.patch"
+  local prefix="$(git log --oneline HEAD^.. | awk '{print $2}')"
+  local suffix=
+  for i in {2..10}; do
+    local name=$prefix$suffix.patch
+    [ -e "$name" ] || break
+    suffix=-v$i
+  done
+  echo $name
+  git format-patch HEAD^.. --stdout > "$name"
 }
 
 pbc() {
