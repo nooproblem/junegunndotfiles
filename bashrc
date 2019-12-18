@@ -536,9 +536,14 @@ gs() {
   cut -d: -f1
 }
 
+# Extra
 gp() {
   ps -ef | fzf-down --header-lines 1 --info inline --layout reverse --multi |
     awk '{print $2}'
+}
+
+gg() {
+  _z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info --tac | sed 's/^[0-9,.]* *//'
 }
 
 if [[ $- =~ i ]]; then
@@ -549,7 +554,10 @@ if [[ $- =~ i ]]; then
   bind '"\C-g\C-h": "$(gh)\e\C-e\er"'
   bind '"\C-g\C-r": "$(gr)\e\C-e\er"'
   bind '"\C-g\C-s": "$(gs)\e\C-e\er"'
+
+  # Extra
   bind '"\C-g\C-p": "$(gp)\e\C-e\er"'
+  bind '"\C-g\C-g": "$(gg)\e\C-e\er"'
 fi
 
 [[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && . /usr/local/etc/profile.d/bash_completion.sh
