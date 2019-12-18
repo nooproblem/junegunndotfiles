@@ -323,8 +323,16 @@ w3mdump() {
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
-csi() {
-  echo -en "\x1b[$*"
+RG() {
+  RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  INITIAL_QUERY="$1"
+  local selected=$(
+    FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY' || true" \
+      fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+          --ansi --phony --query "$INITIAL_QUERY" \
+          --preview "~/.vim/plugged/fzf.vim/bin/preview.sh {}"
+  )
+  [ -n "$selected" ] && $EDITOR "$selected"
 }
 
 fzf-down() {
