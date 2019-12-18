@@ -21,7 +21,7 @@ nnoremap <tab> <c-w>w
 nnoremap Y y$
 nnoremap Q @q
 
-nnoremap <c-w><c-c> :action VimWindowClose<cr>
+nnoremap <c-w><c-c> <c-w>c
 
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
