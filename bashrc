@@ -323,6 +323,14 @@ w3mdump() {
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
+Rg() {
+  local selected=$(
+    rg --column --line-number --no-heading --color=always --smart-case "$1" |
+      fzf --ansi --preview "~/.vim/plugged/fzf.vim/bin/preview.sh {}"
+  )
+  [ -n "$selected" ] && $EDITOR "$selected"
+}
+
 RG() {
   RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
   INITIAL_QUERY="$1"
