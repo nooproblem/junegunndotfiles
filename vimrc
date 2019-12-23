@@ -1471,6 +1471,7 @@ function! s:lisp_maps()
   nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
   nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
+  nmap     <buffer> K <Plug>FireplaceK
 endfunction
 
 function! s:figwheel()
