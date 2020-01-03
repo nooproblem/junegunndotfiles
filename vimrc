@@ -1533,25 +1533,25 @@ autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 " ----------------------------------------------------------------------------
 " markdown-preview
 " ----------------------------------------------------------------------------
-if s:darwin
+if s:darwin && executable('x5050')
   function! MKDPSplit(url)
     let script = '
-    \| ~/Library/ApplicationSupport/iTerm2/iterm2env/versions/*/bin/python3 <<_
-    \| import iterm2
-    \| async def main(connection):
-    \|   app = await iterm2.async_get_app(connection)
-    \|   window = app.current_terminal_window
-    \|   if window is not None:
-    \|     await window.async_set_fullscreen(False)
-    \| iterm2.run_until_complete(main)
-    \| _
-    \| x5050 '.shellescape(a:url)
-    call system(join(split(script, '| '), "\n"))
+    \│ ~/Library/ApplicationSupport/iTerm2/iterm2env/versions/*/bin/python3 <<_
+    \│ import iterm2
+    \│ async def main(connection):
+    \│   app = await iterm2.async_get_app(connection)
+    \│   window = app.current_terminal_window
+    \│   if window is not None:
+    \│     await window.async_set_fullscreen(False)
+    \│ iterm2.run_until_complete(main)
+    \│ _
+    \│ x5050 '.shellescape(a:url)
+    call system(join(split(script, '│ '), "\n"))
   endfunction
   let g:mkdp_browserfunc = 'MKDPSplit'
-  let g:mkdp_open_to_the_world = 1
-  let g:mkdp_auto_close = 0
 endif
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_auto_close = 0
 
 " ----------------------------------------------------------------------------
 " splitjoin
