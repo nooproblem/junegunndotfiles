@@ -7,7 +7,13 @@
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
+augroup vimrc
+  autocmd!
+augroup END
+
 let s:darwin = has('mac')
+let mapleader      = ' '
+let maplocalleader = ' '
 
 " }}}
 " ============================================================================
@@ -25,14 +31,29 @@ endif
 " My plugins
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-github-dashboard'
+  let g:github_dashboard = { 'username': 'junegunn' }
 Plug 'junegunn/vim-emoji'
+  command! -range EmojiReplace <line1>,<line2>s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
+
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-slash'
+  if has('timers')
+    noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+  endif
+
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim'
+  function! s:gv_expand()
+    let line = getline('.')
+    GV --name-status
+    call search('\V'.line, 'c')
+    normal! zz
+  endfunction
+  autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
+
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim'
@@ -41,6 +62,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/heytmux'
 Plug 'junegunn/vim-after-object'
+  autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
+
 if s:darwin
   Plug 'junegunn/vim-xmark'
 endif
@@ -50,6 +73,7 @@ unlet! g:plug_url_format
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
+  let g:gruvbox_contrast_dark = 'soft'
 Plug 'yuttie/hydrangea-vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'AlessandroYorba/Despacio'
@@ -65,67 +89,89 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
+  map  gc  <Plug>Commentary
+  nmap gcc <Plug>CommentaryLine
+
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+  let g:undotree_WindowLayout = 2
+  nnoremap U :UndotreeToggle<CR>
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
+  let g:splitjoin_split_mapping = ''
+  let g:splitjoin_join_mapping = ''
+  nnoremap gss :SplitjoinSplit<cr>
+  nnoremap gsj :SplitjoinJoin<cr>
+
 Plug 'AndrewRadev/switch.vim'
+  let g:switch_mapping = '-'
+  let g:switch_custom_definitions = [
+  \   ['MON', 'TUE', 'WED', 'THU', 'FRI']
+  \ ]
+
 Plug 'sgur/vim-editorconfig'
 if exists('##TextYankPost')
   Plug 'machakann/vim-highlightedyank'
   let g:highlightedyank_highlight_duration = 100
 endif
 
-" function! BuildYCM(info)
-"   if a:info.status == 'installed' || a:info.force
-"     !./install.py --clang-completer --gocode-completer
-"   endif
-" endfunction
-" Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp'], 'do': function('BuildYCM') }
-
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
-
 " Browsing
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
-autocmd! User indentLine doautocmd indentLine Syntax
+  autocmd! User indentLine doautocmd indentLine Syntax
+  let g:indentLine_color_term = 239
+  let g:indentLine_color_gui = '#616161'
+
 
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-augroup nerd_loader
-  autocmd!
-  autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,BufNew *
-        \  if isdirectory(expand('<amatch>'))
-        \|   call plug#load('nerdtree')
-        \|   execute 'autocmd! nerd_loader'
-        \| endif
-augroup END
+  augroup nerd_loader
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+          \  if isdirectory(expand('<amatch>'))
+          \|   call plug#load('nerdtree')
+          \|   execute 'autocmd! nerd_loader'
+          \| endif
+  augroup END
 
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-endif
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+  let g:tagbar_sort = 0
+
 Plug 'justinmk/vim-gtfo'
 
 " Git
 Plug 'tpope/vim-fugitive'
+  nmap     <Leader>g :Gstatus<CR>gg<c-n>
+  nnoremap <Leader>d :Gdiff<CR>
+
 Plug 'tpope/vim-rhubarb'
-if v:version >= 703
-  Plug 'mhinz/vim-signify'
-endif
+Plug 'mhinz/vim-signify'
+  let g:signify_vcs_list = ['git']
+  let g:signify_skip_filetype = { 'journal': 1 }
+  let g:signify_sign_add          = '│'
+  let g:signify_sign_change       = '│'
+  let g:signify_sign_changedelete = '│'
 
 " Lang
-if v:version >= 703
-  Plug 'kovisoft/paredit', { 'for': 'clojure' }
-  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-static'
-  Plug 'guns/vim-clojure-highlight'
-  Plug 'guns/vim-slamhound'
-  Plug 'venantius/vim-cljfmt'
-endif
+Plug 'kovisoft/paredit', { 'for': 'clojure' }
+  let g:paredit_smartjump = 1
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'guns/vim-clojure-static'
+  let g:clojure_maxlines = 60
+  set lispwords+=match
+  let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
+Plug 'guns/vim-clojure-highlight'
+Plug 'guns/vim-slamhound'
+Plug 'venantius/vim-cljfmt'
+  let g:clj_fmt_autosave = 0
+  autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
+  autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'alvan/vim-closetag'
+  let g:closetag_filenames = '*.js'
+
 Plug 'kchmck/vim-coffee-script'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -137,13 +183,17 @@ Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
-" Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 
 " Lint
 Plug 'w0rp/ale'
+  let g:ale_linters = {'java': [], 'yaml': [], 'scala': [], 'clojure': []}
+  let g:ale_fixers = {'ruby': ['rubocop']}
+  let g:ale_lint_delay = 1000
+  nmap ]a <Plug>(ale_next_wrap)
+  nmap [a <Plug>(ale_previous_wrap)
 
 call plug#end()
 endif
@@ -152,13 +202,6 @@ endif
 " ============================================================================
 " BASIC SETTINGS {{{
 " ============================================================================
-
-let mapleader      = ' '
-let maplocalleader = ' '
-
-augroup vimrc
-  autocmd!
-augroup END
 
 set nu
 set autoindent
@@ -1262,18 +1305,6 @@ let g:plug_pwindow = 'vertical rightbelow new'
 let g:matchparen_insert_timeout=5
 
 " ----------------------------------------------------------------------------
-" vim-commentary
-" ----------------------------------------------------------------------------
-map  gc  <Plug>Commentary
-nmap gcc <Plug>CommentaryLine
-
-" ----------------------------------------------------------------------------
-" vim-fugitive
-" ----------------------------------------------------------------------------
-nmap     <Leader>g :Gstatus<CR>gg<c-n>
-nnoremap <Leader>d :Gdiff<CR>
-
-" ----------------------------------------------------------------------------
 " vim-ruby
 " ----------------------------------------------------------------------------
 " ft-ruby-syntax
@@ -1283,32 +1314,10 @@ let ruby_fold = 1
 let ruby_no_expensive = 1
 let ruby_spellcheck_strings = 1
 
-" ft-ruby-omni
-" let rubycomplete_buffer_loading = 1
-" let rubycomplete_classes_in_global = 1
-" let rubycomplete_load_gemfile = 1
-
 " ----------------------------------------------------------------------------
 " matchit.vim
 " ----------------------------------------------------------------------------
 runtime macros/matchit.vim
-
-" ----------------------------------------------------------------------------
-" ack.vim
-" ----------------------------------------------------------------------------
-if executable('ag')
-  let &grepprg = 'ag --nogroup --nocolor --column'
-else
-  let &grepprg = 'grep -rn $* *'
-endif
-command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
-
-" ----------------------------------------------------------------------------
-" vim-after-object
-" ----------------------------------------------------------------------------
-silent! if has_key(g:plugs, 'vim-after-object')
-  autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
-endif
 
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
@@ -1348,42 +1357,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 nmap gaa ga_
 
-xmap <Leader>ga   <Plug>(LiveEasyAlign)
-" nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
-
-" inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
-
-" ----------------------------------------------------------------------------
-" vim-github-dashboard
-" ----------------------------------------------------------------------------
-let g:github_dashboard = { 'username': 'junegunn' }
-
-" ----------------------------------------------------------------------------
-" indentLine
-" ----------------------------------------------------------------------------
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#616161'
-
-" ----------------------------------------------------------------------------
-" vim-signify
-" ----------------------------------------------------------------------------
-let g:signify_vcs_list = ['git']
-let g:signify_skip_filetype = { 'journal': 1 }
-let g:signify_sign_add          = '│'
-let g:signify_sign_change       = '│'
-let g:signify_sign_changedelete = '│'
-
-" ----------------------------------------------------------------------------
-" vim-slash
-" ----------------------------------------------------------------------------
-if has('timers')
-  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
-endif
-
-" ----------------------------------------------------------------------------
-" vim-emoji :dog: :cat: :rabbit:!
-" ----------------------------------------------------------------------------
-command! -range EmojiReplace <line1>,<line2>s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
+xmap <Leader>ga <Plug>(LiveEasyAlign)
 
 " ----------------------------------------------------------------------------
 " goyo.vim + limelight.vim
@@ -1419,44 +1393,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
-
-" ----------------------------------------------------------------------------
-" ALE
-" ----------------------------------------------------------------------------
-let g:ale_linters = {'java': [], 'yaml': [], 'scala': [], 'clojure': []}
-let g:ale_fixers = {'ruby': ['rubocop']}
-let g:ale_lint_delay = 1000
-" let g:ale_sign_warning = '──'
-" let g:ale_sign_error = '══'
-
-nmap ]a <Plug>(ale_next_wrap)
-nmap [a <Plug>(ale_previous_wrap)
-
-" ----------------------------------------------------------------------------
-" gv.vim / gl.vim
-" ----------------------------------------------------------------------------
-function! s:gv_expand()
-  let line = getline('.')
-  GV --name-status
-  call search('\V'.line, 'c')
-  normal! zz
-endfunction
-
-autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
-
-" ----------------------------------------------------------------------------
-" undotree
-" ----------------------------------------------------------------------------
-let g:undotree_WindowLayout = 2
-nnoremap U :UndotreeToggle<CR>
-
-" ----------------------------------------------------------------------------
-" switch.vim
-" ----------------------------------------------------------------------------
-let g:switch_mapping = '-'
-let g:switch_custom_definitions = [
-\   ['MON', 'TUE', 'WED', 'THU', 'FRI']
-\ ]
 
 " ----------------------------------------------------------------------------
 " clojure
@@ -1510,19 +1446,6 @@ augroup vimrc
   autocmd BufReadPost *.cljs command! -buffer Chestnut call s:chestnut()
 augroup END
 
-let g:clojure_maxlines = 60
-
-set lispwords+=match
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-
-" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-let g:paredit_smartjump = 1
-
-" vim-cljfmt
-let g:clj_fmt_autosave = 0
-autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
-autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
-
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
@@ -1552,14 +1475,6 @@ if s:darwin && executable('x5050')
 endif
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_auto_close = 0
-
-" ----------------------------------------------------------------------------
-" splitjoin
-" ----------------------------------------------------------------------------
-let g:splitjoin_split_mapping = ''
-let g:splitjoin_join_mapping = ''
-nnoremap gss :SplitjoinSplit<cr>
-nnoremap gsj :SplitjoinJoin<cr>
 
 " ----------------------------------------------------------------------------
 " vimawesome.com
@@ -1606,22 +1521,6 @@ endfunction
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
 " ----------------------------------------------------------------------------
-" YCM
-" ----------------------------------------------------------------------------
-" autocmd vimrc FileType c,cpp,go nnoremap <buffer> ]d :YcmCompleter GoTo<CR>
-" autocmd vimrc FileType c,cpp    nnoremap <buffer> K  :YcmCompleter GetType<CR>
-
-" ----------------------------------------------------------------------------
-" gruvbox
-" ----------------------------------------------------------------------------
-let g:gruvbox_contrast_dark = 'soft'
-
-" ----------------------------------------------------------------------------
-" Tagbar
-" ----------------------------------------------------------------------------
-let g:tagbar_sort = 0
-
-" ----------------------------------------------------------------------------
 " coc.nvim
 " ----------------------------------------------------------------------------
 if has_key(g:plugs, 'coc.nvim')
@@ -1645,6 +1544,11 @@ if has_key(g:plugs, 'coc.nvim')
   endfunction
 
   nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  let g:coc_global_extensions = ['coc-github', 'coc-yaml', 'coc-solargraph',
+    \ 'coc-r-lsp', 'coc-python', 'coc-html', 'coc-json', 'coc-css', 'coc-html',
+    \ 'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-emoji']
+  command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
   let g:go_doc_keywordprg_enabled = 0
 
@@ -1691,19 +1595,19 @@ autocmd! FileType fzf
 autocmd  FileType fzf set noshowmode noruler nonu
 
 if has('nvim')
-  function! s:create_float(hl, opts)
-    let buf = nvim_create_buf(v:false, v:true)
-    let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
-    let win = nvim_open_win(buf, v:true, opts)
-    call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
-    call setwinvar(win, '&colorcolumn', '')
-    return buf
-  endfunction
+  function! FloatingFZF(width, height, border_highlight)
+    function! s:create_float(hl, opts)
+      let buf = nvim_create_buf(v:false, v:true)
+      let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
+      let win = nvim_open_win(buf, v:true, opts)
+      call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
+      call setwinvar(win, '&colorcolumn', '')
+      return buf
+    endfunction
 
-  function! FloatingFZF()
     " Size and position
-    let width = float2nr(&columns * 0.9)
-    let height = float2nr(&lines * 0.6)
+    let width = float2nr(&columns * a:width)
+    let height = float2nr(&lines * a:height)
     let row = float2nr((&lines - height) / 2)
     let col = float2nr((&columns - width) / 2)
 
@@ -1714,7 +1618,7 @@ if has('nvim')
     let border = [top] + repeat([mid], height - 2) + [bot]
 
     " Draw frame
-    let s:frame = s:create_float('Comment', {'row': row, 'col': col, 'width': width, 'height': height})
+    let s:frame = s:create_float(a:border_highlight, {'row': row, 'col': col, 'width': width, 'height': height})
     call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
 
     " Draw viewport
@@ -1722,7 +1626,7 @@ if has('nvim')
     autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
   endfunction
 
-  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+  let g:fzf_layout = { 'window': 'call FloatingFZF(0.9, 0.6, "Comment")' }
 endif
 
 command! -bang -nargs=? -complete=dir Files
