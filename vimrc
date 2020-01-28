@@ -165,7 +165,9 @@ Plug 'venantius/vim-cljfmt'
   autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
   autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+if v:version >= 800
+  Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+endif
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
