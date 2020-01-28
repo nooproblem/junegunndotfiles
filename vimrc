@@ -185,7 +185,9 @@ Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+if v:version >= 800
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+endif
 
 " Lint
 Plug 'w0rp/ale'
