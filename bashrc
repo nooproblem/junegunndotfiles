@@ -427,6 +427,21 @@ fs() {
   tmux switch-client -t "$session"
 }
 
+# jq repl
+fjq() {
+  local TEMP QUERY
+  TEMP=$(mktemp -t fjq)
+  cat > "$TEMP"
+  QUERY=$(
+    jq -C . "$TEMP" |
+      fzf --reverse --ansi --phony \
+      --prompt 'jq> ' --query '.' \
+      --preview "set -x; jq -C {q} < \"$TEMP\"" \
+      --print-query | head -1
+  )
+  [ -n "$QUERY" ] && jq "$QUERY" < "$TEMP"
+}
+
 # Z integration
 source "$BASE/z.sh"
 unalias z 2> /dev/null
