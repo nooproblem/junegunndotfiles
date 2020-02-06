@@ -436,10 +436,10 @@ fjq() {
     jq -C . "$TEMP" |
       fzf --reverse --ansi --phony \
       --prompt 'jq> ' --query '.' \
-      --preview "set -x; jq -C {q} < \"$TEMP\"" \
+      --preview "set -x; jq -C {q} \"$TEMP\"" \
       --print-query | head -1
   )
-  [ -n "$QUERY" ] && jq "$QUERY" < "$TEMP"
+  [ -n "$QUERY" ] && jq "$QUERY" "$TEMP"
 }
 
 # Z integration

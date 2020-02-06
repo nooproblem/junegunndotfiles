@@ -10,7 +10,7 @@
                   [lein-exec "0.3.7"]
                   [lein-licenses "0.2.2"]
                   [lein-try "0.4.3"]
-                  [jonase/eastwood "0.3.6"]
+                  [jonase/eastwood "0.3.7"]
                   [lein-cljfmt "0.6.6"]]
         :dependencies [[slamhound "1.5.5"]
                        [cljfmt "0.6.6"]
