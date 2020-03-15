@@ -286,8 +286,11 @@ set tags=./tags;/
 " Annoying temporary files
 set backupdir=/tmp//,.
 set directory=/tmp//,.
-if v:version >= 703
-  set undodir=/tmp//,.
+
+" Semi-persistent undo
+if has('persistent_undo')
+  set undodir=/tmp,.
+  set undofile
 endif
 
 " Shift-tab on GNU screen
@@ -1559,6 +1562,7 @@ if has_key(g:plugs, 'coc.nvim')
   augroup coc-config
     autocmd!
     autocmd VimEnter * nmap <silent> gd <Plug>(coc-definition)
+    autocmd VimEnter * nmap <silent> gi <Plug>(coc-implementation)
     autocmd VimEnter * nmap <silent> g? <Plug>(coc-references)
   augroup END
 endif
@@ -1601,19 +1605,11 @@ autocmd  FileType fzf set noshowmode noruler nonu
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
 " nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>L        :Lines<CR>
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
 nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
