@@ -165,6 +165,15 @@ tt() {
   $SHELL -ci "$head; $tail"
 }
 
+tssh() {
+  local arg commands
+  commands=()
+  for arg in "$@"; do
+    commands+=("ssh $arg")
+  done
+  tt "${commands[@]}"
+}
+
 
 # Shortcut functions
 # --------------------------------------------------------------------
@@ -577,4 +586,20 @@ fi
 [[ -r /usr/local/etc/profile.d/bash_completion.sh ]] && . /usr/local/etc/profile.d/bash_completion.sh
 [[ -r /usr/local/etc/bash_completion.d/kubectl ]] && . /usr/local/etc/bash_completion.d/kubectl
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-_fzf_setup_completion path git kubectl
+if [[ $- == *i* ]]; then
+  _fzf_setup_completion path git kubectl
+  _fzf_setup_completion host tssh
+fi
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
+    export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
+    ssh)          fzf "$@" --preview 'dig {}' ;;
+    tssh)         fzf "$@" --preview 'dig {}' --bind 'alt-a:select-all' --multi ;;
+    *)            fzf "$@" ;;
+  esac
+}
