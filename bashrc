@@ -6,7 +6,7 @@
 # System default
 # --------------------------------------------------------------------
 
-export PLATFORM=$(uname -s)
+[ -z ${PLATFORM+x} ] && export PLATFORM=$(uname -s)
 [ -f /etc/bashrc ] && . /etc/bashrc
 
 BASE=$(dirname $(readlink $BASH_SOURCE))
@@ -45,11 +45,12 @@ export GOPATH=~/gosrc
 mkdir -p $GOPATH
 if [ "$PLATFORM" = 'Darwin' ]; then
   export PATH=~/bin:/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.6.0/bin:$GOPATH/bin:$PATH
+  export EDITOR=nvim
 else
-  export PATH=~/bin
+  export PATH=~/bin:$PATH
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
+  export EDITOR=vim
 fi
-export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
@@ -68,8 +69,8 @@ alias cd.='cd ..'
 alias cd..='cd ..'
 alias l='ls -alF'
 alias ll='ls -l'
-alias vi='nvim'
-alias vim='nvim'
+alias vi=$EDITOR
+alias vim=$EDITOR
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
