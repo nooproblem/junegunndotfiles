@@ -1663,7 +1663,14 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 " AUTOCMD {{{
 " ============================================================================
 
+function! s:templated(type)
+  execute 'doautocmd filetypedetect BufNewFile' fnamemodify(expand('<afile>'), ':r')
+  let &filetype = join([&filetype, a:type], '.')
+endfunction
+
 augroup vimrc
+  autocmd BufEnter *.j2,*.jinja2 call s:templated('jinja2')
+
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 
   " File types
