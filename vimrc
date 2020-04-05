@@ -12,6 +12,7 @@ augroup vimrc
 augroup END
 
 let s:darwin = has('mac')
+let s:windows = has('win32') || has('win64')
 let mapleader      = ' '
 let maplocalleader = ' '
 
@@ -185,9 +186,9 @@ Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
-if v:version >= 800
+if v:version >= 800 && !s:windows
+  Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+  Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
   Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 endif
 
@@ -320,12 +321,7 @@ if exists('&fixeol')
   set nofixeol
 endif
 
-if has('gui_running')
-  set guifont=Menlo:h14 columns=80 lines=40
-  silent! colo seoul256-light
-else
-  silent! colo seoul256
-endif
+silent! colo seoul256
 
 if has('nvim')
   " https://github.com/neovim/neovim/issues/2897#issuecomment-115464516
