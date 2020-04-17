@@ -6,7 +6,9 @@ set ignorecase smartcase
 set clipboard=unnamed
 set scrolloff=5
 set showmode
+set commentary
 set surround
+set textobj-entire
 set ReplaceWithRegister
 
 inoremap jk <Esc>
@@ -29,8 +31,6 @@ nnoremap ]c :action VcsShowNextChangeMarker<cr>
 
 nnoremap [d :action QuickImplementations<cr>
 nnoremap ]d :action QuickImplementations<cr>
-
-nnoremap gcc :action CommentByLineComment<cr>
 
 nnoremap <leader><leader> :action SearchEverywhere<cr>
 nnoremap <leader>ff :action FindInPath<cr>
