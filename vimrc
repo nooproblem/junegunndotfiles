@@ -1665,7 +1665,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 function! s:templated(type)
   execute 'doautocmd filetypedetect BufNewFile' fnamemodify(expand('<afile>'), ':r')
-  let &filetype = join([&filetype, a:type], '.')
+  let &filetype = join(uniq(add(split(&filetype, '\.'), a:type)), '.')
 endfunction
 
 augroup vimrc
