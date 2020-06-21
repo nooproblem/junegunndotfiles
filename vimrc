@@ -142,6 +142,7 @@ Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-fugitive'
   nmap     <Leader>g :Gstatus<CR>gg<c-n>
   nnoremap <Leader>d :Gdiff<CR>
+Plug 'rhysd/git-messenger.vim'
 
 Plug 'tpope/vim-rhubarb'
 Plug 'mhinz/vim-signify'
