@@ -187,6 +187,7 @@ Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'mzlogin/vim-markdown-toc'
 if v:version >= 800 && !s:windows
   Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
   Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
