@@ -327,7 +327,7 @@ tail-until() (
 )
 
 w3mdump() {
-  curl -s "$@" | w3m -dump -T text/html
+  curl -s "$@" | w3m -dump -T text/html | perl -pe 's/(\+[0-9,.%]+)/\x1b[31;1m\1\x1b[m/g; s/(-[0-9,.%]+)/\x1b[34;1m\1\x1b[m/g;'
 }
 
 # fzf (https://github.com/junegunn/fzf)
