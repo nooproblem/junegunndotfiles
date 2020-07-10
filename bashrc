@@ -74,9 +74,15 @@ alias vim=$EDITOR
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+
+tally() {
+  sort | uniq -c | sort -n
+}
+
 ext() {
   ext-all --exclude .git --exclude target --exclude "*.log"
 }
+
 ext-all() {
   local name=$(basename $(pwd))
   cd ..

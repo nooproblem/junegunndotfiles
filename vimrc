@@ -349,6 +349,12 @@ if has('nvim')
     \ if line("'\"") >= 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+else
+  let g:terminal_ansi_colors = [
+    \ '#4e4e4e', '#d68787', '#5f865f', '#d8af5f',
+    \ '#85add4', '#d7afaf', '#87afaf', '#d0d0d0',
+    \ '#626262', '#d75f87', '#87af87', '#ffd787',
+    \ '#add4fb', '#ffafaf', '#87d7d7', '#e4e4e4']
 endif
 
 " }}}
@@ -1571,10 +1577,7 @@ endif
 " FZF {{{
 " ============================================================================
 
-if has('nvim') || has('gui_running')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
-
+let $FZF_DEFAULT_OPTS .= ' --inline-info'
 
 " All files
 command! -nargs=? -complete=dir AF
