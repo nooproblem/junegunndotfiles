@@ -286,7 +286,9 @@ if [ "$PLATFORM" = 'Darwin' ]; then
     done
   }
 
-  j() { export JAVA_HOME=$(/usr/libexec/java_home -v1.$1); }
+  j() { export JAVA_HOME=$(/usr/libexec/java_home -v$1); }
+  j8() { export JAVA_HOME=$(/usr/libexec/java_home -v1.8); }
+  j9() { export JAVA_HOME=$(/usr/libexec/java_home -v9); }
 fi
 
 jfr() {
