@@ -138,6 +138,9 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
 Plug 'justinmk/vim-gtfo'
 
+Plug 'junegunn/vim-carbon-now-sh' " Forked
+let g:carbon_now_sh_options = { 't': 'oceanic-next'}
+
 " Git
 Plug 'tpope/vim-fugitive'
   nmap     <Leader>g :Gstatus<CR>gg<c-n>
