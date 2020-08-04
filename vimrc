@@ -165,10 +165,6 @@ Plug 'guns/vim-clojure-static'
   let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-slamhound'
-Plug 'venantius/vim-cljfmt'
-  let g:clj_fmt_autosave = 0
-  autocmd vimrc BufWritePre *.clj call cljfmt#AutoFormat()
-  autocmd vimrc BufWritePre *.cljc call cljfmt#AutoFormat()
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 if v:version >= 800
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
