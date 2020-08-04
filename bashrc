@@ -74,6 +74,7 @@ alias vim=$EDITOR
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+alias gpob='git push origin $(git branch --show-current)'
 
 tally() {
   sort | uniq -c | sort -n
