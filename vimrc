@@ -42,6 +42,7 @@ Plug 'junegunn/vim-slash'
     noremap <expr> <plug>(slash-after) slash#blink(2, 50)
   endif
 
+Plug 'junegunn/vim-cfr'
 Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-journal'
