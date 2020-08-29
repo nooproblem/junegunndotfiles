@@ -39,7 +39,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
   brew cask install xquartz iterm2 keepingyouawake spectacle \
     virtualbox virtualbox-extension-pack \
     vagrant mat visualvm fluid google-backup-and-sync rstudio r mactex osxfuse \
-    karabiner-elements
+    karabiner-elements maccy
 
   brew install \
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
