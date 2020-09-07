@@ -1411,7 +1411,7 @@ nnoremap <Leader>G :Goyo<CR>
 function! s:lisp_maps()
   nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ <cr>gv=
   nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
   nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
   nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
@@ -1565,9 +1565,9 @@ if has_key(g:plugs, 'coc.nvim')
 
   augroup coc-config
     autocmd!
-    autocmd VimEnter * nmap <silent> gd <Plug>(coc-definition)
-    autocmd VimEnter * nmap <silent> gi <Plug>(coc-implementation)
-    autocmd VimEnter * nmap <silent> g? <Plug>(coc-references)
+    autocmd VimEnter * nmap <silent> <leader>gd <Plug>(coc-definition)
+    autocmd VimEnter * nmap <silent> <leader>gi <Plug>(coc-implementation)
+    autocmd VimEnter * nmap <silent> <leader>g? <Plug>(coc-references)
   augroup END
 endif
 
