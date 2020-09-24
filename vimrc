@@ -1567,7 +1567,7 @@ if has_key(g:plugs, 'coc.nvim')
     autocmd!
     autocmd VimEnter * nmap <silent> <leader>gd <Plug>(coc-definition)
     autocmd VimEnter * nmap <silent> <leader>gi <Plug>(coc-implementation)
-    autocmd VimEnter * nmap <silent> <leader>g? <Plug>(coc-references)
+    autocmd VimEnter * nmap <silent> <leader>su <Plug>(coc-references)
   augroup END
 endif
 
