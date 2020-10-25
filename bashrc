@@ -56,6 +56,7 @@ export LC_ALL=en_US.UTF-8
 
 ### OS X
 export COPYFILE_DISABLE=true
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # Aliases
 # --------------------------------------------------------------------
