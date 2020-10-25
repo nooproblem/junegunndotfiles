@@ -58,6 +58,9 @@ Plug 'junegunn/gv.vim'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+  nmap <Leader>l <Plug>(Limelight)
+  xmap <Leader>l <Plug>(Limelight)
+  nnoremap <Leader>ll :Limelight!<cr>
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/fzf', { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -189,7 +192,6 @@ Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'mzlogin/vim-markdown-toc'
 if v:version >= 800 && !s:windows
-  Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
   Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
   Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 endif
@@ -951,6 +953,18 @@ function! s:profile(bang)
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 
+function! s:carbon()
+  let cmd = "silicon --to-clipboard --background '\\#fff0' --theme 'Nord' --font 'Menlo;Apple SD Gothic Neo' --shadow-blur-radius 20"
+  silent! execute printf("'<,'>write !%s --language %s | grep -i failed", cmd, &filetype)
+  if v:shell_error
+    silent! execute printf("'<,'>write !%s | grep -i failed", cmd)
+    if !v:shell_error
+      echohl WarningMsg | echo 'Error running ' .. cmd | echohl None
+    endif
+  endif
+endfunction
+command! -range Carbon call s:carbon()
+
 " ----------------------------------------------------------------------------
 " call LSD()
 " ----------------------------------------------------------------------------
@@ -1558,7 +1572,7 @@ if has_key(g:plugs, 'coc.nvim')
 
   let g:coc_global_extensions = ['coc-git', 'coc-solargraph',
     \ 'coc-r-lsp', 'coc-python', 'coc-html', 'coc-json', 'coc-css', 'coc-html',
-    \ 'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-emoji'] " , 'coc-java']
+    \ 'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-emoji', 'coc-java']
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
   let g:go_doc_keywordprg_enabled = 0
