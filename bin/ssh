@@ -1,0 +1,2 @@
+#!/bin/sh
+TERM=screen-256color /usr/bin/ssh "$@"
