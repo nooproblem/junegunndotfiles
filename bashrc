@@ -340,6 +340,22 @@ w3mdump() {
   curl -s "$@" | w3m -dump -T text/html | perl -pe 's/(\+[0-9,.%]+)/\x1b[31;1m\1\x1b[m/g; s/(-[0-9,.%]+)/\x1b[34;1m\1\x1b[m/g;'
 }
 
+pods() {
+  local selected tokens
+  selected=$(
+    kubectl get pods --all-namespaces |
+      fzf --info=inline --layout=reverse --header-lines=1 \
+          --header $'Press CTRL-O to open log in editor\n\n' \
+          --bind ctrl-/:toggle-preview \
+          --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --namespace {1} {2}) > /dev/tty' \
+          --preview-window up:follow \
+          --preview 'kubectl logs -f --namespace {1} {2}'
+  )
+  read -ra tokens <<< "$selected"
+  [ ${#tokens} -gt 1 ] &&
+    kubectl exec -it --namespace "${tokens[0]}" "${tokens[1]}" -- bash
+}
+
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
 
