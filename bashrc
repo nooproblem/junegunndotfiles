@@ -344,13 +344,13 @@ pods() {
   local selected tokens
   selected=$(
     kubectl get pods --all-namespaces |
-      fzf --info=inline --layout=reverse --header-lines=1 \
+      fzf --info=inline --layout=reverse --header-lines=1 --border \
           --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
           --header $'Press CTRL-O to open log in editor\n\n' \
           --bind ctrl-/:toggle-preview \
           --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --namespace {1} {2}) > /dev/tty' \
           --preview-window up:follow \
-          --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}'
+          --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}' "$@"
   )
   read -ra tokens <<< "$selected"
   [ ${#tokens} -gt 1 ] &&
