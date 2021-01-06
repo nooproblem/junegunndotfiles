@@ -969,6 +969,17 @@ endfunction
 command! -range Carbon call s:carbon()
 
 " ----------------------------------------------------------------------------
+" Translate
+" ----------------------------------------------------------------------------
+function! s:translate()
+  normal! gvy
+  let @" = trim(system(printf('trans -brief %s 2> /dev/null', shellescape(@"))))
+  normal! gvp
+endfunction
+
+command! -range Translate call s:translate()
+
+" ----------------------------------------------------------------------------
 " call LSD()
 " ----------------------------------------------------------------------------
 function! LSD()
