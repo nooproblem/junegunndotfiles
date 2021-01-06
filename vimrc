@@ -953,6 +953,9 @@ function! s:profile(bang)
 endfunction
 command! -bang Profile call s:profile(<bang>0)
 
+" ----------------------------------------------------------------------------
+" Carbon
+" ----------------------------------------------------------------------------
 function! s:carbon()
   let cmd = "silicon --to-clipboard --background '\\#fff0' --theme 'Nord' --font 'Menlo;Apple SD Gothic Neo' --shadow-blur-radius 20"
   silent! execute printf("'<,'>write !%s --language %s | grep -i failed", cmd, &filetype)
