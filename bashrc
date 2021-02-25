@@ -44,7 +44,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 export GOPATH=~/gosrc
 mkdir -p $GOPATH
 if [ "$PLATFORM" = 'Darwin' ]; then
-  export PATH=~/bin:/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.7.0/bin:$GOPATH/bin:$PATH
+  export PATH=~/bin:/usr/local/lib/ruby/gems/3.0.0/bin:/usr/local/opt/ruby/bin:$GOPATH/bin:$PATH
   export EDITOR=nvim
 else
   export PATH=~/bin:$PATH
@@ -288,9 +288,8 @@ if [ "$PLATFORM" = 'Darwin' ]; then
     done
   }
 
-  j() { export JAVA_HOME=$(/usr/libexec/java_home -v$1); }
-  j8() { export JAVA_HOME=$(/usr/libexec/java_home -v1.8); }
-  j9() { export JAVA_HOME=$(/usr/libexec/java_home -v9); }
+  j8() { export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home; }
+  j11() { export JAVA_HOME= /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home; }
 fi
 
 jfr() {

@@ -193,7 +193,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'mzlogin/vim-markdown-toc'
 if v:version >= 800 && !s:windows
   Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
-  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install() }}
 endif
 
 " Lint
@@ -1613,10 +1613,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-
-" Terminal buffer options for fzf
-autocmd! FileType fzf
-autocmd  FileType fzf set noshowmode noruler nonu
 
 if exists('$TMUX')
   let g:fzf_layout = { 'tmux': '-p90%,60%' }

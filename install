@@ -36,10 +36,10 @@ if [ "$(uname -s)" = 'Darwin' ]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
   echo "Updating homebrew"
-  brew cask install xquartz iterm2 keepingyouawake spectacle \
+  brew install --cask xquartz iterm2 keepingyouawake spectacle \
     virtualbox virtualbox-extension-pack \
     vagrant mat visualvm fluid google-backup-and-sync rstudio r mactex osxfuse \
-    karabiner-elements maccy
+    karabiner-elements maccy adoptopenjdk8
 
   brew install \
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
