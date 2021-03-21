@@ -376,7 +376,7 @@ RG() {
   local selected=$(
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY' || true" \
       fzf --bind "change:reload:$RG_PREFIX {q} || true" \
-          --ansi --phony --query "$INITIAL_QUERY" \
+          --ansi --disabled --query "$INITIAL_QUERY" \
           --delimiter : \
           --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
           --preview-window '~3:+{2}+3/2'
@@ -452,7 +452,7 @@ fjq() {
   cat > "$TEMP"
   QUERY=$(
     jq -C . "$TEMP" |
-      fzf --reverse --ansi --phony \
+      fzf --reverse --ansi --disabled \
       --prompt 'jq> ' --query '.' \
       --preview "set -x; jq -C {q} \"$TEMP\"" \
       --print-query | head -1
