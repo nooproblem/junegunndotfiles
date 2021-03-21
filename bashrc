@@ -362,7 +362,10 @@ pods() {
 Rg() {
   local selected=$(
     rg --column --line-number --no-heading --color=always --smart-case "$1" |
-      fzf --ansi --preview "~/.vim/plugged/fzf.vim/bin/preview.sh {}"
+      fzf --ansi \
+          --delimiter : \
+          --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+          --preview-window '~3:+{2}+3/2'
   )
   [ -n "$selected" ] && $EDITOR "$selected"
 }
@@ -374,7 +377,9 @@ RG() {
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY' || true" \
       fzf --bind "change:reload:$RG_PREFIX {q} || true" \
           --ansi --phony --query "$INITIAL_QUERY" \
-          --preview "~/.vim/plugged/fzf.vim/bin/preview.sh {}"
+          --delimiter : \
+          --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+          --preview-window '~3:+{2}+3/2'
   )
   [ -n "$selected" ] && $EDITOR "$selected"
 }
