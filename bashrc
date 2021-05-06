@@ -385,7 +385,7 @@ RG() {
 }
 
 fzf-down() {
-  fzf --height 50% "$@" --border
+  fzf --height 50% --min-height 20 --border --bind ctrl-/:toggle-preview "$@"
 }
 
 export FZF_TMUX_OPTS='-p80%,60%'
