@@ -190,6 +190,10 @@ Plug 'solarnz/thrift.vim'
 Plug 'dag/vim-fish'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'ferrine/md-img-paste.vim'
+  autocmd FileType markdown nnoremap <buffer> <silent> <leader>v :call mdip#MarkdownClipboardImage()<CR>
+  let g:mdip_imgdir = 'images'
+  let g:mdip_imgname = 'image'
 Plug 'mzlogin/vim-markdown-toc'
 if v:version >= 800 && !s:windows
   Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown', 'on': 'MarkdownPreview' }
