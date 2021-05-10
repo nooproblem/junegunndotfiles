@@ -455,6 +455,8 @@ fjq() {
       fzf --reverse --ansi --disabled \
       --prompt 'jq> ' --query '.' \
       --preview "set -x; jq -C {q} \"$TEMP\"" \
+      --header 'Press CTRL-Y to copy expression to the clipboard and quit' \
+      --bind 'ctrl-y:execute-silent(echo -n {q} | pbcopy)+abort' \
       --print-query | head -1
   )
   [ -n "$QUERY" ] && jq "$QUERY" "$TEMP"
