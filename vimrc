@@ -23,12 +23,6 @@ let maplocalleader = ' '
 
 silent! if plug#begin('~/.vim/plugged')
 
-if s:darwin
-  let g:plug_url_format = 'git@github.com:%s.git'
-else
-  let $GIT_SSL_NO_VERIFY = 'true'
-endif
-
 " My plugins
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-github-dashboard'
@@ -72,7 +66,6 @@ Plug 'junegunn/vim-after-object'
 if s:darwin
   Plug 'junegunn/vim-xmark'
 endif
-unlet! g:plug_url_format
 
 " Colors
 Plug 'tomasr/molokai'
