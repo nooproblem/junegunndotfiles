@@ -140,7 +140,7 @@ let g:carbon_now_sh_options = { 't': 'oceanic-next'}
 
 " Git
 Plug 'tpope/vim-fugitive'
-  nmap     <Leader>g :Gstatus<CR>gg<c-n>
+  nmap     <Leader>g :Git<CR>gg<c-n>
   nnoremap <Leader>d :Gdiff<CR>
 Plug 'rhysd/git-messenger.vim'
 
@@ -162,7 +162,7 @@ Plug 'guns/vim-clojure-static'
   let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-slamhound'
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+Plug 'tpope/vim-bundler'
 if v:version >= 800
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 endif
@@ -955,9 +955,9 @@ command! -bang Profile call s:profile(<bang>0)
 " Carbon
 " ----------------------------------------------------------------------------
 function! s:carbon()
-  let cmd = "silicon --to-clipboard --background '\\#fff0' --theme 'Nord' --font 'Menlo;Apple SD Gothic Neo' --shadow-blur-radius 20"
+  let cmd = "silicon --to-clipboard --background '\\#fff0' --theme 'Solarized (light)' --shadow-blur-radius 0 --no-window-controls --no-line-number"
   silent! execute printf("'<,'>write !%s --language %s | grep -i failed", cmd, &filetype)
-  if v:shell_error
+  if !v:shell_error
     silent! execute printf("'<,'>write !%s | grep -i failed", cmd)
     if !v:shell_error
       echohl WarningMsg | echo 'Error running ' .. cmd | echohl None
@@ -1567,6 +1567,7 @@ if has_key(g:plugs, 'coc.nvim')
   endfunction
 
   inoremap <silent><expr> <TAB>
+        \ complete_info().mode != 'omni' && &filetype == 'clojure' ? "\<c-x>\<c-o>" :
         \ pumvisible() ? "\<C-n>" :
         \ <SID>check_back_space() ? "\<TAB>" :
         \ coc#refresh()
@@ -1645,7 +1646,6 @@ nnoremap <silent> <Leader>`        :Marks<CR>
 " nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>
 
-inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 inoremap <expr> <c-x><c-d> fzf#vim#complete#path('blsd')

@@ -42,14 +42,13 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 
 ### Global
 export GOPATH=~/gosrc
+export EDITOR=vim
 mkdir -p $GOPATH
 if [ "$PLATFORM" = 'Darwin' ]; then
   export PATH=~/bin:/usr/local/lib/ruby/gems/3.0.0/bin:/usr/local/opt/ruby/bin:$GOPATH/bin:$PATH
-  export EDITOR=nvim
 else
   export PATH=~/bin:$PATH
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
-  export EDITOR=vim
 fi
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
