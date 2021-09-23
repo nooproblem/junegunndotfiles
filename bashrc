@@ -339,20 +339,16 @@ w3mdump() {
 }
 
 pods() {
-  local selected tokens
-  selected=$(
-    kubectl get pods --all-namespaces |
-      fzf --info=inline --layout=reverse --header-lines=1 --border \
-          --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
-          --header $'Press CTRL-O to open log in editor\n\n' \
-          --bind ctrl-/:toggle-preview \
-          --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --namespace {1} {2}) > /dev/tty' \
-          --preview-window up:follow \
-          --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}' "$@"
-  )
-  read -ra tokens <<< "$selected"
-  [ ${#tokens} -gt 1 ] &&
-    kubectl exec -it --namespace "${tokens[0]}" "${tokens[1]}" -- bash
+  FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
+    fzf --info=inline --layout=reverse --header-lines=1 --border \
+    --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
+    --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
+    --bind ctrl-/:toggle-preview \
+    --bind 'enter:execute:kubectl exec -it --namespace {1} {2} -- bash > /dev/tty' \
+    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --namespace {1} {2}) > /dev/tty' \
+    --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND' \
+    --preview-window up:follow \
+    --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}' "$@"
 }
 
 # fzf (https://github.com/junegunn/fzf)
