@@ -267,6 +267,10 @@ pbc() {
   perl -pe 'chomp if eof' | pbcopy
 }
 
+pbpatch() {
+  pbpaste | patch -p1
+}
+
 cheap-bin() {
   local PID=$(jps -lv |
       fzf --height 30% --reverse --inline-info \
