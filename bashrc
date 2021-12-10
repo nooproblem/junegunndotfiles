@@ -342,6 +342,10 @@ w3mdump() {
   curl -s "$@" | w3m -dump -T text/html | perl -pe 's/(\+[0-9,.%]+)/\x1b[31;1m\1\x1b[m/g; s/(-[0-9,.%]+)/\x1b[34;1m\1\x1b[m/g;'
 }
 
+
+# fzf (https://github.com/junegunn/fzf)
+# --------------------------------------------------------------------
+
 pods() {
   FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
     fzf --info=inline --layout=reverse --header-lines=1 --border \
@@ -355,8 +359,22 @@ pods() {
     --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}' "$@"
 }
 
-# fzf (https://github.com/junegunn/fzf)
-# --------------------------------------------------------------------
+all-pods() {
+  FZF_DEFAULT_COMMAND='
+    (echo CONTEXT NAMESPACE NAME READY STATUS RESTARTS AGE
+     for context in $(kubectl config get-contexts --no-headers -o name | sort); do
+       kubectl get pods --all-namespaces --no-headers --context "$context" | sed "s/^/${context%-context} /"
+     done) 2> /dev/null | column -t
+  ' fzf --info=inline --layout=reverse --header-lines=1 --border \
+    --prompt 'all-pods> ' \
+    --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
+    --bind ctrl-/:toggle-preview \
+    --bind 'enter:execute:kubectl exec -it --context {1}-context --namespace {2} {3} -- bash > /dev/tty' \
+    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --context {1}-context --namespace {2} {3}) > /dev/tty' \
+    --bind 'ctrl-r:reload:eval "$FZF_DEFAULT_COMMAND"' \
+    --preview-window up:follow \
+    --preview 'kubectl logs --follow --tail=100000 --context {1}-context --namespace {2} {3}' "$@"
+}
 
 Rg() {
   local selected=$(
