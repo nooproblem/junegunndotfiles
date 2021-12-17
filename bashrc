@@ -354,10 +354,10 @@ pods() {
     --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
     --bind ctrl-/:toggle-preview \
     --bind 'enter:execute:kubectl exec -it --namespace {1} {2} -- bash > /dev/tty' \
-    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --namespace {1} {2}) > /dev/tty' \
+    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers --namespace {1} {2}) > /dev/tty' \
     --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND' \
     --preview-window up:follow \
-    --preview 'kubectl logs --follow --tail=100000 --namespace {1} {2}' "$@"
+    --preview 'kubectl logs --follow --all-containers --tail=10000 --namespace {1} {2}' "$@"
 }
 
 all-pods() {
@@ -371,10 +371,10 @@ all-pods() {
     --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
     --bind ctrl-/:toggle-preview \
     --bind 'enter:execute:kubectl exec -it --context {1}-context --namespace {2} {3} -- bash > /dev/tty' \
-    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --context {1}-context --namespace {2} {3}) > /dev/tty' \
+    --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers --context {1}-context --namespace {2} {3}) > /dev/tty' \
     --bind 'ctrl-r:reload:eval "$FZF_DEFAULT_COMMAND"' \
     --preview-window up:follow \
-    --preview 'kubectl logs --follow --tail=100000 --context {1}-context --namespace {2} {3}' "$@"
+    --preview 'kubectl logs --follow --tail=10000 --all-containers --context {1}-context --namespace {2} {3}' "$@"
 }
 
 Rg() {
