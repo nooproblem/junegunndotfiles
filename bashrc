@@ -9,7 +9,8 @@
 [ -z ${PLATFORM+x} ] && export PLATFORM=$(uname -s)
 [ -f /etc/bashrc ] && . /etc/bashrc
 
-BASE=$(dirname $(readlink $BASH_SOURCE))
+[ -f "${BASH_SOURCE[0]}" ] && BASE=$(dirname "$(readlink "${BASH_SOURCE[0]}")") ||
+  BASE=$(dirname "$(readlink ~/.bashrc)")
 
 # Options
 # --------------------------------------------------------------------
