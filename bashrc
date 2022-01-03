@@ -349,10 +349,10 @@ w3mdump() {
 
 pods() {
   FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
-    fzf --info=inline --layout=reverse --header-lines=1 --border \
+    fzf --info=inline --layout=reverse --header-lines=1 \
     --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
     --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
-    --bind ctrl-/:toggle-preview \
+    --bind 'ctrl-/:change-preview-window(80%,border-bottom|hidden|)' \
     --bind 'enter:execute:kubectl exec -it --namespace {1} {2} -- bash > /dev/tty' \
     --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers --namespace {1} {2}) > /dev/tty' \
     --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND' \
@@ -366,10 +366,10 @@ all-pods() {
      for context in $(kubectl config get-contexts --no-headers -o name | sort); do
        kubectl get pods --all-namespaces --no-headers --context "$context" | sed "s/^/${context%-context} /"
      done) 2> /dev/null | column -t
-  ' fzf --info=inline --layout=reverse --header-lines=1 --border \
+  ' fzf --info=inline --layout=reverse --header-lines=1 \
     --prompt 'all-pods> ' \
     --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
-    --bind ctrl-/:toggle-preview \
+    --bind 'ctrl-/:change-preview-window(80%,border-bottom|hidden|)' \
     --bind 'enter:execute:kubectl exec -it --context {1}-context --namespace {2} {3} -- bash > /dev/tty' \
     --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers --context {1}-context --namespace {2} {3}) > /dev/tty' \
     --bind 'ctrl-r:reload:eval "$FZF_DEFAULT_COMMAND"' \
