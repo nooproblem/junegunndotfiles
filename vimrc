@@ -21,7 +21,7 @@ let maplocalleader = ' '
 " VIM-PLUG BLOCK {{{
 " ============================================================================
 
-silent! if plug#begin('~/.vim/plugged')
+silent! if plug#begin()
 
 " My plugins
 Plug 'junegunn/vim-easy-align'
