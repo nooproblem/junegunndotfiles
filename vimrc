@@ -1634,10 +1634,10 @@ else
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 
-" nnoremap <silent> <Leader><Leader> :Files<CR>
-nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+command! -bar MoveBack if &buftype == 'nofile' && (winwidth(0) < &columns / 3 || winheight(0) < &lines / 3) | execute "normal! \<c-w>\<c-p>" | endif
+nnoremap <silent> <Leader><Leader> :MoveBack<BAR>Files<CR>
+nnoremap <silent> <Leader><Enter>  :MoveBack<BAR>Buffers<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
-nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>L        :Lines<CR>
 nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
