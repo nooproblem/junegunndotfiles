@@ -37,8 +37,7 @@ if [ "$(uname -s)" = 'Darwin' ]; then
 
   echo "Updating homebrew"
   brew install --cask xquartz iterm2 keepingyouawake spectacle \
-    mat visualvm google-backup-and-sync rstudio r mactex osxfuse \
-    karabiner-elements maccy adoptopenjdk8
+    mat visualvm rstudio r mactex osxfuse karabiner-elements maccy adoptopenjdk8
 
   brew install \
     fd ag ripgrep ant cmake cmus coreutils cscope exiftool doxygen liboauth \
