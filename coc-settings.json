@@ -1,6 +1,6 @@
 {
   "yaml.schemas": {
-    "kubernetes": "*.y*ml",
+    "kubernetes": "*k8s*.y*ml",
     "https://json.schemastore.org/ansible-playbook": "*ansible*.y*ml"
   },
   "languageserver": {
