@@ -45,10 +45,8 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 export GOPATH=~/gosrc
 export EDITOR=vim
 mkdir -p $GOPATH
-if [ "$PLATFORM" = 'Darwin' ]; then
-  export PATH=~/bin:/usr/local/lib/ruby/gems/3.0.0/bin:/usr/local/opt/ruby/bin:$GOPATH/bin:$PATH
-else
-  export PATH=~/bin:$PATH
+export PATH=~/bin:$PATH
+if [ "$PLATFORM" = Linux ]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 fi
 export LANG=en_US.UTF-8
@@ -150,6 +148,7 @@ else
     source ~/.git-prompt.sh
   fi
   PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\[\e[1;30m\]$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]'
+  PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[35m\]:\[\e[m\]\w\[\e[1;30m\]$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]'
 fi
 
 # Tmux tile
@@ -630,3 +629,6 @@ nvm() {
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
   nvm "$@"
 }
+
+. /usr/local/opt/asdf/libexec/asdf.sh &> /dev/null
+. ~/.asdf/plugins/java/set-java-home.bash &> /dev/null
