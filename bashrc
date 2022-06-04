@@ -292,7 +292,7 @@ if [ "$PLATFORM" = 'Darwin' ]; then
   }
 
   j8() { export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home; }
-  j11() { export JAVA_HOME= /Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home; }
+  j11() { export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home; }
 fi
 
 jfr() {
@@ -342,6 +342,9 @@ w3mdump() {
   curl -s "$@" | w3m -dump -T text/html | perl -pe 's/(\+[0-9,.%]+)/\x1b[31;1m\1\x1b[m/g; s/(-[0-9,.%]+)/\x1b[34;1m\1\x1b[m/g;'
 }
 
+silicopy() {
+  silicon --to-clipboard --background '#fff0' --theme 'Solarized (light)' --shadow-blur-radius 20 "$@"
+}
 
 # fzf (https://github.com/junegunn/fzf)
 # --------------------------------------------------------------------
@@ -427,7 +430,7 @@ command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 fgl() (
   [ $# -eq 0 ] && return
   cd /usr/local/Cellar/figlet/*/share/figlet/fonts
-  local font=$(ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} $@" --preview-window up) &&
+  local font=$(ls *.flf | sort | fzf --no-multi --reverse --preview "figlet -f {} -w \$FZF_PREVIEW_COLUMNS $@" --preview-window up) &&
   figlet -f "$font" "$@" | pbcopy
 )
 
