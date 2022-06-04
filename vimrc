@@ -153,15 +153,15 @@ Plug 'mhinz/vim-signify'
   let g:signify_sign_changedelete = '│'
 
 " Lang
+Plug 'guns/vim-sexp',    { 'for': 'clojure' }
+Plug 'liquidz/vim-iced', { 'for': 'clojure' }
+  let g:iced_enable_default_key_mappings = v:true
 Plug 'kovisoft/paredit', { 'for': 'clojure' }
   let g:paredit_smartjump = 1
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-Plug 'guns/vim-clojure-static'
-  let g:clojure_maxlines = 60
-  set lispwords+=match
-  let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
-Plug 'guns/vim-clojure-highlight'
-Plug 'guns/vim-slamhound'
+" Plug 'guns/vim-clojure-static'
+"   let g:clojure_maxlines = 60
+"   set lispwords+=match
+"   let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 Plug 'tpope/vim-bundler'
 if v:version >= 800
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -1432,58 +1432,6 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 nnoremap <Leader>G :Goyo<CR>
 
 " ----------------------------------------------------------------------------
-" clojure
-" ----------------------------------------------------------------------------
-function! s:lisp_maps()
-  nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ <cr>gv=
-  nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
-  nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
-  nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
-  nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
-  nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
-  imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
-  nmap     <buffer> K <Plug>FireplaceK
-endfunction
-
-function! s:figwheel()
-  call system('tmux send-keys -t right C-u "(figwheel-sidecar.repl-api/start-figwheel!)" Enter')
-  call input('Press enter when ready.')
-  redraw!
-  Piggieback (figwheel-sidecar.repl-api/repl-env)
-endfunction
-
-function! s:chestnut()
-  " https://github.com/clojure/clojurescript-site/blob/master/content/tools/repls.adoc
-  " nashorn / browser / node
-  new | setlocal buftype=nofile bufhidden=hide noswapfile filetype=clojure
-  Eval (go)
-  bd
-  call system('open --background http://localhost:10555/')
-  Piggieback (fw-sys/repl-env (:figwheel-system system))
-  call system('osascript -e ''activate application "iTerm2"''')
-  redraw!
-endfunction
-
-augroup vimrc
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
-  autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
-
-  " Clojure
-  autocmd FileType clojure xnoremap <buffer> <silent> <cr>         "cy:Eval <c-r>c<cr>
-  autocmd FileType clojure xnoremap <buffer> <silent> <leader><cr> "cy:Eval (require 'clojure.pprint)(clojure.pprint/pprint <c-r>c)<cr>
-  autocmd FileType clojure nmap     <buffer> <Enter>      cpp
-
-  " Ruby
-  autocmd FileType ruby set iskeyword+=!
-
-  " Figwheel / Chestnut
-  autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
-  autocmd BufReadPost *.cljs command! -buffer Chestnut call s:chestnut()
-augroup END
-
-" ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
 " let g:markdown_fenced_languages = [
@@ -1567,17 +1515,16 @@ if has_key(g:plugs, 'coc.nvim')
   endfunction
 
   inoremap <silent><expr> <TAB>
-        \ complete_info().mode != 'omni' && &filetype == 'clojure' ? "\<c-x>\<c-o>" :
         \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
+        \ <sid>check_back_space() ? "\<TAB>" :
         \ coc#refresh()
   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
   function! s:show_documentation()
-    if (index(['vim', 'help'], &filetype) >= 0)
-      execute 'h' expand('<cword>')
+    if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
     else
-      call CocAction('doHover')
+      call feedkeys('K', 'in')
     endif
   endfunction
 
@@ -1585,7 +1532,7 @@ if has_key(g:plugs, 'coc.nvim')
 
   let g:coc_global_extensions = ['coc-git', 'coc-solargraph',
     \ 'coc-r-lsp', 'coc-python', 'coc-html', 'coc-json', 'coc-css', 'coc-html',
-    \ 'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-emoji', 'coc-java']
+    \ 'coc-prettier', 'coc-eslint', 'coc-tsserver', 'coc-emoji', 'coc-java', 'coc-yaml']
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
   let g:go_doc_keywordprg_enabled = 0
@@ -1704,6 +1651,18 @@ augroup vimrc
   au BufNewFile,BufRead *.pde               set filetype=java
   au BufNewFile,BufRead *.coffee-processing set filetype=coffee
   au BufNewFile,BufRead Dockerfile*         set filetype=dockerfile
+
+  " Clojure
+  au FileType lisp,clojure,scheme RainbowParentheses
+  au FileType lisp,clojure,scheme nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  au FileType lisp,clojure,scheme nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  au FileType lisp,clojure,scheme nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ <cr>gv=
+  au FileType clojure nmap     <buffer> <Enter>  <Leader>ee
+  au FileType clojure xmap     <buffer> <Enter>  <Leader>ee
+  au BufNewFile,BufRead *.clj IcedConnect
+
+  " Ruby
+  autocmd FileType ruby set iskeyword+=!
 
   " Included syntax
   au FileType,ColorScheme * call <SID>file_type_handler()
