@@ -423,8 +423,18 @@ if command -v fd > /dev/null; then
 fi
 
 command -v bat  > /dev/null && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
-command -v blsd > /dev/null && export FZF_ALT_C_COMMAND='blsd'
 command -v tree > /dev/null && export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
+if command -v blsd > /dev/null; then
+  export FZF_ALT_C_COMMAND='blsd'
+  _fzf_compgen_dir() {
+    blsd "$1"
+  }
+elif command -v blsd > /dev/null; then
+  export FZF_ALT_C_COMMAND='bfs -type d | sed "s#^\./##"'
+  _fzf_compgen_dir() {
+    bfs -type d "$1" | sed "s#^\./##"
+  }
+fi
 
 # Figlet font selector => copy to clipboard
 fgl() (
